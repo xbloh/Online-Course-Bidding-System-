@@ -2,6 +2,16 @@ drop schema if exists BOSSB;
 create schema BOSSB;
 use BOSSB;
 
+create table BID (
+    userid varchar(128) not null,
+    amount decimal(5,2) not null,
+    code varchar(100),
+    section varchar(2) not null,
+	CONSTRAINT BID_PK primary key (userid,code,section),
+	CONSTRAINT BID_FK1 foreign key(userid) references STUDENT(userid),
+	CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID)
+);
+
 create table COURSE (
     courseID varchar(100) not null,
     school varchar(100) not null,
@@ -11,6 +21,22 @@ create table COURSE (
 	examStart time not  null,
 	examEnd time not  null,
 	CONSTRAINT COURSE_PK primary key (courseID)
+);
+
+create table COURSE_COMPLETED (
+    userid varchar(128) not null,
+    code varchar(100) not null,
+	CONSTRAINT COURSE_COMPLETED_PK primary key (userid,code),
+	CONSTRAINT COURSE_COMPLETED_FK1 foreign key(userid) references STUDENT(userid),
+	CONSTRAINT COURSE_COMPLETED_FK2 foreign key(code) references COURSE(courseID)
+);
+
+create table PREREQUISITE (
+    course varchar(100) not null,
+	prerequisite varchar(100) not null,
+	CONSTRAINT PREREQUISITE_PK primary key (course,prerequisite),
+	CONSTRAINT PREREQUISITE_FK1 foreign key(course) references COURSE(courseID),
+	CONSTRAINT PREREQUISITE_FK2 foreign key(prerequisite) references COURSE(courseID)
 );
 
 create table SECTION (
@@ -35,31 +61,11 @@ create table STUDENT (
 	CONSTRAINT STUDENT_PK primary key (userid)
 );
 
-create table PREREQUISITE (
-    course varchar(100) not null,
-	prerequisite varchar(100) not null,
-	CONSTRAINT PREREQUISITE_PK primary key (course,prerequisite),
-	CONSTRAINT PREREQUISITE_FK1 foreign key(course) references COURSE(courseID),
-	CONSTRAINT PREREQUISITE_FK2 foreign key(prerequisite) references COURSE(courseID)
-);
 
-create table COURSE_COMPLETED (
-    userid varchar(128) not null,
-    code varchar(100) not null,
-	CONSTRAINT COURSE_COMPLETED_PK primary key (userid,code),
-	CONSTRAINT COURSE_COMPLETED_FK1 foreign key(userid) references STUDENT(userid),
-	CONSTRAINT COURSE_COMPLETED_FK2 foreign key(code) references COURSE(courseID)
-);
 
-create table BID (
-    userid varchar(128) not null,
-    amount decimal(5,2) not null,
-    code varchar(100),
-    section varchar(2) not null,
-	CONSTRAINT BID_PK primary key (userid,code,section),
-	CONSTRAINT BID_FK1 foreign key(userid) references STUDENT(userid),
-	CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID)
-);
+
+
+
 
 LOAD DATA LOCAL INFILE 'D:/SMUGeneralFiles/Current_Semester/SPM/Project/SampleData/bid.csv' INTO TABLE BID FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
 LOAD DATA LOCAL INFILE 'D:/SMUGeneralFiles/Current_Semester/SPM/Project/SampleData/course.csv' INTO TABLE COURSE FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
