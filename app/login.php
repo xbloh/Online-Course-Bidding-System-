@@ -5,9 +5,11 @@ require_once 'include/common.php';
 ?>
 
 <html>
-<head>Welcome to BIOS</head>
-<body>
+<head>
+<title>Welcome to BIOS</title>
+</head>
 
+<body>
 Sign in with your SMU user ID or SMU Email address.<br>
 e.g.<br>
 Staff: smustf\marylim<br>
@@ -18,7 +20,7 @@ Student/Alumni: john.2014@business.smu.edu.sg<br>
 <br>
 
 <form action = 'process.php' method = 'POST'>
-Email Adress: <input type = 'text' name = 'email'>
+Username/Email Address: <input type = 'text' name = 'userid'>
 <br>
 Password: <input type = 'password' name = 'password'>
 <br>
@@ -27,3 +29,8 @@ Password: <input type = 'password' name = 'password'>
 
 </body>
 </html>
+<?php
+
+printErrors();
+
+?>
