@@ -1,8 +1,6 @@
 <html>
 <?php
 
-session_start();
-
 require_once 'include/common.php';
 
 $userid = $_SESSION['userid'];
