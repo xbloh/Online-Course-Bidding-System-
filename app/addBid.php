@@ -35,33 +35,73 @@
 	</form>
 
 	<form>
-		<table>
-			<tr>
-				<th>
-					Select Section:
-				</th>
-				<td>
-					<select name="indexOfSectionToBid">
-					<?php
+		<table cellspacing="10px" cellpadding="3px">
+			<?php
 
-						if (isset($_POST['courseSelected'])) {
-							$course = $_SESSION['coursesAvailable'][$_POST['indexOfCoursesToBid']];
-							$sectionDAO = new SectionDAO();
-							$sections = $sectionDAO->retrieveSectionsByCourse($course);
-							$course->setSectionsAvailable($sections);
+				if (isset($_POST['courseSelected'])) {
+					$course = $_SESSION['coursesAvailable'][$_POST['indexOfCoursesToBid']];
+					$sectionDAO = new SectionDAO();
+					$sections = $sectionDAO->retrieveSectionsByCourse($course);
+					$course->setSectionsAvailable($sections);
 
-							foreach ($course->getSectionsAvailable() as $index => $section) {
-								echo "<option value='$index'>" . $section->getSectionId() . "</option>";
-							}
-						}
+					echo "<tr>
+							<th>
+								Section ID
+							</th>
+							<th>
+								Day
+							</th>
+							<th>
+								Start
+							</th>
+							<th>
+								End
+							</th>
+							<th>
+								Instructor
+							</th>
+							<th>
+								Venue
+							</th>
+							<th>
+								Size
+							</th>
+							<th>
+								Add bid
+							</th>
+						</tr>";
+					foreach ($course->getSectionsAvailable() as $index => $section) {
+						echo "<tr>
+								<td>
+									{$section->getSectionId()}
+								</td>
+								<td>
+									{$section->getDay()}
+								</td>
+								<td>
+									{$section->getStart()}
+								</td>
+								<td>
+									{$section->getEnd()}
+								</td>
+								<td>
+									{$section->getInstructor()}
+								</td>
+								<td>
+									{$section->getVenue()}
+								</td>
+								<td>
+									{$section->getSize()}
+								</td>
+								<td>
+									Add to cart <input type='checkbox' name='indexOfSectionToBid' value='$index'>
+								</td>";
+					}
+				}
 
-					?>
-					</select>
-				</td>
-			</tr>
+			?>
 		</table>
 	</form>
-
 
 </body>
 </html>

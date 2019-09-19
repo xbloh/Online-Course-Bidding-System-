@@ -26,9 +26,44 @@
 			$this->size = $size;
 		}
 
+		public function getCourseId()
+		{
+			return $this->courseId;
+		}
+
 		public function getSectionId()
 		{
 			return $this->sectionId;
+		}
+
+		public function getDay()
+		{
+			return $this->day;
+		}
+
+		public function getStart()
+		{
+			return $this->start;
+		}
+
+		public function getEnd()
+		{
+			return $this->end;
+		}
+
+		public function getInstructor()
+		{
+			return $this->instructor;
+		}
+
+		public function getVenue()
+		{
+			return $this->venue;
+		}
+
+		public function getSize()
+		{
+			return $this->size;
 		}
 	}
 
