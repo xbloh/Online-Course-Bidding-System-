@@ -6,7 +6,7 @@
 class CourseDAO
 {
 	
-	public function getCoursesBySchool($school)
+	public function retrieveCoursesBySchool($school)
 	{
 		$sql = 'SELECT * from course where school=:school';
         

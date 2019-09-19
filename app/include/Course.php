@@ -5,17 +5,18 @@
  */
 class Course
 {
-	private $courseID;
+	private $courseId;
 	private $school;
 	private $title;
 	private $description;
 	private $examDate;
 	private $examStart;
 	private $examEnd;
+	private $sectionsAvailable;
 	
-	public function __construct($courseID, $school, $title, $description, $examDate, $examStart, $examEnd)
+	public function __construct($courseId, $school, $title, $description, $examDate, $examStart, $examEnd)
 	{
-		$this->courseID = $courseID;
+		$this->courseId = $courseId;
 		$this->school = $school;
 		$this->title = $title;
 		$this->description = $description;
@@ -26,7 +27,7 @@ class Course
 
 	public function getCourseId()
 	{
-		return $this->courseID;
+		return $this->courseId;
 	}
 
 	public function getSchool()
@@ -58,5 +59,16 @@ class Course
 	{
 		return $this->examEnd;
 	}
+
+	public function setSectionsAvailable($sectionsAvailable)
+	{
+		$this->sectionsAvailable = $sectionsAvailable;
+	}
+
+	public function getSectionsAvailable()
+	{
+		return $this->sectionsAvailable;
+	}
+
 }
 

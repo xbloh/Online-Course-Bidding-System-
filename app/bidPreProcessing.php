@@ -12,7 +12,7 @@ $courseDAO = new CourseDAO();
 
 if ($isRound1) {
 	$school = $student->getSchool();
-	$coursesAvailable = $courseDAO->getCoursesBySchool($school);
+	$coursesAvailable = $courseDAO->retrieveCoursesBySchool($school);
 
 } elseif ($isRound2) {
 	$coursesAvailable = $courseDAO->retrieveAllCourses();

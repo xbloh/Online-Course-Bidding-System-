@@ -8,7 +8,7 @@
 		<table>
 			<tr>
 				<th>
-					Select course to bid for:
+					Select course:
 				</th>
 				<td>
 					<select name='indexOfCoursesToBid'>
@@ -34,13 +34,34 @@
 		</table>
 	</form>
 
-	<?php
+	<form>
+		<table>
+			<tr>
+				<th>
+					Select Section:
+				</th>
+				<td>
+					<select name="indexOfSectionToBid">
+					<?php
 
-		if (isset($_POST['courseSelected'])) {
-			# code...
-		}
+						if (isset($_POST['courseSelected'])) {
+							$course = $_SESSION['coursesAvailable'][$_POST['indexOfCoursesToBid']];
+							$sectionDAO = new SectionDAO();
+							$sections = $sectionDAO->retrieveSectionsByCourse($course);
+							$course->setSectionsAvailable($sections);
 
-	?>
+							foreach ($course->getSectionsAvailable() as $index => $section) {
+								echo "<option value='$index'>" . $section->getSectionId() . "</option>";
+							}
+						}
+
+					?>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</form>
+
 
 </body>
 </html>
