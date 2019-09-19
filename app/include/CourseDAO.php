@@ -6,7 +6,7 @@
 class CourseDAO
 {
 	
-	public function getCourseIdBySchool($school)
+	public function getCoursesBySchool($school)
 	{
 		$sql = 'SELECT * from course where school=:school';
         
@@ -14,6 +14,7 @@ class CourseDAO
         $conn = $connMgr->getConnection();
 
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':school',$school,PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
@@ -26,7 +27,7 @@ class CourseDAO
         return $result;
 	}
 
-	public function retrieveAllCourseId()
+	public function retrieveAllCourses()
 	{
 		$sql = 'SELECT * from course';
 
