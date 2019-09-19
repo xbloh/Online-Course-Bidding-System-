@@ -3,10 +3,10 @@
 
 require_once 'include/common.php';
 
-$userid = $_SESSION['userid'];
+$student = $_SESSION['student'];
+$userid = $student->getUserId();
 
 var_dump($_SESSION);
-
 
 
 ?>

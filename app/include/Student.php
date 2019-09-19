@@ -20,6 +20,11 @@ class Student
 		
 	}
 
+	public function getUserId()
+	{
+		return $this->userid;
+	}
+
 	public function getEdollarAfterBid($edollarUsed)
 	{
 		$this->edollar -= $edollarUsed;

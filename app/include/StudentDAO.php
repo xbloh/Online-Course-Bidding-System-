@@ -2,24 +2,7 @@
 require_once 'common.php';
 
 class StudentDAO{
-    public function getStudent($userid)
-    {
-        $connMgr = new ConnectionManager();
-        $pdo = $connMgr->getConnection();
-
-        $sql = "SELECT * from student where userid=:userid";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':userid', $userid,PDO::PARAM_STR);
-
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $stmt->execute();
-
-        if ($row = $stmt->fetch()) {
-            $student = new Student($row['userid'], $row['name'], $row['school'], $row['edollar'])
-        }
-
-        return $student;
-    }
+    
 
     public function authenticate ($userid, $password){
         // Step 1 - Connect to Database
@@ -43,7 +26,6 @@ class StudentDAO{
         if ($row=$stmt->fetch()){
             if ($password==$row['password']){
                 $return_message= 'SUCCESS';
-                $_SESSION['student'] = $this->getStudent($userid);
             }else{
                 $return_message='Incorrect Password!';
             }
@@ -55,8 +37,10 @@ class StudentDAO{
         $stmt = null;
         $pdo = null;
 
+        $student = new Student($row['userid'], $row['name'], $row['school'], $row['edollar']);
+
         // Step 6 - Return (if any)
-        return $return_message;
+        return [$return_message, $student];
     }
 }
 ?>

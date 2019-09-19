@@ -7,12 +7,13 @@ if( isset($_POST['userid']) && isset($_POST['password']) )
     $userid = $_POST['userid'];
     $password = $_POST['password'];
 
-    $dao = new UserDAO();
-    $return_message = $dao->authenticate($userid, $password);
+    $dao = new StudentDAO();
+    $result = $dao->authenticate($userid, $password);
+    $return_message = $result[0];
 
     if($return_message == 'SUCCESS') 
     {
-        $_SESSION['userid'] = $userid;
+        $_SESSION['student'] = $result[1];
         header('Location: welcome.php');
     }
     elseif ($return_message == 'Incorrect Password!') {
