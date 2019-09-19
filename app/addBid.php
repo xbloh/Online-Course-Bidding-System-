@@ -11,11 +11,11 @@
 					Select course:
 				</th>
 				<td>
-					<select name='indexOfCoursesToBid'>
+					<select name='indexOfCourseToBid'>
 						<?php
 							require 'include/common.php';
 							foreach ($_SESSION['coursesAvailable'] as $index => $course) {
-								if (isset($_POST['indexOfCoursesToBid']) && $index == $_POST['indexOfCoursesToBid']) {
+								if (isset($_POST['indexOfCourseToBid']) && $index == $_POST['indexOfCourseToBid']) {
 									$selected = 'selected';
 
 								}else {
@@ -28,18 +28,19 @@
 					</select>
 				</td>
 				<td>
-					<input type="submit" name="courseSelected" value="Select">
+					<input type="submit" name="courseSelected" value="View Course">
 				</td>
 			</tr>
 		</table>
 	</form>
 
-	<form>
+	<form method='post'>
 		<table cellspacing="10px" cellpadding="3px">
 			<?php
 
 				if (isset($_POST['courseSelected'])) {
-					$course = $_SESSION['coursesAvailable'][$_POST['indexOfCoursesToBid']];
+
+					$course = $_SESSION['coursesAvailable'][$_POST['indexOfCourseToBid']];
 					$sectionDAO = new SectionDAO();
 					$sections = $sectionDAO->retrieveSectionsByCourse($course);
 					$course->setSectionsAvailable($sections);
@@ -71,6 +72,12 @@
 							</th>
 						</tr>";
 					foreach ($course->getSectionsAvailable() as $index => $section) {
+						if (isset($_POST['indexOfSectionToBid']) && $index == $_POST['indexOfSectionToBid']) {
+									$selected = 'checked';
+
+						}else {
+							$selected = '';
+						}
 						echo "<tr>
 								<td>
 									{$section->getSectionId()}
@@ -94,13 +101,14 @@
 									{$section->getSize()}
 								</td>
 								<td>
-									Add to cart <input type='checkbox' name='indexOfSectionToBid' value='$index'>
+									Add to cart <input type='checkbox' name='indexOfSectionToBid' value='$index' $selected>
 								</td>";
 					}
 				}
 
 			?>
 		</table>
+		<input type="submit" name="sectionSelected" value="Select Section">
 	</form>
 
 </body>
