@@ -21,7 +21,7 @@ if ($isRound1) {
 //courses available will be added as an array of course objects into SESSION
 $_SESSION['coursesAvailable'] = $coursesAvailable;
 
-header("Location: addBid.php")
+header("Location: addBid.php");
 
 
 ?>
