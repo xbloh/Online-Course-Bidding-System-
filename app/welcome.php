@@ -34,6 +34,6 @@ $eDollar = $student->getEdollar();
 <br>
 You currently have <?php echo $eDollar; ?> eDollars
 <br>
-<a href ="../app/addBid.php" class="button">Click Here to Add Bid</a>
+<a href ="../app/bidPreProcessing.php" class="button">Click Here to Add Bid</a>
 </body>
 </html>
