@@ -7,6 +7,11 @@ require_once 'include/common.php';
 <html>
 <head>
 <title>Welcome to BIOS</title>
+<style>
+h1 {
+    font-size : 30px;
+}
+</style>
 </head>
 
 <body>
