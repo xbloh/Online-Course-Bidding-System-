@@ -15,6 +15,12 @@
 						<?php
 							require 'include/common.php';
 							foreach ($_SESSION['coursesAvailable'] as $index => $course) {
+								
+								$preReqDAO = new PreRequisiteDAO();
+								$preRequisites = $preReqDAO->retrievePreRequisites($course);
+								$course->setPreRequisites($preRequisites);
+
+
 								if (isset($_POST['indexOfCourseToBid']) && $index == $_POST['indexOfCourseToBid']) {
 									$selected = 'selected';
 
