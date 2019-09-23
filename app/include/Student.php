@@ -6,10 +6,10 @@
 class Student
 {
 	private $userid;
-	private $password;
 	private $name;
 	private $school;
 	private $edollar;
+	private $courseCompleted;
 
 	public function __construct($userid, $name, $school, $edollar)
 	{

@@ -13,6 +13,7 @@ class Course
 	private $examStart;
 	private $examEnd;
 	private $sectionsAvailable;
+	private $preRequisite;
 	
 	public function __construct($courseId, $school, $title, $description, $examDate, $examStart, $examEnd)
 	{
