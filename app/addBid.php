@@ -119,64 +119,18 @@
 		<input type="submit" name="sectionSelected" value="Select Section">
 	</form>
 	<?php
-		if(isset($_POST['sectionSelected']))
-		{
+		if(isset($_POST['sectionSelected'])) {
 			$course = $_SESSION['courseSelected'];
 			$index = $_POST['indexOfSectionToBid'];
 			$sectionSelected = $course->getSectionsAvailable()[$index];
 			$_SESSION['cart'][] = $sectionSelected;
-			echo "Your Selected Section(s)";
-			echo "<table cellspacing='10px' cellpadding='3px'>
-			<tr>
-			<td>Course ID</td>
-			<td>Section ID</td>
-			<td>Day</td>
-			<td>Start Time</td>
-			<td>End Time</td>
-			<td>Instructor</td>
-			<td>Venue</td>
-			<td>Size</td>
-			<td>Bid Amount</td>
-			</tr>";
-			//var_dump($_SESSION['cart']);
-			foreach($_SESSION['cart'] as $sectionSelected) {
-				echo "<tr>
-					<td>
-						{$sectionSelected->getCourseId()}
-					</td>
-					<td>
-						{$sectionSelected->getSectionId()}
-					</td>
-					<td>
-						{$sectionSelected->getDay()}
-					</td>
-					<td>
-						{$sectionSelected->getStart()}
-					</td>
-					<td>
-						{$sectionSelected->getEnd()}
-					</td>
-					<td>
-						{$sectionSelected->getInstructor()}
-					</td>
-					<td>
-						{$sectionSelected->getVenue()}
-					</td>
-					<td>
-						{$sectionSelected->getSize()}
-					</td>
-					<td>
-						<input type = 'text' name = 'amount'>
-					</td>
-				</tr>";
-			}
 			
+			echo "<form action = 'placeBids.php' method = 'POST'>
+					<input type = 'submit' name = 'placeBids' value = 'Place Bids'>
+					</form>";
 		}
-	echo "</table>";
 	?>
-	<form action = 'welcome.php' method = 'POST'>
-	<input type = 'submit' name = 'addedToCart' value = 'Done'>
-	</form>
+
 
 
 </body>
