@@ -25,6 +25,9 @@ require_once 'include/common.php';
 $student = $_SESSION['student'];
 $name = $student->getName();
 $eDollar = $student->getEdollar();
+$courseCompletedDAO = new CourseCompletedDAO();
+$coursesCompleted = $courseCompletedDAO->retrieveCoursesCompleted();
+$student->setCoursesCompleted($coursesCompleted);
 
 //var_dump($_SESSION);
 

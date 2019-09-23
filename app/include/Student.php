@@ -46,9 +46,14 @@ class Student
 		return $this->edollar;
 	}
 
-	public function setCourseCompleted($coursesCompleted)
+	public function setCoursesCompleted($coursesCompleted)
 	{
 		$this->coursesCompleted = $coursesCompleted;
+	}
+
+	public function getCoursesCompleted()
+	{
+		return $this->coursesCompleted;
 	}
 }
 
