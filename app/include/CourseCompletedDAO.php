@@ -25,7 +25,14 @@ class CoursesCompletedDAO
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $row['code'];
         }
-        return $result;
+
+        $courseDAO = new CourseDAO();
+        $courses = [];
+        foreach ($result as $code) {
+        	$course = $courseDAO->retrieveCourseById($code);
+        	$courses[] = $course;
+        }
+        return $courses;
 	}
 }
 
