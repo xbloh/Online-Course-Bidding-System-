@@ -17,6 +17,7 @@ echo "<h1>Your Selected Section(s)<h1>";
 			</tr>";
 			//var_dump($_SESSION['cart']);
 			foreach($_SESSION['cart'] as $sectionSelected) {
+				$identifier = $sectionSelected->getCourseId() . $sectionSelected->getSectionId();
 				echo "<form action='placeBidsProcessing.php' method='post'>
 				<tr>
 					<td>
@@ -44,7 +45,7 @@ echo "<h1>Your Selected Section(s)<h1>";
 						{$sectionSelected->getSize()}
 					</td>
 					<td>
-						<input type='text' name='{$sectionSelected->getCourseId()}'>
+						<input type='text' name='$identifier'>
 					</td>
 
 				</tr>";
