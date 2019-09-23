@@ -13,6 +13,7 @@ class Course
 	private $examStart;
 	private $examEnd;
 	private $sectionsAvailable;
+	private $preRequisites;
 	
 	public function __construct($courseId, $school, $title, $description, $examDate, $examStart, $examEnd)
 	{
@@ -69,6 +70,12 @@ class Course
 	{
 		return $this->sectionsAvailable;
 	}
+
+	public function setPreRequisites($preRequisites)
+	{
+		$this->preRequisites = $preRequisites;
+	}
+
 
 }
 

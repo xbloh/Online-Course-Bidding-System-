@@ -6,10 +6,10 @@
 class Student
 {
 	private $userid;
-	private $password;
 	private $name;
 	private $school;
 	private $edollar;
+	private $coursesCompleted;
 
 	public function __construct($userid, $name, $school, $edollar)
 	{
@@ -44,6 +44,16 @@ class Student
 	public function getEdollar()
 	{
 		return $this->edollar;
+	}
+
+	public function setCoursesCompleted($coursesCompleted)
+	{
+		$this->coursesCompleted = $coursesCompleted;
+	}
+
+	public function getCoursesCompleted()
+	{
+		return $this->coursesCompleted;
 	}
 }
 

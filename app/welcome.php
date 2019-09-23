@@ -26,6 +26,10 @@ $student = $_SESSION['student'];
 $name = $student->getName();
 $eDollar = $student->getEdollar();
 
+$coursesCompletedDAO = new CoursesCompletedDAO();
+$coursesCompleted = $coursesCompletedDAO->retrieveCoursesCompleted($student);
+$student->setCoursesCompleted($coursesCompleted);
+
 //var_dump($_SESSION);
 
 ?>
