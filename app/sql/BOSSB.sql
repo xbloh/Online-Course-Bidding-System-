@@ -2,6 +2,15 @@ drop schema if exists BOSSB;
 create schema BOSSB;
 use BOSSB;
 
+create table STUDENT (
+    userid varchar(128) not null,
+	password varchar(128) not null,
+    name varchar(100) not null,
+    school varchar(100) not null,
+    edollar	decimal(5,2) not null,
+	CONSTRAINT STUDENT_PK primary key (userid)
+);
+
 create table COURSE (
     courseID varchar(100) not null,
     school varchar(100) not null,
@@ -26,14 +35,6 @@ create table SECTION (
 	CONSTRAINT SECTION_FK1 foreign key(courseID) references COURSE(courseID)
 );
 
-create table STUDENT (
-    userid varchar(128) not null,
-	password varchar(128) not null,
-    name varchar(100) not null,
-    school varchar(100) not null,
-    edollar	decimal(5,2) not null,
-	CONSTRAINT STUDENT_PK primary key (userid)
-);
 
 create table PREREQUISITE (
     course varchar(100) not null,
