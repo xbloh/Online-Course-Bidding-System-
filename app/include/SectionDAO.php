@@ -24,7 +24,7 @@
 
 
 	        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	            $result[] = new Section($row['courseID'], $row['sectionID'], $row['day'], $row['start'], $row['end'], $row['instructor'], $row['venue'], $row['size']);
+	            $result[] = new Section($course, $row['sectionID'], $row['day'], $row['start'], $row['end'], $row['instructor'], $row['venue'], $row['size']);
 	        }
 	        return $result;
 		}

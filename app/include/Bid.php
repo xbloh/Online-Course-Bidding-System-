@@ -12,6 +12,12 @@ class Bid
 		$this->section = $section;
 		$this->amount = $amount;
 	}
+
+	public function validate()
+	{
+		
+	}
+
 }
 
 ?>

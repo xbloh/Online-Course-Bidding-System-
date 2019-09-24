@@ -17,11 +17,12 @@ echo "<h1>Your Selected Section(s)<h1>";
 			</tr>";
 			//var_dump($_SESSION['cart']);
 			foreach($_SESSION['cart'] as $sectionSelected) {
-				$identifier = $sectionSelected->getCourseId() . $sectionSelected->getSectionId();
+				$course = $sectionSelected->getCourse();
+				$identifier = $course->getCourseId() . $sectionSelected->getSectionId();
 				echo "<form action='placeBidsProcessing.php' method='post'>
 				<tr>
 					<td>
-						{$sectionSelected->getCourseId()}
+						{$course->getCourseId()}
 					</td>
 					<td>
 						{$sectionSelected->getSectionId()}

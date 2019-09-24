@@ -3,7 +3,8 @@
 require_once 'include/common.php';
 
 foreach ($_SESSION['cart'] as $section) {
-	$identifier = $section->getCourseId() . $section->getSectionId();
+	$course = $section->getCourse();
+	$identifier = $course->getCourseId() . $section->getSectionId();
 
 	if (isset($_POST[$identifier])) {
 		$bidAmt = $_POST[$identifier] + 0;

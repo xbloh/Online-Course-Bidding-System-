@@ -5,7 +5,7 @@
 	 */
 	class Section
 	{
-		private $courseId;
+		private $course;
 		private $sectionId;
 		private $day;
 		private $start;
@@ -15,9 +15,9 @@
 		private $size;
 		private $isBidded;
 
-		function __construct($courseId, $sectionId, $day, $start, $end, $instructor, $venue, $size, $isBidded = False)
+		function __construct($course, $sectionId, $day, $start, $end, $instructor, $venue, $size, $isBidded = False)
 		{
-			$this->courseId = $courseId;
+			$this->course = $course;
 			$this->sectionId = $sectionId;
 			$this->day = $day;
 			$this->start = $start;
@@ -28,9 +28,9 @@
 			$this->isBidded = $isBidded;
 		}
 
-		public function getCourseId()
+		public function getCourse()
 		{
-			return $this->courseId;
+			return $this->course;
 		}
 
 		public function getSectionId()
