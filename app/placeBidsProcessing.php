@@ -17,5 +17,24 @@ foreach ($_SESSION['cart'] as $section) {
 }
 
 var_dump($_SESSION['bids']);
+$bidErrors = 0;
+
+foreach ($_SESSION['bids'] as $bid) {
+	$isAllowed = $bid->validate();
+	if (!$isAllowed) {
+		//output error message and go back to placeBids.php
+		$bidErrors++;
+
+	}
+
+
+}
+
+if ($bidErrors == 0) {
+	$bidDAO = new BidDAO();
+	foreach ($_SESSION['bids'] as $bid) {
+		$bidDAO->placeBid($bid);
+	}
+}
 
 ?>
