@@ -17,16 +17,15 @@ foreach ($_SESSION['cart'] as $section) {
 	}
 }
 
-var_dump($_SESSION['bids']);
 $bidErrors = 0;
 
 foreach ($_SESSION['bids'] as $bid) {
 	$isAllowed = $bid->validate();
-	if (!$isAllowed) {
+	//if (!$isAllowed) {
 		//output error message and go back to placeBids.php
-		$bidErrors++;
+	//	$bidErrors++;
 
-	}
+	//}
 
 
 }

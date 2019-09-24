@@ -11,10 +11,11 @@ class BidDAO
 		//put bid into database!
 		$student = $_SESSION['student'];
 		$userId = $student->getUserId();
-		$section = $bid->section;
+		$section = $bid->getSection();
 		$course = $section->getCourse();
 		$courseId = $course->getCourseId();
 		$sectionId = $section->getSectionId();
+		$amount = $bid->getAmount();
 
 		$sql = 'INSERT into bid values (:userId, :amount, :courseId, :sectionId)';
         

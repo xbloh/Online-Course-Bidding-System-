@@ -18,6 +18,16 @@ class Bid
 		
 	}
 
+	public function getSection()
+	{
+		return $this->section;
+	}
+
+	public function getAmount()
+	{
+		return $this->amount;
+	}
+
 }
 
 ?>
