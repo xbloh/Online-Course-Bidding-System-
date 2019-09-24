@@ -19,4 +19,16 @@ function printErrors() {
     }    
 }
 
+function isEmpty($var) {
+    if (isset($var) && is_array($var))
+        foreach ($var as $key => $value) {
+            if (empty($value)) {
+               unset($var[$key]);
+            }
+        }
+
+    if (empty($var))
+        return TRUE;
+}
+
 ?>
