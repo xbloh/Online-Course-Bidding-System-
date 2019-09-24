@@ -13,8 +13,9 @@
 		private $instructor;
 		private $venue;
 		private $size;
+		private $isBidded;
 
-		function __construct($courseId, $sectionId, $day, $start, $end, $instructor, $venue, $size)
+		function __construct($courseId, $sectionId, $day, $start, $end, $instructor, $venue, $size, $isBidded = False)
 		{
 			$this->courseId = $courseId;
 			$this->sectionId = $sectionId;
@@ -24,6 +25,7 @@
 			$this->instructor= $instructor;
 			$this->venue = $venue;
 			$this->size = $size;
+			$this->isBidded = $isBidded;
 		}
 
 		public function getCourseId()
@@ -64,6 +66,16 @@
 		public function getSize()
 		{
 			return $this->size;
+		}
+
+		public function placeBid()
+		{
+			$this->isBidded = True;
+		}
+
+		public function isBidded()
+		{
+			return $this->isBidded;
 		}
 	}
 
