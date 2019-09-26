@@ -42,5 +42,46 @@ class StudentDAO{
         // Step 6 - Return (if any)
         return [$return_message, $student];
     }
+    public function add($student){
+        $sql = "INSERT INTO STUDENT (userid, password, name, school, edollar) VALUES (:userid, :password, :name, :school, :edollar)";
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+        $stmt = $conn->prepare($sql);
+        $password = $student->getPassword();
+        $userid = $student->getUserId();
+        $name = $student->getName();
+        $school = $student->getSchool();
+        $edollar = $student->getEdollar();
+
+        //$password = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':school', $school, PDO::PARAM_STR);
+        $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
+        
+        $isAddOK = False;
+        if ($stmt->execute()) {
+            $isAddOK = True;
+        }
+
+        return $isAddOK;
+
+    }
+
+    public function removeAll() {
+        // $sql = 'SET foreign_key_checks = 0; TRUNCATE TABLE STUDENT; SET foreign_key_checks = 1';
+        $sql = 'TRUNCATE TABLE STUDENT';
+        
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+        
+        $stmt = $conn->prepare($sql);
+        
+        $stmt->execute();
+        $count = $stmt->rowCount();
+    }  
 }
 ?>
