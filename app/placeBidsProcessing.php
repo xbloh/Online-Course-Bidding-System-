@@ -7,7 +7,7 @@ $userId = $student->getUserId();
 foreach ($_SESSION['cart'] as $section) {
 	$course = $section->getCourse();
 	$courseId = $course->getCourseId();
-
+	$identifier = $course->getCourseId() . $section->getSectionId();
 
 	if (isset($_POST[$identifier])) {
 		$bidAmt = $_POST[$identifier] + 0;
@@ -15,7 +15,7 @@ foreach ($_SESSION['cart'] as $section) {
 		if (isset($_SESSION['bids'])) {
 			$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $section);
 		} else {
-			$_SESSION['bids'] = [new Bid(($userId, $bidAmt, $courseId, $section)];
+			$_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $section)];
 		}
 	}
 }
@@ -23,7 +23,7 @@ foreach ($_SESSION['cart'] as $section) {
 $bidErrors = 0;
 
 foreach ($_SESSION['bids'] as $bid) {
-	$isAllowed = $bid->validate();
+	//$isAllowed = $bid->validate();
 	//if (!$isAllowed) {
 		//output error message and go back to placeBids.php
 	//	$bidErrors++;
