@@ -37,7 +37,7 @@ class StudentDAO{
         $stmt = null;
         $pdo = null;
 
-        $student = new Student($row['userid'], $row['name'], $row['school'], $row['edollar']);
+        $student = new Student($row['userid'], $row['password'], $row['name'], $row['school'], $row['edollar']);
 
         // Step 6 - Return (if any)
         return [$return_message, $student];
