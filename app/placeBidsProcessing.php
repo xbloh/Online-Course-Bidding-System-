@@ -1,18 +1,21 @@
 <?php
 
 require_once 'include/common.php';
+$student = $_SESSION['student'];
+$userId = $student->getUserId();
 
 foreach ($_SESSION['cart'] as $section) {
 	$course = $section->getCourse();
-	$identifier = $course->getCourseId() . $section->getSectionId();
+	$courseId = $course->getCourseId();
+
 
 	if (isset($_POST[$identifier])) {
 		$bidAmt = $_POST[$identifier] + 0;
 
 		if (isset($_SESSION['bids'])) {
-			$_SESSION['bids'][] = new Bid($section, $bidAmt);
+			$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $section);
 		} else {
-			$_SESSION['bids'] = [new Bid($section, $bidAmt)];
+			$_SESSION['bids'] = [new Bid(($userId, $bidAmt, $courseId, $section)];
 		}
 	}
 }
