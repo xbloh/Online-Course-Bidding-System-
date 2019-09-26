@@ -1,5 +1,5 @@
 <?php
-
+require_once 'common.php';
 /**
  * 
  */
@@ -67,6 +67,49 @@ class CourseDAO
         }
         return $result;
     }
+    public function add($course){
+        $sql = "INSERT INTO COURSE (courseId, school, title, description, examDate, examStart, examEnd) VALUES (:courseId, :school, :title, :description, :examDate, :examStart, :examEnd)";
+
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+        $courseId = $course->getCourseId();
+        $school = $course->getSchool();
+        $title = $course->getTitle();
+        $description = $course->getDescription();
+        $examDate = $course->getExamDate();
+        $examStart = $course->getExamStart();
+        $examEnd = $course->getExamEnd();
+
+        $stmt = $conn->prepare($sql); 
+        $stmt->bindParam(':courseId', $courseId, PDO::PARAM_STR);
+        $stmt->bindParam(':school', $school, PDO::PARAM_STR);
+        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':examDate', $examDate, PDO::PARAM_STR);
+        $stmt->bindParam(':examStart', $examStart, PDO::PARAM_STR);
+        $stmt->bindParam(':examEnd', $examEnd, PDO::PARAM_STR);
+        
+        //$courseId, $school, $title, $description, $examDate, $examStart, $examEnd)
+        $isAddOK = False;
+        if ($stmt->execute()) {
+            $isAddOK = True;
+        }
+
+        return $isAddOK;
+    }
+
+
+    public function removeAll() {
+        $sql = 'TRUNCATE TABLE COURSE';
+        
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+        
+        $stmt = $conn->prepare($sql);
+        
+        $stmt->execute();
+        $count = $stmt->rowCount();
+    }  
 }
 
 ?>

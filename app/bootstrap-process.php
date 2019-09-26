@@ -1,11 +1,5 @@
-
 <?php
-require_once 'include/common.php';
-
+# edit the file included below. the bootstrap logic is there
+require_once 'include/bootstrap.php';
+doBootstrap();
 ?>
-
-<form id='bootstrap-form' action="bootstrap.php" method="post" enctype="multipart/form-data">
-	Bootstrap file: 
-	<input id='bootstrap-file' type="file" name="bootstrap-file"></br>
-	<input type="submit" name="submit" value="Import">
-</form>
