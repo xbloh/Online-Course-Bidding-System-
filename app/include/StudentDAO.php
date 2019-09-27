@@ -71,6 +71,33 @@ class StudentDAO{
 
     }
 
+    public function isUserIdExists($userId)
+    {
+        $connMgr = new ConnectionManager();
+        $pdo = $connMgr->getConnection();
+
+        // Step 2 - Write & Prepare SQL Query (take care of Param Binding if necessary)
+        $sql = "SELECT * 
+                FROM STUDENT 
+                WHERE 
+                    userid=:userid
+                ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        
+        // Step 3 - Execute SQL Query
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        // Step 4 - Retrieve Query Results (if any)
+        return $row=$stmt->fetch();
+
+        
+        // Step 5 - Clear Resources $stmt, $pdo
+        $stmt = null;
+        $pdo = null;
+    }
+
     public function removeAll() {
         // $sql = 'SET foreign_key_checks = 0; TRUNCATE TABLE STUDENT; SET foreign_key_checks = 1';
         $sql = 'TRUNCATE TABLE STUDENT';

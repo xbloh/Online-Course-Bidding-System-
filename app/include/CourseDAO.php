@@ -110,6 +110,28 @@ class CourseDAO
         $stmt->execute();
         $count = $stmt->rowCount();
     }  
+    
+    public function isCourseIdExists($courseId)
+    {
+        $sql = 'SELECT * from course where courseID = :courseId';
+
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+        
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        
+        // Step 3 - Execute SQL Query
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        // Step 4 - Retrieve Query Results (if any)
+        return $row=$stmt->fetch();
+
+        $stmt = null;
+        $pdo = null;
+    }
 }
 
 ?>

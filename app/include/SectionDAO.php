@@ -5,7 +5,26 @@ require_once 'common.php';
 	 */
 	class SectionDAO
 	{
-		
+		public function isSectionIdExists($sectionId)
+		{
+
+			$sql = 'SELECT * from section where sectionID=:sectionId';
+        
+	        $connMgr = new ConnectionManager();      
+	        $conn = $connMgr->getConnection();
+
+	        $stmt = $conn->prepare($sql);
+			$stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+			
+	        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+	        $stmt->execute();
+
+			return $row=$stmt->fetch();
+
+			$stmt = null;
+			$pdo = null;
+		}
+
 		public function retrieveSectionsByCourse($course)
 		{
 			$courseId = $course->getCourseId();
