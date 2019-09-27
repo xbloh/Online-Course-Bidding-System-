@@ -32,6 +32,8 @@ class BidDAO
 
         return $isAddOK;
     }
+
+
     public function removeAll() {
         $sql = 'TRUNCATE TABLE BID;';
         
@@ -43,6 +45,29 @@ class BidDAO
         $stmt->execute();
         $count = $stmt->rowCount();
     }  
+
+    public function retrieveCourseIdSecitionIdBidded($userid)
+    {
+        $sql = 'SELECT * from bid where userid=:userid';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = [$row['code'], $row['section']];
+        }
+
+        return $result;
+    }
+
 }
 
 ?>
