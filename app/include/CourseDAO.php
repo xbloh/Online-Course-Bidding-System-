@@ -139,6 +139,24 @@ class CourseDAO
         // Step 4 - Retrieve Query Results (if any)
         return $row=$stmt->fetch();
     }
+
+    public function retrieveExamDateTime($courseId)
+    {
+        $sql = 'SELECT * from course where courseID = :courseId';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = new Course($row['examDate'], $row['examStart'], $row['examEnd']);
+
+        return $result;
+    }
 }
 
 ?>
