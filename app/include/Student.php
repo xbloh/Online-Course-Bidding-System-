@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 
  */
@@ -61,6 +60,33 @@ class Student
 	public function getCoursesCompleted()
 	{
 		return $this->coursesCompleted;
+	}
+
+	public function validate()
+	{
+		$errors = [];
+
+		if (strlen($this->userid) > 128) {
+			$errors[] = "invalid userid";
+		}
+
+		$studentDAO = new StudentDAO();
+		if ($studentDAO->isUserIdExists($this->userid)) {
+			$errors[] = "duplicate userid";
+		}
+
+		// check for invalid e-dollar
+
+
+		if (strlen($this->password) > 128) {
+			$errors[] = "invalid password";
+		}
+
+		if (strlen($this->name) > 100) {
+			$errors[] = "invalid name";
+		}
+
+		return $errors;
 	}
 }
 

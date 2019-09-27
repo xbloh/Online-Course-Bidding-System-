@@ -35,26 +35,25 @@ class Bid
 	{
 		return $this->section;
 	}
-	public function validate()
-	{
-		$StudentDAO = new StudentDAO;
-		$CourseDAO = new CourseDAO;
-		$SectionDAO = new SectionDAO;
 
-		if (!$StudentDAO->isUserIdExists($this->userid)){
-			$errors[] = "invalid UserId";
-		}
-		if (!preg_match('/^(?:[0-9]{0,3})\.\d{2}$/', $this->amount)) {
-			$errors[] = "invalid Amount";
-		}
-		if (!$CourseDAO->isCourseIdExists($this->code)) {
-			$errors[] = "invalid Course";
-		}
-		if (!$SectionDAO->isSectionIdExists($this->sectionId)) {
-			$errors[] = "invalid Section";
-		}
+	public function validate() {
+	    $StudentDAO = new StudentDAO;
+	    $CourseDAO = new CourseDAO;
+	    $SectionDAO = new SectionDAO;
 
-	}
+	    if (!$StudentDAO->isUserIdExists($this->userid)){
+	      $errors[] = "invalid UserId";
+	    }
+	    if (!preg_match('/^(?:[0-9]{0,3})\.\d{2}$/', $this->amount)) {
+	      $errors[] = "invalid Amount";
+	    }
+	    if (!$CourseDAO->isCourseIdExists($this->code)) {
+	      $errors[] = "invalid Course";
+	    }	
+	    if (!$SectionDAO->isSectionIdExists($this->section)) {
+	      $errors[] = "invalid Section";
+	    }
 
+  }
 }
 

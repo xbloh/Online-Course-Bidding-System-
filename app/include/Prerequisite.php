@@ -22,5 +22,20 @@ class Prerequisite
 		return $this->prerequisite;
 	}
 
+	public function validate()
+	{
+		$errors = [];
+
+		$courseDAO = new CourseDAO();
+		if (!$courseDAO->isCourseIdExists($this->course)) {
+			$errors[] = "invalid course";
+		}
+
+		if (!$courseDAO->isCourseIdExists($this->prerequisite)) {
+			$errors[] = "invalid prerequisite";
+		}
+
+		return $errors;
+	}
 }
 

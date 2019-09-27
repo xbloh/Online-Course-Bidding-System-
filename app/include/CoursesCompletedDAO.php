@@ -34,6 +34,30 @@ class CoursesCompletedDAO
         }
         return $courses;
     }
+
+    public function retrieveCourseIdCompleted($student)
+    {
+        $userid = $student->getUserId();
+        $sql = 'SELECT * from course_completed where userid=:userid';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['code'];
+        }
+
+        return $result;
+    }
+
     public function add($course_completed){
         $sql = "INSERT INTO COURSE_COMPLETED (userid, code) VALUES (:userid, :code)";
 
@@ -57,11 +81,9 @@ class CoursesCompletedDAO
 
     }
     public function removeAll() {
-        $sql = 'ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK1;
-        ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK2;
+        $sql = '
         TRUNCATE TABLE COURSE_COMPLETED;
-        ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK1 foreign key(userid) references STUDENT(userid);
-        ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK2 foreign key(code) references COURSE(courseID);';
+        ';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();

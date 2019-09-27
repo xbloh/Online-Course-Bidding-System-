@@ -5,26 +5,7 @@ require_once 'common.php';
 	 */
 	class SectionDAO
 	{
-		public function isSectionIdExists($sectionId)
-		{
-
-			$sql = 'SELECT * from section where sectionID=:sectionId';
-        
-	        $connMgr = new ConnectionManager();      
-	        $conn = $connMgr->getConnection();
-
-	        $stmt = $conn->prepare($sql);
-			$stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
-			
-	        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-	        $stmt->execute();
-
-			return $row=$stmt->fetch();
-
-			$stmt = null;
-			$pdo = null;
-		}
-
+		
 		public function retrieveSectionsByCourse($course)
 		{
 			$courseId = $course->getCourseId();
@@ -85,9 +66,12 @@ require_once 'common.php';
 		}
 
 		public function removeAll(){
-			$sql = 'ALTER TABLE SECTION DROP FOREIGN KEY SECTION_FK1;
+			$sql = '
+        	#ALTER TABLE BID DROP FOREIGN KEY BID_FK2;
+
 			TRUNCATE TABLE SECTION;
-			ALTER TABLE SECTION ADD CONSTRAINT SECTION_FK1 foreign key(courseID) references COURSE(courseID)';
+
+        	#ALTER TABLE BID ADD CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID);';
 			$connMgr = new ConnectionManager();
 			$conn = $connMgr->getConnection();
 	
@@ -96,6 +80,23 @@ require_once 'common.php';
 			$count = $stmt->rowCount();
 			
 		}
+
+		public function isSectionIdExists($sectionId)
+	    {
+
+	      $sql = 'SELECT * from section where sectionID=:sectionId';
+	        
+	          $connMgr = new ConnectionManager();      
+	          $conn = $connMgr->getConnection();
+
+	          $stmt = $conn->prepare($sql);
+	      $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+	      
+	          $stmt->setFetchMode(PDO::FETCH_ASSOC);
+	          $stmt->execute();
+
+	      return $row=$stmt->fetch();
+	    }
 	}
 
 ?>

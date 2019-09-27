@@ -35,6 +35,30 @@ class PreRequisiteDAO
 
         return $courses;
     }
+
+    public function retrievePreRequisitesId($course)
+    {
+        $courseId = $course->getCourseId();
+        $sql = 'SELECT * from prerequisite where course=:courseid';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseid',$courseId,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['prerequisite'];
+        }
+
+        return $result;
+    }
+
     public function add($prerequisite){
 
         $sql = 'INSERT INTO PREREQUISITE (course, prerequisite)
@@ -59,11 +83,9 @@ class PreRequisiteDAO
         return $isAddOK;
     }
     public function removeAll() {
-        $sql = 'ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK1;
-        ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK2;
+        $sql = '
         TRUNCATE TABLE PREREQUISITE;
-        ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK1 foreign key(course) references COURSE(courseID);
-        ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK2 foreign key(prerequisite) references COURSE(courseID);';
+        ';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();

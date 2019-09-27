@@ -87,15 +87,8 @@ function doBootstrap(){
 				$conn = $connMgr->getConnection();
 				#start processing
                 #truncate current SQL tables
-
-                $bidDAO = new BidDAO();
-                $bidDAO->removeAll();
-
-                $course_completedDAO = new CoursesCompletedDAO();
-                $course_completedDAO->removeAll();
-
-                $prerequisiteDAO = new PrerequisiteDAO();
-                $prerequisiteDAO->removeAll();
+                $studentDAO = New StudentDAO();
+                $studentDAO->removeAll();
 
                 $courseDAO = new CourseDAO();
                 $courseDAO->removeAll();
@@ -103,97 +96,254 @@ function doBootstrap(){
                 $sectionDAO = new SectionDAO();
                 $sectionDAO->removeAll();
 
-                $studentDAO = New StudentDAO();
-                $studentDAO->removeAll();
+                $prerequisiteDAO = new PrerequisiteDAO();
+                $prerequisiteDAO->removeAll();
 
+                
+                $course_completedDAO = new CoursesCompletedDAO();
+                $course_completedDAO->removeAll();
 
+                $bidDAO = new BidDAO();
+                $bidDAO->removeAll();
+
+                $errors = [];
                 // #then read each csv file line by line (remember to skip the header)
 				// #$data = fgetcsv($file) gets you the next line of the CSV file which will be stored 
 				// #in the array $data
 				// #$data[0] is the first element in the csv row, $data[1] is the 2nd, ....
-				$data = fgetcsv($student);
+				$header = fgetcsv($student);
 				#to remove the first line, because it rmbs which line it reads
-                
+                $file = "student.csv";
+                $line = 1;
                 while(($data = fgetcsv($student)) != false){
                     #to start from the second line (with data)
                     #0 -> userid, 1 -> password, 2 -> name, 3 -> school, 4 -> edollar
-                    
+                    $message = [];
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) || !empty($data[1]) || !empty($data[2]) || !empty($data[3]) || !empty($data[4])){
+                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4])){
                         $new_student = new Student($data[0], $data[1], $data[2], $data[3], $data[4]);
-                        $studentDAO->add($new_student);
-                        $student_processed++;
+
+                        $currentErrors = $new_student->validate();
+
+                        if (empty($currentErrors)) {
+                            $studentDAO->add($new_student);
+                            $student_processed++;
+                        } else {
+                            foreach ($currentErrors as $error) {
+                                array_push($message, $error);
+                            }
+                        }
+                        
+
+                    }else {
+                        foreach ($data as $key => $value) {
+                            if (empty($value)) {
+                                $message[] = "blank " . $header[$key];
+                                break;
+                            }
+                        }
                     }
+
+                    
+                    if (!empty($message)) {
+                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                    }
+
+                    $line++;
                 }
                 fclose($student);
                 @unlink($student_path);
                 
-                $data = fgetcsv($course);
+                $header = fgetcsv($course);
+                $file = "course.csv";
+                $line = 1;
                 while(($data = fgetcsv($course)) != false){
+                    $message = [];
                     #0 -> course, #1 -> school, #2 -> title, #3 -> description, #4 -> exam date, #5 -> exam start, #6 -> exam end
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) || !empty($data[1]) || !empty($data[2]) || !empty($data[3]) || !empty($data[4]) || !empty($data[5]) || !empty($data[6])){
+                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6])){
                         $new_course = new Course($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
-                        $courseDAO->add($new_course);
-                        $course_processed++;
+                        $currentErrors = $new_course->validate();
+                        if (empty($currentErrors)) {
+                            $courseDAO->add($new_course);
+                            $course_processed++;
+                        } else {
+                            foreach ($currentErrors as $error) {
+                                array_push($message, $error);
+                            }
+                        }
+                        
+                    }else {
+                        foreach ($data as $key => $value) {
+                            if (empty($value)) {
+                                $message[] = "blank " . $header[$key];
+                                break;
+                            }
+                        }
                     }
+
+                    if (!empty($message)) {
+                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                    }
+
+                    $line++;
                 }
                 fclose($course);
                 @unlink($course_path);
 
-				$data = fgetcsv($section);
-				
+				$header = fgetcsv($section);
+                $file = 'section.csv';
+				$line = 1;
                 while(($data = fgetcsv($section)) != false){
+                    $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) || !empty($data[1]) || !empty($data[2]) || !empty($data[3]) || !empty($data[4]) || !empty($data[5]) || !empty($data[6]) || !empty($data[7])){
+                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6]) && !empty($data[7])){
                         $new_section = new Section($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
-                        $sectionDAO->add($new_section);
-                        $section_processed++;
+
+                        $currentErrors = $new_section->validate();
+                        if (empty($currentErrors)) {
+                            $sectionDAO->add($new_section);
+                            $section_processed++;
+                        } else {
+                            foreach ($currentErrors as $error) {
+                                array_push($message, $error);
+                            }
+                        }
+                        
+
+                    }else {
+                        foreach ($data as $key => $value) {
+                            if (empty($value)) {
+                                $message[] = "blank " . $header[$key];
+                                break;
+                            }
+                        }
                     }
+
+                    if (!empty($message)) {
+                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                    }
+
+                    $line++;
                 }
                 fclose($section);
                 @unlink($section_path);
 
                 // mysql_query('SET foreign_key_checks = 1');
-                $data = fgetcsv($prerequisite);
-				
+                $header = fgetcsv($prerequisite);
+				$file = 'prerequisite.csv';
+                $line = 1;
                 while(($data = fgetcsv($prerequisite)) != false){
+                    $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) || !empty($data[1])){
+                    if(!empty($data[0]) && !empty($data[1])){
                         $new_prerequisite = new Prerequisite($data[0], $data[1]);
-                        $prerequisiteDAO->add($new_prerequisite);
-                        $prerequisite_processed++;
+
+                        $currentErrors = $new_prerequisite->validate();
+                        if (empty($currentErrors)) {
+                            $prerequisiteDAO->add($new_prerequisite);
+                            $prerequisite_processed++;
+                        } else {
+                            foreach ($currentErrors as $error) {
+                                array_push($message, $error);
+                            }
+                        }
+                        
+                    }else {
+                        foreach ($data as $key => $value) {
+                            if (empty($value)) {
+                                $message[] = "blank " . $header[$key];
+                                break;
+                            }
+                        }
                     }
+
+                    if (!empty($message)) {
+                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                    }
+
+                    $line++;
+
                 }
                 fclose($prerequisite);
                 @unlink($prerequisite_path);
 
-                $data = fgetcsv($course_completed);
-				
+                $header = fgetcsv($course_completed);
+				$file = 'course_completed.csv';
+                $line = 1;
                 while(($data = fgetcsv($course_completed)) != false){
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) || !empty($data[1])){
+                    $message = [];
+                    if(!empty($data[0]) && !empty($data[1])){
                         $new_course_completed = new Course_Completed($data[0], $data[1]);
-                        $course_completedDAO->add($new_course_completed);
-                        $course_completed_processed++;
+
+                        $currentErrors = $new_course_completed->validate();
+                        if (empty($currentErrors)) {
+                            $course_completedDAO->add($new_course_completed);
+                            $course_completed_processed++;
+                        } else {
+                            foreach ($currentErrors as $error) {
+                                array_push($message, $error);
+                            }
+                        }
+                        
+                    }else {
+                        foreach ($data as $key => $value) {
+                            if (empty($value)) {
+                                $message[] = "blank " . $header[$key];
+                                break;
+                            }
+                        }
                     }
+
+                    if (!empty($message)) {
+                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                    }
+
+                    $line++;
+
                 }
                 fclose($course_completed);
                 @unlink($course_completed_path);
 
-                $data = fgetcsv($bid);
+                $header = fgetcsv($bid);
+                $file = "bid.csv";
+                $line = 1;
 				
                 while(($data = fgetcsv($bid)) != false){
+                    $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) || !empty($data[1]) || !empty($data[2]) || !empty($data[3])){
+                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3])){
                         $new_bid = new Bid($data[0], $data[1], $data[2], $data[3]);
-                        $bidDAO->add($new_bid);
-                        $bid_processed++;
+
+                        $currentErrors = $new_bid->validate();
+                        if (empty($currentErrors)) {
+                            $bidDAO->add($new_bid);
+                            $bid_processed++;
+                        } else {
+                            foreach ($currentErrors as $error) {
+                                array_push($message, $error);
+                            }
+                        }
+                        
+                    }else {
+                        foreach ($data as $key => $value) {
+                            if (empty($value)) {
+                                $message[] = "blank " . $header[$key];
+                                break;
+                            }
+                        }
                     }
+
+                    if (!empty($message)) {
+                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                    }
+
+                    $line++;
                 }
                 fclose($bid);
                 @unlink($bid_path);
@@ -208,11 +358,19 @@ function doBootstrap(){
 #returning JSON format errors. remember this is only for the JSON API. Humans should not get JSON errors.
 if (!empty($errors))
 {	
-    $sortclass = new Sort();
-    $errors = $sortclass->sort_it($errors,"bootstrap");
+    // $sortclass = new Sort();
+    // $errors = $sortclass->sort_it($errors,"bootstrap");
     $result = [ 
         "status" => "error",
-        "messages" => $errors
+        "num-record-loaded" => [
+            ["student.csv" => $student_processed],
+            ["course.csv" => $course_processed],
+            ["section.csv" => $section_processed],
+            ["prerequisite.csv" => $prerequisite_processed],
+            ["course_completed.csv" => $course_completed_processed],
+            ["bid.csv" => $bid_processed]
+        ],
+        "error" => $errors
     ];
 }
 else
@@ -220,12 +378,12 @@ else
     $result = [ 
         "status" => "success",
         "num-record-loaded" => [
-            "student.csv" => $student_processed,
-            "course.csv" => $course_processed,
-            "section.csv" => $section_processed,
-            "prerequisite.csv" => $prerequisite_processed,
-            "course_completed" => $course_completed_processed,
-            "bid" => $bid_processed
+            ["student.csv" => $student_processed],
+            ["course.csv" => $course_processed],
+            ["section.csv" => $section_processed],
+            ["prerequisite.csv" => $prerequisite_processed],
+            ["course_completed.csv" => $course_completed_processed],
+            ["bid.csv" => $bid_processed]
         ]
     ];
 }

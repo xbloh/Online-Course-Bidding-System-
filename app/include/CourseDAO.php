@@ -1,5 +1,4 @@
 <?php
-require_once 'common.php';
 /**
  * 
  */
@@ -59,12 +58,9 @@ class CourseDAO
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
-        $result = array();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = new Course($row['courseID'], $row['school'], $row['title'], $row['description'], $row['examDate'], $row['examStart'], $row['examEnd']);
 
-
-        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new Course($row['courseID'], $row['school'], $row['title'], $row['description'], $row['examDate'], $row['examStart'], $row['examEnd']);
-        }
         return $result;
     }
     public function add($course){
@@ -100,7 +96,21 @@ class CourseDAO
 
 
     public function removeAll() {
-        $sql = 'TRUNCATE TABLE COURSE';
+        $sql = '
+        ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK2;
+        ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK1;
+        ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK2;
+        ALTER TABLE BID DROP FOREIGN KEY BID_FK2;
+        ALTER TABLE SECTION DROP FOREIGN KEY SECTION_FK1;
+
+
+        TRUNCATE TABLE COURSE;
+
+        ALTER TABLE SECTION ADD CONSTRAINT SECTION_FK1 foreign key(courseID) references COURSE(courseID)
+        ALTER TABLE BID ADD CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID);
+        ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK1 foreign key(course) references COURSE(courseID);
+        ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK2 foreign key(prerequisite) references COURSE(courseID);
+        ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK2 foreign key(code) references COURSE(courseID);';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
@@ -110,7 +120,7 @@ class CourseDAO
         $stmt->execute();
         $count = $stmt->rowCount();
     }  
-    
+
     public function isCourseIdExists($courseId)
     {
         $sql = 'SELECT * from course where courseID = :courseId';
@@ -128,9 +138,6 @@ class CourseDAO
 
         // Step 4 - Retrieve Query Results (if any)
         return $row=$stmt->fetch();
-
-        $stmt = null;
-        $pdo = null;
     }
 }
 

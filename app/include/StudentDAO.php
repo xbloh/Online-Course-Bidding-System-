@@ -71,6 +71,27 @@ class StudentDAO{
 
     }
 
+    public function removeAll() {
+        // $sql = 'SET foreign_key_checks = 0; TRUNCATE TABLE STUDENT; SET foreign_key_checks = 1';
+        $sql = 'ALTER TABLE BID DROP FOREIGN KEY BID_FK1;
+        ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK1;
+
+        TRUNCATE TABLE STUDENT;
+
+        ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK1 foreign key(userid) references STUDENT(userid);
+        ALTER TABLE BID ADD CONSTRAINT BID_FK1 foreign key(userid) references STUDENT(userid);'
+
+        ;
+        
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+        
+        $stmt = $conn->prepare($sql);
+        
+        $stmt->execute();
+        $count = $stmt->rowCount();
+    }  
+
     public function isUserIdExists($userId)
     {
         $connMgr = new ConnectionManager();
@@ -98,17 +119,26 @@ class StudentDAO{
         $pdo = null;
     }
 
-    public function removeAll() {
-        // $sql = 'SET foreign_key_checks = 0; TRUNCATE TABLE STUDENT; SET foreign_key_checks = 1';
-        $sql = 'TRUNCATE TABLE STUDENT';
-        
+    public function retrieveStudentByUserId($userId)
+    {
         $connMgr = new ConnectionManager();
-        $conn = $connMgr->getConnection();
+        $pdo = $connMgr->getConnection();
+
+        // Step 2 - Write & Prepare SQL Query (take care of Param Binding if necessary)
+        $sql = "SELECT * 
+                FROM STUDENT 
+                WHERE 
+                    userid=:userid
+                ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
         
-        $stmt = $conn->prepare($sql);
-        
+        // Step 3 - Execute SQL Query
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
-        $count = $stmt->rowCount();
-    }  
+
+        $row=$stmt->fetch();
+        return new Student($row['userid'], $row['password'], $row['name'], $row['school'], $row['edollar']);
+    }
 }
 ?>

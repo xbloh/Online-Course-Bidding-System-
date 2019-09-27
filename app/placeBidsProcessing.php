@@ -36,7 +36,7 @@ foreach ($_SESSION['bids'] as $bid) {
 if ($bidErrors == 0) {
 	$bidDAO = new BidDAO();
 	foreach ($_SESSION['bids'] as $bid) {
-		$bidDAO->placeBid($bid);
+		$bidDAO->addBid($bid);
 	}
 }
 

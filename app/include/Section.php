@@ -77,6 +77,51 @@
 		{
 			return $this->isBidded;
 		}
+
+		public function validate()
+		{
+			$errors = [];
+
+			$courseDAO = new CourseDAO();
+			if (!$courseDAO->retrieveCourseById($this->course)) {
+				$errors[] = "invalid course";
+			}
+
+			//validation for section TO ADD
+
+
+			if ((int)$this->day > 7 || (int)$this->day < 1) {
+				$errors[] = "invalid day";
+			}
+
+			$start = explode(":", $this->start);
+			if ((int)$start[0] > 23 || (int)$start[1] > 59 || (int)$start[0] < 0 || (int)$start[1] < 0) {
+				$errors[] = "invalid start";
+			}
+
+
+			$end = explode(":", $this->end);
+			if ((int)$end[0] > 23 || (int)$end[1] > 59 || (int)$end[0] < 0 || (int)$end[1] < 0) {
+				$errors[] = "invalid end";
+			} else if (strtotime($this->end) <= strtotime($this->start)) {
+				$errors[] = "invalid end";
+			}
+
+			if (strlen($this->instructor) > 100) {
+				$errors[] = "invalid instructor";
+			}
+
+			if (strlen($this->venue) > 100) {
+				$errors[] = "invalid venue";
+			}
+
+			if ((int)$this->size < 1) {
+				$errors[] = "invalid size";
+			}
+
+			return $errors;
+			
+		}
 	}
 
 ?>
