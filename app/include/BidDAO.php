@@ -19,11 +19,12 @@ class BidDAO
         $amount = $bid->getAmount();
         $code = $bid->getCode();
         $section = $bid->getSection();
+        $sectionId = $section->getSectionId();
 
         $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
         $stmt->bindParam(':amount', $amount, PDO::PARAM_STR);
         $stmt->bindParam(':code', $code, PDO::PARAM_STR);
-        $stmt->bindParam(':section', $section, PDO::PARAM_STR);
+        $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
         
         $isAddOK = False;
         if ($stmt->execute()) {
