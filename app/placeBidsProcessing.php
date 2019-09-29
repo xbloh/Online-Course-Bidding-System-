@@ -38,6 +38,10 @@ if ($bidErrors == 0) {
 	foreach ($_SESSION['bids'] as $bid) {
 		$bidDAO->add($bid);
 	}
+	echo "<h1>BIDS PLACED!!! GOOD LUCK</h1>
+	<a href = 'welcome.php'>go back home</a>";
+	unset($_SESSION['bids']);
+	unset($_SESSION['cart']);
 }
 
 ?>
