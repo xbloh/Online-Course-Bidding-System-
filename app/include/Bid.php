@@ -6,6 +6,7 @@ class Bid
     private $amount;
     private $code;
     private $section;
+    private $sectionId;
 
 	
 	public function __construct($userid, $amount, $code, $section)
@@ -35,6 +36,7 @@ class Bid
 	{
 		return $this->section;
 	}
+
 	public function validate()
 	{
 
@@ -56,12 +58,12 @@ class Bid
 		if (!$CourseDAO->isCourseIdExists($this->code)) {
 			$errors[] = "invalid Course";
 		}
-		if (!$SectionDAO->isSectionIdExists($this->sectionId)) {
+		if (!$SectionDAO->isSectionIdExists($this->section)) {
 			$errors[] = "invalid Section";
 		}
 
-		$courseCompleted = $courseCompletedDAO->retrieveCoursesCompleted($this->userid);
-		$prerequisiteId = $prerequisiteDAO->retrievePreRequisitesId($this->code);
+		$courseCompleted = $courseCompletedDAO->retrieveCoursesCompletedByUserId($this->userid);
+		$prerequisiteId = $prerequisiteDAO->retrievePreRequisitesIdByCourseId($this->code);
 		foreach($prerequisiteId as $prerequisiteEach){
 			if(!in_array($prerequisiteEach, $courseCompleted)){
 				$errors[] = "Incomplete Prerequisites";

@@ -7,6 +7,7 @@ class BidDAO
 {
 	public function add($bid){
 
+
         $sql = 'INSERT INTO BID (userid, amount, code, section)
                 VALUES (:userid, :amount, :code, :section)
                 ';
@@ -18,8 +19,10 @@ class BidDAO
         $userId = $bid->getUserid();
         $amount = $bid->getAmount();
         $code = $bid->getCode();
-        $section = $bid->getSection();
-        $sectionId = $section->getSectionId();
+        $sectionId = $bid->getSection();
+        if (!is_string($sectionId)) {
+            $sectionId = $sectionId->getSectionId();
+        }
 
         $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
         $stmt->bindParam(':amount', $amount, PDO::PARAM_STR);
