@@ -72,6 +72,37 @@ class BidDAO
         return $result;
     }
 
+    public function numberOfSectionsByID($userId){
+
+
+        $sql = 'SELECT COUNT(:userid) FROM BID WHERE userid=:userid
+                ';
+
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+        
+        $stmt = $conn->prepare($sql); 
+
+        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+        
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    public function totalAmountByID($userId){
+
+    $sql='SELECT sum(amount) FROM BID WHERE userid=:userid
+            ';
+    $connMgr = new ConnectionManager();       
+    $conn = $connMgr->getConnection();
+    
+    $stmt = $conn->prepare($sql); 
+
+    $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+    
+    $result = $stmt->execute();
+    return $result;
+    }
 }
 
 ?>
