@@ -90,7 +90,7 @@ class Bid
 		}
 		$examdaytimelistBidded = [];
 		foreach($courselist as $course) {
-			$examdaytimelistBidded = [$bidDAO->retrieveExamDateTime($course)]
+			$examdaytimelistBidded = [$bidDAO->retrieveExamDateTime($course)];
 		}
 		$examdate = [];
 		$examStart = [];
@@ -104,10 +104,10 @@ class Bid
 		}
 
 		//check date first then check start then check end 
-		foreach ($examdate as $date)
-		{
-			if(in_array($date,))
-		}
+		// foreach ($examdate as $date)
+		// {
+		// 	if(in_array($date));
+		// }
 
 
 		// foreach($examdate as $date){
