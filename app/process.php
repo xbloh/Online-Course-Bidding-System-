@@ -4,6 +4,16 @@ require_once 'include/common.php';
 
 if( isset($_POST['userid']) && isset($_POST['password']) )
 {
+    if ($_POST['userid'] === "admin") {
+        if ($_POST['password'] === "@dm1n5PM") {
+            header('Location: bootstrapinterface.php');
+            exit;
+        } else {
+            $_SESSION['errors'][] = "wrong admin password!";
+            header('Location: login.php');
+            exit;
+        }
+    }
     $userid = $_POST['userid'];
     $password = $_POST['password'];
 
