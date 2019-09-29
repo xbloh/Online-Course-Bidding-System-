@@ -74,6 +74,15 @@ class Bid
 			$errors[] = "Course completed";
 		}
 
+		if($BidDAO->numberOfSectionsByID($this->userid)>=5){
+			$errors[] = "Section limit reached";
+		}
+
+		// $StudentObj=$StudentDAO->retrieveStudentByUserId($this->userid);
+		// if($BidDAO->totalAmountByID($this->userid) > $StudentObj->getAmount()){
+		// 	$errors[] = "Not enough e-dollar";
+		// }
+
 		$courseIdSectionId = $BidDAO->retrieveCourseIdSecitionIdBidded($this->userid);
 		foreach ($courseIdSectionId as $coursesection) {
 		$courselist[]+=$coursesection[0];
