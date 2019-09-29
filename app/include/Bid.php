@@ -74,40 +74,45 @@ class Bid
 			$errors[] = "Course completed";
 			}
 
-		// $courseIdSectionId = $BidDAO->retrieveCourseIdSecitionIdBidded($this->userid);
-		// foreach ($courseIdSectionId as $coursesection){
-		// 	$courselist[]+=$coursesection[0];
-		// 	$coursesectionlist[]+=$coursesection;
-		// }
-		// $examdaytimelist=[];
-		// foreach($courselist as $course){
-		// 	$examdaytimelist=[$bidDAO->retrieveExamDateTime($course)]
-		// }
-		// $examdate=[];
-		// foreach($examdaytimelist as $date){
-		// 	if !in_array($date, $examdate){
-		// 		$examdate=[$date[0]];
-		// 	}
-		// }
-		
+		$courseIdSectionId = $BidDAO->retrieveCourseIdSecitionIdBidded($this->userid);
+		foreach ($courseIdSectionId as $coursesection) {
+		$courselist[]+=$coursesection[0];
+		$coursesectionlist[]+=$coursesection;
+		}
+		$examdaytimelistBidded = [];
+		foreach($courselist as $course) {
+			$examdaytimelistBidded = [$bidDAO->retrieveExamDateTime($course)]
+		}
+		$examdate = [];
+		$examStart = [];
+		$examEnd = [];
+		foreach($examdaytimelistBidded as $datetime) {
+			if(!in_array($datetime, $examdate)) { //Bidded examDate in list - examdate
+				$examdate = [$datetime[0]];		  
+				$examStart = [$datetime[1]];	  //Bidded examStart in list - examStart
+				$examEnd = [$datetime[2]];		  //Bidded examEnd in list - examEnd
+			}
+		}
+
+		//check date first then check start then check end 
+		foreach ($examdate as $date)
+		{
+			if(in_array($date,))
+		}
+
+
 		// foreach($examdate as $date){
-		// 	$count=0;
+		// $count = 0;
 		// 	foreach($examdaytimelist as $datetime){
-		// 		if $date==$datetime[0]{
+		// 		if ($date==$datetime[0]) {
 		// 			$count++;
 		// 		}
 		// 	}
 		// }
-		
-
-
 	
-
-
-
 		
 
 	}
 
 }
-
+?>
