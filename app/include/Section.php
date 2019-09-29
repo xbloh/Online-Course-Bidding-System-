@@ -88,6 +88,9 @@
 			}
 
 			//validation for section TO ADD
+			if (substr($this->sectionId, 0, 1) !== "S" || (substr($this->sectionId, 1) + 0) < 1 || (substr($this->sectionId, 1) + 0) > 99) {
+				$errors[] = "invalid section";
+			}
 
 
 			if ((int)$this->day > 7 || (int)$this->day < 1) {

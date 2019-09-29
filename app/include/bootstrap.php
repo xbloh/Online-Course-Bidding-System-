@@ -354,42 +354,42 @@ function doBootstrap(){
         }
     }  
     
-    
-#returning JSON format errors. remember this is only for the JSON API. Humans should not get JSON errors.
-if (!empty($errors))
-{	
-    // $sortclass = new Sort();
-    // $errors = $sortclass->sort_it($errors,"bootstrap");
-    $result = [ 
-        "status" => "error",
-        "num-record-loaded" => [
-            ["student.csv" => $student_processed],
-            ["course.csv" => $course_processed],
-            ["section.csv" => $section_processed],
-            ["prerequisite.csv" => $prerequisite_processed],
-            ["course_completed.csv" => $course_completed_processed],
-            ["bid.csv" => $bid_processed]
-        ],
-        "error" => $errors
-    ];
-}
-else
-{	
-    $result = [ 
-        "status" => "success",
-        "num-record-loaded" => [
-            ["student.csv" => $student_processed],
-            ["course.csv" => $course_processed],
-            ["section.csv" => $section_processed],
-            ["prerequisite.csv" => $prerequisite_processed],
-            ["course_completed.csv" => $course_completed_processed],
-            ["bid.csv" => $bid_processed]
-        ]
-    ];
-}
 
-header('Content-Type: application/json');
-echo json_encode($result, JSON_PRETTY_PRINT);
+#returning JSON format errors. remember this is only for the JSON API. Humans should not get JSON errors.
+    if (!empty($errors))
+    {	
+        // $sortclass = new Sort();
+        // $errors = $sortclass->sort_it($errors,"bootstrap");
+        $result = [ 
+            "status" => "error",
+            "num-record-loaded" => [
+                ["student.csv" => $student_processed],
+                ["course.csv" => $course_processed],
+                ["section.csv" => $section_processed],
+                ["prerequisite.csv" => $prerequisite_processed],
+                ["course_completed.csv" => $course_completed_processed],
+                ["bid.csv" => $bid_processed]
+            ],
+            "error" => $errors
+        ];
+    }
+    else
+    {	
+        $result = [ 
+            "status" => "success",
+            "num-record-loaded" => [
+                ["student.csv" => $student_processed],
+                ["course.csv" => $course_processed],
+                ["section.csv" => $section_processed],
+                ["prerequisite.csv" => $prerequisite_processed],
+                ["course_completed.csv" => $course_completed_processed],
+                ["bid.csv" => $bid_processed]
+            ]
+        ];
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($result, JSON_PRETTY_PRINT);
 
 
 
