@@ -8,14 +8,15 @@ foreach ($_SESSION['cart'] as $section) {
 	$course = $section->getCourse();
 	$courseId = $course->getCourseId();
 	$identifier = $course->getCourseId() . $section->getSectionId();
+	$sectionId = $section->getSectionId();
 
 	if (isset($_POST[$identifier])) {
 		$bidAmt = $_POST[$identifier] + 0;
 
 		if (isset($_SESSION['bids'])) {
-			$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $section);
+			$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $sectionId);
 		} else {
-			$_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $section)];
+			$_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $sectionId)];
 		}
 	}
 }
@@ -38,6 +39,10 @@ if ($bidErrors == 0) {
 	foreach ($_SESSION['bids'] as $bid) {
 		$bidDAO->add($bid);
 	}
+	echo "<h1>BIDS PLACED!!! GOOD LUCK</h1>
+	<a href = 'welcome.php'>go back home</a>";
+	unset($_SESSION['bids']);
+	unset($_SESSION['cart']);
 }
 
 ?>

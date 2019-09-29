@@ -72,7 +72,7 @@ class Bid
 
 		if(!in_array($this->code, $courseCompleted)){
 			$errors[] = "Course completed";
-			}
+		}
 
 		$courseIdSectionId = $BidDAO->retrieveCourseIdSecitionIdBidded($this->userid);
 		foreach ($courseIdSectionId as $coursesection) {
