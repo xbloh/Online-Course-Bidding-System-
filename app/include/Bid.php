@@ -52,7 +52,7 @@ class Bid
 		if (!$StudentDAO->isUserIdExists($this->userid)){
 			$errors[] = "invalid UserId";
 		}
-		if (!preg_match('/^(?:[0-9]{0,3})\.\d{2}$/', $this->amount)) {
+		if (!preg_match('/^(?:[0-9]{0,3})\.\d{0,2}$/', $this->amount)) {
 			$errors[] = "invalid Amount";
 		}
 		if (!$CourseDAO->isCourseIdExists($this->code)) {
