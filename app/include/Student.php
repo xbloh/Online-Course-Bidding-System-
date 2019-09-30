@@ -75,8 +75,9 @@ class Student
 			$errors[] = "duplicate userid";
 		}
 
-		// check for invalid e-dollar
-
+		if (!preg_match('/^(?:[0-9]{0,3})\.\d{0,2}$/', $this->edollar)) {
+			$errors[] = "invalid e-dollar";
+		}
 
 		if (strlen($this->password) > 128) {
 			$errors[] = "invalid password";
