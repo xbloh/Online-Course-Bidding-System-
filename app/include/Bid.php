@@ -62,6 +62,11 @@ class Bid
 			$errors[] = "invalid Section";
 		}
 
+		$student = $StudentDAO->retrieveStudentByUserId($this->userid);
+		$school = $student->getSchool();
+		$courses = $CourseDAO->retrieveCoursesBySchool($school);
+
+
 		$courseCompleted = $courseCompletedDAO->retrieveCoursesCompletedByUserId($this->userid);
 		$prerequisiteId = $prerequisiteDAO->retrievePreRequisitesIdByCourseId($this->code);
 		foreach($prerequisiteId as $prerequisiteEach){
@@ -92,14 +97,34 @@ class Bid
 		foreach($courselist as $course) {
 			$examdaytimelistBidded = [$bidDAO->retrieveExamDateTime($course)];
 		}
-		$examdate = [];
-		$examStart = [];
-		$examEnd = [];
+		$examdateBidded = [];
+		$examStartBidded = [];
+		$examEndBidded = [];
 		foreach($examdaytimelistBidded as $datetime) {
-			if(!in_array($datetime, $examdate)) { //Bidded examDate in list - examdate
-				$examdate = [$datetime[0]];		  
-				$examStart = [$datetime[1]];	  //Bidded examStart in list - examStart
-				$examEnd = [$datetime[2]];		  //Bidded examEnd in list - examEnd
+			if(!in_array($datetime, $examdateBidded)) {         //Bidded examDate in list - examdate
+				$examdateBidded = [$datetime[0]];		  
+				$examStartBidded = [$datetime[1]];	      //Bidded examStart in list - examStart
+				$examEndBidded = [$datetime[2]];		  //Bidded examEnd in list - examEnd
+			}
+		}
+
+		//check date first then check start then check end
+		$course = $CourseDAO->retrieveCourseById($this->code); 
+		$examdateBidding = $course->getExamDate();
+		$examStartBidding = $course->getExamStart();
+		$examStartBidding = $course->getExamEnd();
+
+		foreach ($examdateBidded as $date)
+		{
+			if(in_array($examdateBidding, $examdateBidded))
+			{
+				if(in_array($examStartBidding, $examStartBidded))
+				{
+					if(in_array($examEndBidding, $examEndBidded))
+					{
+						$errors[] = "Exam timetable clash";
+					}
+				}
 			}
 		}
 
