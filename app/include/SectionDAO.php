@@ -28,6 +28,7 @@ require_once 'common.php';
 	        }
 	        return $result;
 		}
+
 		public function add($section){
 
 			$sql = 'INSERT INTO SECTION (courseID, sectionID, day, start, end, instructor, venue, size)
@@ -84,19 +85,39 @@ require_once 'common.php';
 		public function isSectionIdExists($sectionId)
 	    {
 
-	      $sql = 'SELECT * from section where sectionID=:sectionId';
-	        
-	          $connMgr = new ConnectionManager();      
-	          $conn = $connMgr->getConnection();
+			$sql = 'SELECT * from section where sectionID=:sectionId';
+				
+			$connMgr = new ConnectionManager();      
+			$conn = $connMgr->getConnection();
 
-	          $stmt = $conn->prepare($sql);
-	      $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
-	      
-	          $stmt->setFetchMode(PDO::FETCH_ASSOC);
-	          $stmt->execute();
+			$stmt = $conn->prepare($sql);
+			$stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+			
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			return $stmt->execute();
+			// return $row=$stmt->fetch();
+		}
+		
+		public function retrieveSectionDayTime($courseId,$sectionId)
+		{
 
-	      return $row=$stmt->fetch();
-	    }
+			$sql = 'SELECT * from section where courseID=:courseId and sectionID=:sectionId';
+        
+	        $connMgr = new ConnectionManager();      
+	        $conn = $connMgr->getConnection();
+
+	        $stmt = $conn->prepare($sql);
+			$stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+			$stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+	        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+	        $stmt->execute();
+
+	        $result = array();
+
+	        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+	        $result = [$row['day'], $row['start'], $row['end']];
+	        return $result;
+		}
 	}
 
 ?>

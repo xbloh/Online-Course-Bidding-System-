@@ -73,15 +73,16 @@ class StudentDAO{
 
     public function removeAll() {
         // $sql = 'SET foreign_key_checks = 0; TRUNCATE TABLE STUDENT; SET foreign_key_checks = 1';
-        $sql = 'ALTER TABLE BID DROP FOREIGN KEY BID_FK1;
-        ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK1;
+        // $sql = 'ALTER TABLE BID DROP FOREIGN KEY BID_FK1;
+        // ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK1;
 
-        TRUNCATE TABLE STUDENT;
+        // TRUNCATE TABLE STUDENT;
 
-        ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK1 foreign key(userid) references STUDENT(userid);
-        ALTER TABLE BID ADD CONSTRAINT BID_FK1 foreign key(userid) references STUDENT(userid);'
+        // ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK1 foreign key(userid) references STUDENT(userid);
+        // ALTER TABLE BID ADD CONSTRAINT BID_FK1 foreign key(userid) references STUDENT(userid);'
 
-        ;
+        // ;
+        $sql='TRUNCATE TABLE STUDENT';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
@@ -89,7 +90,7 @@ class StudentDAO{
         $stmt = $conn->prepare($sql);
         
         $stmt->execute();
-        $count = $stmt->rowCount();
+        // $count = $stmt->rowCount();
     }  
 
     public function isUserIdExists($userId)
@@ -111,8 +112,41 @@ class StudentDAO{
         $stmt->execute();
 
         // Step 4 - Retrieve Query Results (if any)
-        return $row=$stmt->fetch();
+        $existOK=FALSE;
+        if($row = $stmt->fetch()){
+            $existOK=TRUE;
+        }
+        return $existOK;
+        
+        // Step 5 - Clear Resources $stmt, $pdo
+        $stmt = null;
+        $pdo = null;
+    }
 
+    public function isUserIdValid($userId)
+    {
+        $connMgr = new ConnectionManager();
+        $pdo = $connMgr->getConnection();
+
+        // Step 2 - Write & Prepare SQL Query (take care of Param Binding if necessary)
+        $sql = "SELECT * 
+                FROM STUDENT 
+                WHERE 
+                    userid=:userid
+                ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        
+        // Step 3 - Execute SQL Query
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        // Step 4 - Retrieve Query Results (if any)
+        $existOK=TRUE;
+        if($row = $stmt->fetch()){
+            $existOK=FALSE;
+        }
+        return $existOK;
         
         // Step 5 - Clear Resources $stmt, $pdo
         $stmt = null;

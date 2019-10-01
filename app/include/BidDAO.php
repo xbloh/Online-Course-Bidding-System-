@@ -50,7 +50,7 @@ class BidDAO
         $count = $stmt->rowCount();
     }  
 
-    public function retrieveCourseIdSecitionIdBidded($userid)
+    public function retrieveCourseIdSectionIdBidded($userid)
     {
         $sql = 'SELECT * from bid where userid=:userid';
         
@@ -75,7 +75,7 @@ class BidDAO
     public function numberOfSectionsByID($userId){
 
 
-        $sql = 'SELECT COUNT(:userid) FROM BID WHERE userid=:userid
+        $sql = 'SELECT COUNT(userid) FROM BID WHERE userid=:userid
                 ';
 
         $connMgr = new ConnectionManager();       
@@ -84,9 +84,13 @@ class BidDAO
         $stmt = $conn->prepare($sql); 
 
         $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
         
-        $result = $stmt->execute();
-        return $result;
+        // $result = $stmt->execute();
+        // return $result;
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['COUNT(userid)'];
     }
 
     public function totalAmountByID($userId){
@@ -99,10 +103,16 @@ class BidDAO
     $stmt = $conn->prepare($sql); 
 
     $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
     
-    $result = $stmt->execute();
-    return $result;
+    // $result = $stmt->execute();
+    // return $result;
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['sum(amount)'];
     }
+
+
 }
 
 ?>

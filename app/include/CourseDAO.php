@@ -44,7 +44,7 @@ class CourseDAO
             $result[] = new Course($row['courseID'], $row['school'], $row['title'], $row['description'], $row['examDate'], $row['examStart'], $row['examEnd']);;
         }
         return $result;
-	}
+    }
 
     public function retrieveCourseById($courseId)
     {
@@ -96,21 +96,23 @@ class CourseDAO
 
 
     public function removeAll() {
-        $sql = '
-        ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK2;
-        ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK1;
-        ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK2;
-        ALTER TABLE BID DROP FOREIGN KEY BID_FK2;
-        ALTER TABLE SECTION DROP FOREIGN KEY SECTION_FK1;
+        // $sql = '
+        // ALTER TABLE COURSE_COMPLETED DROP FOREIGN KEY COURSE_COMPLETED_FK2;
+        // ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK1;
+        // ALTER TABLE PREREQUISITE DROP FOREIGN KEY PREREQUISITE_FK2;
+        // ALTER TABLE BID DROP FOREIGN KEY BID_FK2;
+        // ALTER TABLE SECTION DROP FOREIGN KEY SECTION_FK1;
 
 
-        TRUNCATE TABLE COURSE;
+        // TRUNCATE TABLE COURSE;
 
-        ALTER TABLE SECTION ADD CONSTRAINT SECTION_FK1 foreign key(courseID) references COURSE(courseID)
-        ALTER TABLE BID ADD CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID);
-        ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK1 foreign key(course) references COURSE(courseID);
-        ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK2 foreign key(prerequisite) references COURSE(courseID);
-        ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK2 foreign key(code) references COURSE(courseID);';
+        // ALTER TABLE SECTION ADD CONSTRAINT SECTION_FK1 foreign key(courseID) references COURSE(courseID)
+        // ALTER TABLE BID ADD CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID);
+        // ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK1 foreign key(course) references COURSE(courseID);
+        // ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK2 foreign key(prerequisite) references COURSE(courseID);
+        // ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK2 foreign key(code) references COURSE(courseID);';
+
+        $sql='TRUNCATE TABLE COURSE';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
@@ -118,7 +120,7 @@ class CourseDAO
         $stmt = $conn->prepare($sql);
         
         $stmt->execute();
-        $count = $stmt->rowCount();
+        // $count = $stmt->rowCount();
     }  
 
     public function isCourseIdExists($courseId)
@@ -134,10 +136,17 @@ class CourseDAO
         
         // Step 3 - Execute SQL Query
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $stmt->execute();
+        
+        $existOK=FALSE;
+        if($stmt->execute()){
+            $existOK=TRUE;
+        }
+        return $existOK;
 
         // Step 4 - Retrieve Query Results (if any)
-        return $row=$stmt->fetch();
+        // return $row=$stmt->fetch();
+        $stmt = null;
+        $pdo = null;
     }
 
     public function retrieveExamDateTime($courseId)
@@ -153,7 +162,7 @@ class CourseDAO
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $result = new Course($row['examDate'], $row['examStart'], $row['examEnd']);
+        $result = [$row['examDate'], $row['examStart'], $row['examEnd']];
 
         return $result;
     }
