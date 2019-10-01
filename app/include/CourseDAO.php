@@ -59,6 +59,7 @@ class CourseDAO
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
         $result = new Course($row['courseID'], $row['school'], $row['title'], $row['description'], $row['examDate'], $row['examStart'], $row['examEnd']);
 
         return $result;
@@ -125,7 +126,7 @@ class CourseDAO
 
     public function isCourseIdExists($courseId)
     {
-        $sql = 'SELECT * from course where courseID = :courseId';
+        $sql = 'SELECT count(*) as countnum from course where courseID = :courseId';
 
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
@@ -136,9 +137,12 @@ class CourseDAO
         
         // Step 3 - Execute SQL Query
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        
+        $stmt->execute();
+        $row = $stmt->fetch();
+        // var_dump($row['countnum']);
         $existOK=FALSE;
-        if($stmt->execute()){
+        // if($row=$stmt->fetch()){
+        if($row['countnum']>0){
             $existOK=TRUE;
         }
         return $existOK;
@@ -166,6 +170,7 @@ class CourseDAO
 
         return $result;
     }
+    
 }
 
 ?>

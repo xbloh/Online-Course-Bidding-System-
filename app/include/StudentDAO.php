@@ -129,22 +129,23 @@ class StudentDAO{
         $pdo = $connMgr->getConnection();
 
         // Step 2 - Write & Prepare SQL Query (take care of Param Binding if necessary)
-        $sql = "SELECT * 
+        $sql = "SELECT count(*) as countUser 
                 FROM STUDENT 
                 WHERE 
                     userid=:userid
                 ";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->bindParam(':userid',$userId,PDO::PARAM_STR);
         
         // Step 3 - Execute SQL Query
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
+        $row= $stmt->fetch();
 
         // Step 4 - Retrieve Query Results (if any)
-        $existOK=TRUE;
-        if($row = $stmt->fetch()){
-            $existOK=FALSE;
+        $existOK=FALSE;
+        if($row['countUser']>0){
+            $existOK=TRUE;
         }
         return $existOK;
         
@@ -165,14 +166,16 @@ class StudentDAO{
                     userid=:userid
                 ";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->bindParam(':userid',$userId,PDO::PARAM_STR);
         
         // Step 3 - Execute SQL Query
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
-        $row=$stmt->fetch();
-        return new Student($row['userid'], $row['password'], $row['name'], $row['school'], $row['edollar']);
+        if($row=$stmt->fetch()){
+            
+            return new Student($row['userid'], $row['password'], $row['name'], $row['school'], $row['edollar']);
+        }
     }
 }
 ?>

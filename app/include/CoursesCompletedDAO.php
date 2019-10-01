@@ -139,6 +139,32 @@ class CoursesCompletedDAO
         $stmt->execute();
         $count = $stmt->rowCount();
     }  
+
+    public function isPrerequisiteCompleted($prerequisiteId)
+    {
+        $sql = 'SELECT count(*) as countPrerequisite from COURSE_COMPLETED where code = :prerequisiteId';
+
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+        
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':prerequisiteId',$prerequisiteId,PDO::PARAM_STR);
+        
+        // Step 3 - Execute SQL Query
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $row=$stmt->fetch();
+        
+        $existOK=FALSE;
+        if($row['countPrerequisite']>0){
+            $existOK=TRUE;
+        }
+        return $existOK;
+
+        $stmt = null;
+        $pdo = null;
+    }
 }
 
 ?>
