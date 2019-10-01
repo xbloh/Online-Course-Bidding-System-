@@ -30,7 +30,7 @@ class Course_Completed
         $prerequisitesDAO = new PreRequisiteDAO();
         $coursesCompletedDAO = new CoursesCompletedDAO();
 
-    	if (!$studentDAO->isUserIdExists($this->userid)) {
+    	if (!$studentDAO->isUserIdValid($this->userid)) {
     		$errors[] = "invalid userid";
     	}
 
@@ -38,15 +38,18 @@ class Course_Completed
     		$errors[] = "invalid course";
     	}
 
-    	$course = $courseDAO->retrieveCourseById($this->code);
-    	$prerequisites = $prerequisitesDAO->retrievePreRequisitesId($course);
-    	$student = $studentDAO->retrieveStudentByUserId($this->userid);
-    	$coursesCompleted = $coursesCompletedDAO->retrieveCourseIdCompleted($student);
-    	foreach ($prerequisites as $item) {
-    		if (!in_array($item, $coursesCompleted)) {
-    			$errors[] = "invalid course completed";
-    		}
-    	}
+		if($prerequisitesDAO->isCourseRequirePrerequisite($this->code)){
+			$prerequisiteId = $prerequisitesDAO->retrievePreRequisitesIdByCourseId($this->code);
+			foreach($prerequisiteId as $prerequisiteEach){
+				if(!$coursesCompletedDAO->isPrerequisiteCompleted($prerequisiteEach)){
+					$errors[] = "invalid course completed";
+			}
+		}
+
+		}
+		
+		return $errors;
+		
     }
 
 }

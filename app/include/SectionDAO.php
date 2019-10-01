@@ -85,7 +85,7 @@ require_once 'common.php';
 		public function isSectionIdExists($sectionId)
 	    {
 
-			$sql = 'SELECT * from section where sectionID=:sectionId';
+			$sql = 'SELECT COUNT(*) as countSection from section where sectionID=:sectionId';
 				
 			$connMgr = new ConnectionManager();      
 			$conn = $connMgr->getConnection();
@@ -94,8 +94,17 @@ require_once 'common.php';
 			$stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
 			
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
-			return $stmt->execute();
-			// return $row=$stmt->fetch();
+			$stmt->execute();
+
+			$row=$stmt->fetch();
+			$existOK=FALSE;
+			if($row['countSection']>0){
+				$existOK=TRUE;
+			}
+			return $existOK;
+
+			$stmt = null;
+			$pdo = null;
 		}
 		
 		public function retrieveSectionDayTime($courseId,$sectionId)

@@ -83,7 +83,7 @@
 			$errors = [];
 
 			$courseDAO = new CourseDAO();
-			if (!$courseDAO->retrieveCourseById($this->course)) {
+			if (!$courseDAO->isCourseIdExists($this->course)) {
 				$errors[] = "invalid course";
 			}
 

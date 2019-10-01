@@ -52,8 +52,8 @@ class Bid
 		if (!$StudentDAO->isUserIdValid($this->userid)){
 			$errors[] = "invalid UserId";
 		}
-		// if (!preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $this->amount)) {
-		if(!number_format($this->amount,2,'.','')){
+		if ($this->amount<10||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $this->amount))||$this->amount>999) {
+		// if($this->amount<10||$this->amount!=number_format($this->amount,2,'.','')||$this->amount>999){
 			$errors[] = "invalid Amount";
 		}
 		if (!$CourseDAO->isCourseIdExists($this->code)) {
@@ -62,8 +62,9 @@ class Bid
 		if (!$SectionDAO->isSectionIdExists($this->section)) {
 			$errors[] = "invalid Section";
 		}
-
+		if(empty($errors)){
 		$student = $StudentDAO->retrieveStudentByUserId($this->userid);
+		// var_dump($student);
 		$school = $student->getSchool();
 		$courses = $CourseDAO->retrieveCoursesBySchool($school);
 
@@ -83,10 +84,14 @@ class Bid
 		if($bidDAO->numberOfSectionsByID($this->userid)>=5){
 			$errors[] = "Section limit reached";
 		}
+		// var_dump($bidDAO->numberOfSectionsByID($this->userid));
 
 		$StudentObj=$StudentDAO->retrieveStudentByUserId($this->userid);
-		$totalAmt=$bidDAO->totalAmountByID($this->userid)+$this->amount;
-		if($bidDAO->totalAmountByID($this->userid) > $StudentObj->getEdollar()){
+		
+		$biddedAmt=$bidDAO->totalAmountByID($this->userid);
+		$currentAmt=($this->amount);
+		$totalAmt=$biddedAmt+$currentAmt;
+		if($totalAmt > ($StudentObj->getEdollar())){
 			$errors[] = "Not enough e-dollar";
 		}
 		
@@ -121,59 +126,9 @@ class Bid
 				}
 			}
 		}
+	}
 
 		return $errors;
-		// $biddedSectionDayTime = [];
-		// foreach ($courseIdSectionId as $coursesection) //bidded section [day and time]
-		// {
-		// 	$courseId = $coursesection[0];
-		// 	$sectionId = $coursesection[1];
-		// 	$sectionDayTime = $sectionDAO->retrieveSectionDayTime($courseId,$sectionId);
-		// 	$biddedSectionDayTime[] += $sectionDayTime;
-		// }
-
-		// //bidding section [day and time]
-		// $section = $sectionDAO->retrieveSectionDayTime($this->code,$this->section);
-		// $biddingSectionDay = $section->getDay();
-		// $biddingSectionStart = $section->getStart();
-		// $biddingSectionEnd = $section->getEnd();
-
-		// foreach($biddedSectionDayTime as $biddedSection)
-		// {
-		// 	$biddedSectionDay = $section[0];
-		// 	$biddedSectionStart = $section[1];
-		// 	$biddedSectionEnd = $section[2];
-
-		// 	if($biddedSectionDay == $biddingSectionDay)
-		// 	{
-		// 		if($biddedSectionStart >= $biddingSectionStart)
-		// 		{
-		// 			if($biddedSectionEnd <= $biddingSectionEnd)
-		// 			{
-		// 				$errors[] = "Class timetable clash";
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-
-
-		// if()
-		//check date first then check start then check end 
-		// foreach ($examdate as $date)
-		// {
-		// 	if(in_array($date));
-		// }
-
-
-		// foreach($examdate as $date){
-		// $count = 0;
-		// 	foreach($examdaytimelist as $datetime){
-		// 		if ($date==$datetime[0]) {
-		// 			$count++;
-		// 		}
-		// 	}
-		// }
 	
 		
 

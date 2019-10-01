@@ -39,6 +39,30 @@ class PreRequisiteDAO
     public function retrievePreRequisitesId($course)
     {
         $courseId = $course->getCourseId();
+        var_dump($courseId);
+        $sql = 'SELECT * from prerequisite where course=:courseid';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseid',$courseId,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['prerequisite'];
+        }
+
+        return $result;
+    }
+
+    public function retrievePreRequisitesById($courseId)
+    {
+        // var_dump($courseId);
         $sql = 'SELECT * from prerequisite where course=:courseid';
         
         $connMgr = new ConnectionManager();      
@@ -117,6 +141,32 @@ class PreRequisiteDAO
         $stmt->execute();
         $count = $stmt->rowCount();
     }  
+
+    public function isCourseRequirePrerequisite($courseId)
+    {
+        $sql = 'SELECT count(*) as countCourse from PREREQUISITE where course = :courseId';
+
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+        
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        
+        // Step 3 - Execute SQL Query
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $row=$stmt->fetch();
+        
+        $existOK=FALSE;
+        if($row['countCourse']>0){
+            $existOK=TRUE;
+        }
+        return $existOK;
+
+        $stmt = null;
+        $pdo = null;
+    }
 }
 
 ?>
