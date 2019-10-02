@@ -123,6 +123,32 @@ class BidDAO
     
     }
 
+    public function deleteBid($userId, $courseId, $sectionId) {
+        $sql='DELETE FROM BID WHERE userid=:userid AND code=:code AND section=:section';
+
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql); 
+
+        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+        $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
+        $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
+        // Add code to delete a record from employmentstat table in database, 
+        // given the id of an existing record
+        // $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $status=FALSE;
+        // $status=$stmt->execute();
+        // echo"$userId, $courseId,$sectionId";
+        // if(!$status){
+        if($stmt->execute()){
+            $status=TRUE;
+        }
+        $stmt = null;
+        $pdo = null;
+        return $status;
+    }
+
 
 }
 

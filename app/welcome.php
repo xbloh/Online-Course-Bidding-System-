@@ -39,5 +39,7 @@ $student->setCoursesCompleted($coursesCompleted);
 You currently have <?php echo $eDollar; ?> eDollars
 <br>
 <a href ="bidPreProcessing.php" class="button">Click Here to Add Bid</a>
+<br>
+<a href ="deleteBid.php" class="button">Click Here to Delete Bid</a>
 </body>
 </html>
