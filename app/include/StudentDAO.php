@@ -82,7 +82,8 @@ class StudentDAO{
         // ALTER TABLE BID ADD CONSTRAINT BID_FK1 foreign key(userid) references STUDENT(userid);'
 
         // ;
-        $sql='TRUNCATE TABLE STUDENT';
+        // $sql='TRUNCATE TABLE STUDENT';
+        $sql = 'delete from STUDENT';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();

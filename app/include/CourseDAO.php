@@ -113,7 +113,8 @@ class CourseDAO
         // ALTER TABLE PREREQUISITE ADD CONSTRAINT PREREQUISITE_FK2 foreign key(prerequisite) references COURSE(courseID);
         // ALTER TABLE COURSE_COMPLETED ADD CONSTRAINT COURSE_COMPLETED_FK2 foreign key(code) references COURSE(courseID);';
 
-        $sql='TRUNCATE TABLE COURSE';
+        // $sql='TRUNCATE TABLE COURSE';
+        $sql = 'delete from COURSE';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();

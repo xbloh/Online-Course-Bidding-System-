@@ -39,8 +39,9 @@ class BidDAO
 
 
     public function removeAll() {
-        $sql = 'TRUNCATE TABLE BID;';
-        
+        // $sql = 'TRUNCATE TABLE BID';
+        $sql = 'delete from BID';
+
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
         

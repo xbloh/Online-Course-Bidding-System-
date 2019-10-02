@@ -80,7 +80,7 @@ function doBootstrap(){
 
             #if all files not empty
             else{
-
+		
                 //mysql_query('SET foreign_key_checks = 0');
 
 				$connMgr = new ConnectionManager();
@@ -89,6 +89,7 @@ function doBootstrap(){
                 #truncate current SQL tables
                 $studentDAO = New StudentDAO();
                 $studentDAO->removeAll();
+
 
                 $courseDAO = new CourseDAO();
                 $courseDAO->removeAll();
@@ -105,6 +106,8 @@ function doBootstrap(){
 
                 $bidDAO = new BidDAO();
                 $bidDAO->removeAll();
+
+		
 
                 $errors = [];
                 // #then read each csv file line by line (remember to skip the header)
@@ -153,12 +156,16 @@ function doBootstrap(){
                 }
                 fclose($student);
                 @unlink($student_path);
-                
+
+//echo 'student';
+       	
                 $header = fgetcsv($course);
                 $file = "course.csv";
                 $line = 1;
+
                 while(($data = fgetcsv($course)) != false){
                     $message = [];
+
                     #0 -> course, #1 -> school, #2 -> title, #3 -> description, #4 -> exam date, #5 -> exam start, #6 -> exam end
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
                     if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6])){
@@ -185,11 +192,14 @@ function doBootstrap(){
                     if (!empty($message)) {
                         $errors[] = ["file" => $file, "line" => $line, "message" => $message];
                     }
+		
 
                     $line++;
                 }
                 fclose($course);
                 @unlink($course_path);
+
+//echo 'course';
 
 				$header = fgetcsv($section);
                 $file = 'section.csv';
@@ -229,6 +239,8 @@ function doBootstrap(){
                 }
                 fclose($section);
                 @unlink($section_path);
+
+//echo 'section';
 
                 // mysql_query('SET foreign_key_checks = 1');
                 $header = fgetcsv($prerequisite);
@@ -270,6 +282,8 @@ function doBootstrap(){
                 fclose($prerequisite);
                 @unlink($prerequisite_path);
 
+//echo 'prerequisite';
+
                 $header = fgetcsv($course_completed);
 				$file = 'course_completed.csv';
                 $line = 1;
@@ -309,10 +323,11 @@ function doBootstrap(){
                 fclose($course_completed);
                 @unlink($course_completed_path);
 
+echo 'course_completed';
+
                 $header = fgetcsv($bid);
                 $file = "bid.csv";
-                $line = 1;
-				
+                $line = 1;		
                 while(($data = fgetcsv($bid)) != false){
                     $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
@@ -347,6 +362,8 @@ function doBootstrap(){
                 }
                 fclose($bid);
                 @unlink($bid_path);
+
+echo 'bid';
             }
         }
         else{

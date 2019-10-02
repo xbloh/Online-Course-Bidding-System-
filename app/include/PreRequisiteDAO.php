@@ -3,7 +3,7 @@ require_once 'common.php';
 /**
  * 
  */
-class PreRequisiteDAO
+class PrerequisiteDAO
 {
 	
 	public function retrievePreRequisites($course)
@@ -129,9 +129,8 @@ class PreRequisiteDAO
         return $isAddOK;
     }
     public function removeAll() {
-        $sql = '
-        TRUNCATE TABLE PREREQUISITE;
-        ';
+        // $sql = 'TRUNCATE TABLE PREREQUISITE';
+        $sql = 'delete from PREREQUISITE';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();

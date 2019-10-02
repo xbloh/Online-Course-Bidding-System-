@@ -127,9 +127,9 @@ class CoursesCompletedDAO
 
     }
     public function removeAll() {
-        $sql = '
-        TRUNCATE TABLE COURSE_COMPLETED;
-        ';
+        // $sql = 'TRUNCATE TABLE COURSE_COMPLETED';
+        $sql = 'delete from COURSE_COMPLETED';
+
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();

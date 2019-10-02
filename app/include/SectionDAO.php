@@ -67,12 +67,13 @@ require_once 'common.php';
 		}
 
 		public function removeAll(){
-			$sql = '
-        	#ALTER TABLE BID DROP FOREIGN KEY BID_FK2;
+			// $sql = '
+        	// #ALTER TABLE BID DROP FOREIGN KEY BID_FK2;
 
-			TRUNCATE TABLE SECTION;
+			// TRUNCATE TABLE SECTION;
 
-        	#ALTER TABLE BID ADD CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID);';
+			// #ALTER TABLE BID ADD CONSTRAINT BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID);';
+			$sql = 'delete from SECTION';
 			$connMgr = new ConnectionManager();
 			$conn = $connMgr->getConnection();
 	

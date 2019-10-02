@@ -45,7 +45,7 @@ class Bid
 		$StudentDAO = new StudentDAO;
 		$CourseDAO = new CourseDAO;
 		$SectionDAO = new SectionDAO;
-		$prerequisiteDAO = new PreRequisiteDAO();
+		$prerequisiteDAO = new PrerequisiteDAO();
 		$courseCompletedDAO = new CoursesCompletedDAO();
 		$bidDAO = new BidDAO();
 

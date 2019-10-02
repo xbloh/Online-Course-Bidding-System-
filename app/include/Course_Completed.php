@@ -27,7 +27,7 @@ class Course_Completed
     	$errors = [];
         $studentDAO = new StudentDAO();
         $courseDAO = new CourseDAO();
-        $prerequisitesDAO = new PreRequisiteDAO();
+        $prerequisitesDAO = new PrerequisiteDAO();
         $coursesCompletedDAO = new CoursesCompletedDAO();
 
     	if (!$studentDAO->isUserIdValid($this->userid)) {
