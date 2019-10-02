@@ -157,7 +157,6 @@ function doBootstrap(){
                 fclose($student);
                 @unlink($student_path);
 
-//echo 'student';
        	
                 $header = fgetcsv($course);
                 $file = "course.csv";
@@ -199,7 +198,6 @@ function doBootstrap(){
                 fclose($course);
                 @unlink($course_path);
 
-//echo 'course';
 
 				$header = fgetcsv($section);
                 $file = 'section.csv';
@@ -240,7 +238,6 @@ function doBootstrap(){
                 fclose($section);
                 @unlink($section_path);
 
-//echo 'section';
 
                 // mysql_query('SET foreign_key_checks = 1');
                 $header = fgetcsv($prerequisite);
@@ -282,7 +279,6 @@ function doBootstrap(){
                 fclose($prerequisite);
                 @unlink($prerequisite_path);
 
-//echo 'prerequisite';
 
                 $header = fgetcsv($course_completed);
 				$file = 'course_completed.csv';
@@ -323,7 +319,7 @@ function doBootstrap(){
                 fclose($course_completed);
                 @unlink($course_completed_path);
 
-echo 'course_completed';
+
 
                 $header = fgetcsv($bid);
                 $file = "bid.csv";
@@ -363,7 +359,6 @@ echo 'course_completed';
                 fclose($bid);
                 @unlink($bid_path);
 
-echo 'bid';
             }
         }
         else{
