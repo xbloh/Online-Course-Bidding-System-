@@ -5,6 +5,7 @@ $student = $_SESSION['student'];
 $userId = $student->getUserId();
 
 foreach ($_SESSION['cart'] as $section) {
+	if($section!=NULL){
 	$course = $section->getCourse();
 	$courseId = $course->getCourseId();
 	$identifier = $course->getCourseId() . $section->getSectionId();
@@ -19,6 +20,7 @@ foreach ($_SESSION['cart'] as $section) {
 			$_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $sectionId)];
 		}
 	}
+}
 }
 
 $bidErrors = 0;
