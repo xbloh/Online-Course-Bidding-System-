@@ -15,17 +15,10 @@ h1 {
 </head>
 
 <body>
-Sign in with your SMU user ID or SMU Email address.<br>
-e.g.<br>
-Staff: smustf\marylim<br>
-Student/Alumni: smustu\john.2014<br>
-or<br>
-Staff: marylim@smu.edu.sg<br>
-Student/Alumni: john.2014@business.smu.edu.sg<br>
-<br>
 
 <form action = 'process.php' method = 'POST'>
 Username/Email Address: <input type = 'text' name = 'userid'>
+<br>
 <br>
 Password: <input type = 'password' name = 'password'>
 <br>

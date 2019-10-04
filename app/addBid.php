@@ -110,25 +110,80 @@
 								<td>
 									Add to cart <input type='checkbox' name='indexOfSectionToBid' value='$index' $selected>
 								</td>
-							</tr>";
+							</tr>
+							";
 					}
+					echo "</table>
+					<input type='submit' name='sectionSelected' value='Select Section'>";
 				}
 
 			?>
-		</table>
-		<input type="submit" name="sectionSelected" value="Select Section">
+		
 	</form>
 	<?php
 		if(isset($_POST['sectionSelected'])) {
 			$course = $_SESSION['courseSelected'];
 			$index = $_POST['indexOfSectionToBid'];
 			$sectionSelected = $course->getSectionsAvailable()[$index];
-			$_SESSION['cart'][] = $sectionSelected;
-			
+			$course=$sectionSelected->getCourse();
+			$student=$_SESSION['student'];
+			$courseId1=$course->getCourseId();
+			$sessionId1=$sectionSelected->getSectionId();
+			$userId=$student->getUserId();
+			$amount=0;
+			$bid = new Bid($userId, $amount, $courseId1, $sessionId1, $isAddBid = True); 
+
+			if(!isset($_SESSION['cart'])){
+				if(!empty($bid->validate())){
+					$_SESSION['errors']=$bid->validate();
+					printErrors();
+				}
+				else{
+				$_SESSION['cart'][] = $sectionSelected;
+				}
+			}
+
+			else{
+			// var_dump($sectionSelected->getCourse());
+			foreach($_SESSION['cart'] as $cart){
+				$cartCourse=$cart->getCourse();
+				$sessionId=$cart->getSectionId();
+				$courseId=$cartCourse->getCourseId();
+				$bid = new Bid($userId, $amount, $courseId, $sessionId, $isAddBid = True); 
+				// var_dump($bid->validate());
+				if(empty($bid->validate())){
+					if($cartCourse->getCourseId()==$course->getCourseId() && $cart->getSectionId()==$sectionSelected->getSectionId()){
+							$_SESSION['errors'][]='Same section from the same course is added to cart';
+							break;
+						}
+						else{
+							$_SESSION['cart'][] = $sectionSelected;
+						}
+					}
+				else{
+					$_SESSION['errors']=$bid->validate();
+				}
+			}	
+			}
+		}
+		// var_dump($_SESSION['errors']);
+		// var_dump($_SESSION['cart']);
+
+		if(isset($_SESSION['cart'])){
+			if(!isset($_SESSION['errors'])){
 			echo "<form action = 'placeBids.php' method = 'POST'>
 					<input type = 'submit' name = 'placeBids' value = 'Place Bids'>
 					</form>";
 		}
+		else{
+			echo "<form action = 'placeBids.php' method = 'POST'>
+					<input type = 'submit' name = 'placeBids' value = 'Place Bids'>
+					</form>";
+			printErrors();
+		}
+	}
+
+		// }
 	?>
 
 
