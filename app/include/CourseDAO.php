@@ -64,6 +64,7 @@ class CourseDAO
 
         return $result;
     }
+    
     public function add($course){
         $sql = "INSERT INTO COURSE (courseId, school, title, description, examDate, examStart, examEnd) VALUES (:courseId, :school, :title, :description, :examDate, :examStart, :examEnd)";
 
