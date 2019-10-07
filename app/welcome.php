@@ -93,8 +93,10 @@ foreach($bidList as $bidDisplay) {
 
 
 <br>
-<a href ="bidPreProcessing.php" class="button">Click Here to Add Bid</a>
+<a href ="bidPreProcessing.php" class="button" style="font-size : 20px; width: 14%; height: 20px;">Click Here to Add Bid</a>
 <br>
-<a href ="deleteBid.php" class="button">Click Here to Delete Bid</a>
+<a href ="updateBid.php" class="button" style="font-size : 20px; width: 14%; height: 20px;">Click Here to Update Bid </a>
+<br>
+<a href ="deleteBid.php" class="button" style="font-size : 20px; width: 14%; height: 20px;">Click Here to Delete Bid</a>
 </body>
 </html>
