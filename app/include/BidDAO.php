@@ -73,6 +73,29 @@ class BidDAO
         return $result;
     }
 
+    public function retrieveBiddedAmt($userid, $code, $section)
+    {
+        $sql = 'SELECT amount FROM bid WHERE userid=:userid AND code=:code AND section=:section';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->bindParam(':code',$code,PDO::PARAM_STR);
+        $stmt->bindParam(':section',$section,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['amount'];
+        }
+
+        return $result;
+    }
+
     public function numberOfSectionsByID($userId){
 
 
