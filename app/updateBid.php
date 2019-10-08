@@ -8,15 +8,21 @@ $userId = $student->getUserId();
 
 $bidDAO = new BidDAO();
 $bidList = [];
+$allBid = [];
 $bids = $bidDAO->retrieveCourseIdSectionIdBidded($userId);
+
 foreach($bids as $bid)
-{
+
+{   
     $code = $bid[0];
     $section = $bid[1];
     $bidAmt = $bidDAO->retrieveBiddedAmt($userId, $code, $section);
-    
+
     $bidList[] = [$code, $section, $bidAmt];
+    $allBid[] = $bidAmt;
 }
+
+
 echo "<form action = 'updateBid.php' method = 'POST'>";
 echo "<h2>Your Current Bidding(s)</h2>";
 echo "<table cellspacing='10px' cellpadding='3px'>
@@ -33,6 +39,7 @@ foreach($bidList as $bidDisplay) {
     $displayCode = $bidDisplay[0];
     $displaySection = $bidDisplay[1];
     $displayBid = $bidDisplay[2][0];
+
     $count++;
     echo "
     <tr>
@@ -54,13 +61,12 @@ foreach($bidList as $bidDisplay) {
             <input type = 'text' name = 'newAmt[]'>
         </td>
     </tr>";
+
 }
 
 echo "</table>";
 echo "<input type = 'submit' name = 'update' value = 'Update Bid'>";
 echo "</form><br>";
-
-
 
 if(isset($_POST['update']))
 {
@@ -76,9 +82,13 @@ if(isset($_POST['update']))
     $code = $_POST['courseId'];
     $section = $_POST['sectionId'];
     $newAmt = $_POST['newAmt'];
+
+    foreach($newAmt as $int => $value){
+        if ($value === "") $newAmt[$int] = $allBid[$int][0];
+    }
+
     $i = 0;
-    //var_dump($code);
-    //var_dump($newAmt);
+
     while($i < sizeof($code))
     {
         $courseId = $code[$i];
@@ -97,8 +107,9 @@ if(isset($_POST['update']))
         $updated = $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmount);
     
     }
-
+    
     echo "</table>";
+    
 
 }
 
