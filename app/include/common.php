@@ -31,4 +31,16 @@ function isEmpty($var) {
         return TRUE;
 }
 
+function isMissingOrEmpty($name) {
+    if (!isset($_REQUEST[$name])) {
+        return "$name is missing";
+    }
+
+    // client did send the value over
+    $value = $_REQUEST[$name];
+    if (empty($value)) {
+        return "$name cannot be empty";
+    }
+}
+
 ?>

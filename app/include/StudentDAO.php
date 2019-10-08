@@ -25,12 +25,12 @@ class StudentDAO{
         // Step 4 - Retrieve Query Results (if any)
         if ($row=$stmt->fetch()){
             if ($password==$row['password']){
-                $return_message= 'SUCCESS';
+                $return_message= 'success';
             }else{
-                $return_message='Incorrect Password!';
+                $return_message='invalid password';
             }
         }else{
-            $return_message='Invalid Username!';
+            $return_message='invalid username';
         }
         
         // Step 5 - Clear Resources $stmt, $pdo
@@ -177,6 +177,12 @@ class StudentDAO{
             
             return new Student($row['userid'], $row['password'], $row['name'], $row['school'], $row['edollar']);
         }
+    }
+
+    public function isPasswordValid($password)
+    {
+        // generic password validation (not user specific)
+        return True;
     }
 }
 ?>
