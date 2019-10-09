@@ -25,8 +25,8 @@
 	    # check if username and password are right. generate a token and return it in proper json format
 	    if ($username === "admin") {
 	        if ($password === "@dm1n5PM") {
-	            $result = generate_token($username);
-	            header('Content-Type: application/json');
+	            $result = ["status" => "success", "token" => generate_token($username)];
+		    	header('Content-Type: application/json');
 	            echo json_encode($result, JSON_PRETTY_PRINT);
 	            exit;
 	        } else {
@@ -39,13 +39,13 @@
 
 
 		    $dao = new StudentDao();
-		    $username_valid = $dao->isUserIdValid();
-		    $password_valid = $dao->isPasswordValid();
+		    $username_valid = $dao->isUserIdValid($username);
+		    $password_valid = $dao->isPasswordValid($password);
 
 		    if ($username_valid && $password_valid) {
-		    	$result = $dao->authenticate($userid, $password);
+		    	$result = $dao->authenticate($username, $password);
 		    	if ($result[0] == "success") {
-		    		$result = generate_token($username);
+		    		$result = ["status" => "success", "token" => generate_token($username)];
 		    		header('Content-Type: application/json');
 	            	echo json_encode($result, JSON_PRETTY_PRINT);
 		    	} else {

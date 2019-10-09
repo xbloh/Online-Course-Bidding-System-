@@ -1,6 +1,6 @@
 <?php
 // Change the value of $url to point to the web path that contains all your JSON APIs.
-$url = 'http://localhost/json_checker/json/';
+$url = 'http://localhost/spm/app/json/';
 
 // The directories that contains the test cases, expected JSON output, and where to save the actual JSON output recieved
 $directories = [
