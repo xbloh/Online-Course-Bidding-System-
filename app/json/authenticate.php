@@ -13,8 +13,10 @@
 	if (!isEmpty($errors)) {
 	    $result = [
 	        "status" => "error",
-	        "messages" => array_values($errors)
-	        ];
+	        "messages" => array_values($errors)];
+	        header('Content-Type: application/json');
+	        echo json_encode($result, JSON_PRETTY_PRINT);
+	        exit;
 	}
 	else{
 	    $username = $_POST['username'];
