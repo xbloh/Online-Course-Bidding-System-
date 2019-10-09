@@ -123,7 +123,7 @@ function doBootstrap(){
                     #0 -> userid, 1 -> password, 2 -> name, 3 -> school, 4 -> edollar
                     $message = [];
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4])){
+                    if($data[0]!='' && $data[1]!='' && $data[2]!='' && $data[3]!='' && $data[4]!=''){
                         $new_student = new Student($data[0], $data[1], $data[2], $data[3], $data[4]);
 
                         $currentErrors = $new_student->validate();
@@ -167,7 +167,7 @@ function doBootstrap(){
 
                     #0 -> course, #1 -> school, #2 -> title, #3 -> description, #4 -> exam date, #5 -> exam start, #6 -> exam end
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6])){
+                    if($data[0]!='' && $data[1]!='' && $data[2]!='' && $data[3]!='' && $data[4]!='' && $data[5]!='' && $data[6]!=''){
                         $new_course = new Course($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
                         $currentErrors = $new_course->validate();
                         if (empty($currentErrors)) {
@@ -206,7 +206,7 @@ function doBootstrap(){
                     $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4]) && !empty($data[5]) && !empty($data[6]) && !empty($data[7])){
+                    if($data[0]!='' && $data[1]!='' && $data[2]!='' && $data[3]!='' && $data[4]!='' && $data[5]!='' && $data[6]!='' && $data[7]!=''){
                         $new_section = new Section($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
 
                         $currentErrors = $new_section->validate();
@@ -247,7 +247,7 @@ function doBootstrap(){
                     $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) && !empty($data[1])){
+                    if($data[0]!='' && $data[1]!=''){
                         $new_prerequisite = new Prerequisite($data[0], $data[1]);
 
                         $currentErrors = $new_prerequisite->validate();
@@ -287,7 +287,7 @@ function doBootstrap(){
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
                     $message = [];
-                    if(!empty($data[0]) && !empty($data[1])){
+                    if($data[0]!='' && $data[1]!=''){
                         $new_course_completed = new Course_Completed($data[0], $data[1]);
 
                         $currentErrors = $new_course_completed->validate();
@@ -328,7 +328,7 @@ function doBootstrap(){
                     $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
-                    if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3])){
+                    if($data[0]!='' && $data[1]!='' && $data[2]!='' && $data[3]!=''){
                         $new_bid = new Bid($data[0], $data[1], $data[2], $data[3]);
 
                         $currentErrors = $new_bid->validate();
