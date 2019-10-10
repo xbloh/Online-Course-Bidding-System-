@@ -1,6 +1,4 @@
 {
     "status": "error",
-    "messages": [
-        "invalid username\/password"
-    ]
+    "message": "invalid password"
 }
