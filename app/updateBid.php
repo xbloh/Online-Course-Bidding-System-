@@ -70,6 +70,24 @@ echo "</form><br>";
 
 if(isset($_POST['update']))
 {
+    $code = $_POST['courseId'];
+    $section = $_POST['sectionId'];
+    $newAmt = $_POST['newAmt'];
+    $StudentDAO = new StudentDAO();
+    $Student=$StudentDAO->retrieveStudentByUserId($userId);
+    $studentAmt=$Student->getEdollar();
+
+    foreach($newAmt as $amount){
+        $studentAmt-=$amount;
+    }
+    if($studentAmt<0){
+        $_SESSION['errors']=['Exceed e-dollar amount'];
+    }
+    if(!empty($_SESSION['errors'])){
+        printErrors();
+    }
+    else{    
+
     echo "<h2>Your Updated Bid(s):</h2>";
     echo "<table cellspacing='10px' cellpadding='3px'>
     <tr>
@@ -79,14 +97,9 @@ if(isset($_POST['update']))
     <th>New Bidding Amount</th>
     </tr>";
 
-    $code = $_POST['courseId'];
-    $section = $_POST['sectionId'];
-    $newAmt = $_POST['newAmt'];
-
     foreach($newAmt as $int => $value){
         if ($value === "") $newAmt[$int] = $allBid[$int][0];
     }
-
     $i = 0;
 
     while($i < sizeof($code))
@@ -111,6 +124,7 @@ if(isset($_POST['update']))
     echo "</table>";
     
 
+}
 }
 
 echo "<br>";
