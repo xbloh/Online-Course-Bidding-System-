@@ -25,7 +25,7 @@ if( isset($_POST['userid']) && isset($_POST['password']) )
     $result = $dao->authenticate($userid, $password);
     $return_message = $result[0];
 
-    if($return_message == 'SUCCESS') 
+    if($return_message == 'success') 
     {
         $_SESSION['student'] = $result[1];
         header('Location: welcome.php');
