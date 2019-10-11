@@ -42,9 +42,8 @@
 
 		    $dao = new StudentDao();
 		    $username_valid = $dao->isUserIdValid($username);
-		    $password_valid = $dao->isPasswordValid($password);
 
-		    if ($username_valid && $password_valid) {
+		    if ($username_valid) {
 		    	$result = $dao->authenticate($username, $password);
 		    	if ($result[0] == "success") {
 		    		$result = ["status" => "success", "token" => generate_token($username)];
@@ -55,15 +54,13 @@
 		    		header('Content-Type: application/json');
 	            	echo json_encode($result, JSON_PRETTY_PRINT);
 		    	}
+		    } else {
+		    	$result = ["status" => "error", "message" => "invalid username"];
+		    	header('Content-Type: application/json');
+            	echo json_encode($result, JSON_PRETTY_PRINT);
 		    }
 
 		}
-
-	    # generate a secret token for the user based on their username
-
-	    # return the token to the user via JSON    
-			
-		# return error message if something went wrong
 
 	}
 
