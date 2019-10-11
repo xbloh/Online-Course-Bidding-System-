@@ -156,8 +156,8 @@ class Bid
 			// if($this->amount<10||$this->amount!=number_format($this->amount,2,'.','')||$this->amount>999){
 				$errors[] = "Invalid Amount(more than 10 and les than 999)";
 		}
+
 		$student = $StudentDAO->retrieveStudentByUserId($this->userid);
-		// var_dump($student);
 		$school = $student->getSchool();
 		$courses = $CourseDAO->retrieveCoursesBySchool($school);
 
@@ -205,9 +205,8 @@ class Bid
 			}
 		}
 
-
-
 	}
+
 
 
 		return $errors;
