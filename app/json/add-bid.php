@@ -16,7 +16,25 @@
     if(isset($_REQUEST['r'])){
     $php_response = json_decode($_REQUEST['r']);
     $bid_array = get_object_vars($php_response);
-    if($bid_array['userid']!='' && $bid_array['amount']!='' && $bid_array['course']!='' && $bid_array['section']!='')
+    $count=0;
+    foreach($bid_array as $key=>$value)
+    {
+        if(!in_array($key, $checkMissing))
+            {
+                $count++;
+            }
+    }
+    if($count!=count($checkMissing) || count($bid_array)>=count($checkMissing))
+    {
+        foreach($bid_array as $key=>$value)
+        {
+            if(!in_array($key, $checkMissing))
+            {
+                array_push($errors,("unknown " . $key));
+            }
+        }
+    }
+    if(isset($bid_array['userid']) && isset($bid_array['amount']) && isset($bid_array['course']) && isset($bid_array['section']))
     {
         $userId = $bid_array['userid'];
         $bidAmt = $bid_array['amount'];
@@ -147,11 +165,17 @@
             "status" => "success",
         ];
     }
+    unset($_SESSION['bids']);
+    }
+    else
+    {
+        $result = [ 
+            "status" => "error",
+            "message" => "missing all r variables"
+        ];
+    }
 
     header('Content-Type: application/json');
     echo json_encode($result, JSON_PRETTY_PRINT);
-    
-    unset($_SESSION['bids']);
-    }
 
 ?>
