@@ -8,13 +8,13 @@ session_start();
 
 function printErrors() {
     if(isset($_SESSION['errors'])){
-        print "<ul'>";
+        echo "<ul'>";
         
         foreach ($_SESSION['errors'] as $value) {
-            print "<li >" . $value . "</li>";
+            echo "<li >" . $value . "</li>";
         }
         
-        print "</ul>";   
+        echo "</ul>";   
         unset($_SESSION['errors']);
     }    
 }

@@ -108,7 +108,7 @@
 									{$section->getSize()}
 								</td>
 								<td>
-									Add to cart <input type='checkbox' name='indexOfSectionToBid' value='$index' $selected>
+									Add to cart <input type='radio' name='indexOfSectionToBid' value='$index' $selected>
 								</td>
 							</tr>
 							";
@@ -139,7 +139,7 @@
 					printErrors();
 				}
 				else{
-				$_SESSION['cart'][] = $sectionSelected;
+					$_SESSION['cart']= [$sectionSelected];
 				}
 			}
 
@@ -153,13 +153,12 @@
 				// var_dump($bid->validate());
 				if(empty($bid->validate())){
 					if($cartCourse->getCourseId()==$course->getCourseId() && $cart->getSectionId()==$sectionSelected->getSectionId()){
-							$_SESSION['errors'][]='Same section from the same course is added to cart';
-							break;
-						}
-						else{
-							$_SESSION['cart'][] = $sectionSelected;
-						}
+						
 					}
+					else{
+						$_SESSION['cart'][] = $sectionSelected;
+					}
+				}
 				else{
 					$_SESSION['errors']=$bid->validate();
 				}
