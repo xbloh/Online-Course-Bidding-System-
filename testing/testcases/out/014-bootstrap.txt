@@ -1,0 +1,45 @@
+{
+  "status": "error",
+  "num-record-loaded":
+     [
+        { "bid.csv": 21},
+        { "course.csv": 23},
+        { "course_completed.csv": 3},
+        { "prerequisite.csv": 7},
+        { "section.csv": 34},
+        { "student.csv": 25}
+     ],
+  "error":
+     [
+     {
+          "file" : "bid.csv",
+          "line" : 5,
+          "message" : ["blank amount", "blank code", "blank section"]
+        },
+        {
+          "file" : "course.csv",
+          "line" : 13,
+          "message" : ["blank exam date", "blank exam start", "blank exam end"]
+        },
+        {
+          "file" : "course_completed.csv",
+          "line" : 3,
+          "message" : ["blank code"]
+        },
+        {
+          "file" : "prerequisite.csv",
+          "line" : 8,
+          "message" : ["blank prerequisite"]
+        },
+        {
+          "file" : "section.csv",
+          "line" : 29,
+          "message" : ["blank venue", "blank size"]
+        },
+        {
+          "file" : "student.csv",
+          "line" : 12,
+          "message" : ["blank school", "blank edollar"]
+        }
+     ]
+}

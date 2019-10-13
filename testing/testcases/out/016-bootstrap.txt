@@ -1,0 +1,30 @@
+{
+  "status": "error",
+  "num-record-loaded":
+     [
+        { "bid.csv": 23},
+        { "course.csv": 24},
+        { "course_completed.csv": 4},
+        { "prerequisite.csv": 8},
+        { "section.csv": 35},
+        { "student.csv": 26}
+     ],
+  "error":
+     [
+     {
+          "file" : "bid.csv",
+          "line" : 3,
+          "message" : ["class timetable clash", "exam timetable clash"]
+        },
+        {
+          "file" : "bid.csv",
+          "line" : 25,
+          "message" : ["incomplete prerequisites"]
+        },
+        {
+          "file" : "bid.csv",
+          "line" : 26,
+          "message" : ["course completed"]
+        }
+     ]
+}
