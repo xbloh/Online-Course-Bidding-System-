@@ -9,12 +9,12 @@ $student = $_SESSION['student'];
 $userId = $student->getUserId();
 $totalAmtCart=0;
 
-foreach ($_SESSION['cart'] as $section) {
-	if($section!=NULL){
-	$course = $section->getCourse();
-	$courseId = $course->getCourseId();
-	$identifier = $course->getCourseId() . $section->getSectionId();
-	$sectionId = $section->getSectionId();
+foreach ($_SESSION['cart'] as $sectionSelected) {
+	if($sectionSelected!=NULL){
+	$courseId = $sectionSelected[0];
+	$sectionId = $sectionSelected[1];
+	$identifier = $courseId . $sectionId;
+
 
 	if (isset($_POST[$identifier])) {
 		$bidAmt = $_POST[$identifier] + 0;
