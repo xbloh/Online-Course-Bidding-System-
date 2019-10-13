@@ -5,18 +5,30 @@ require_once 'common.php';
 $courseId = 'IS100';
 $sectionId = 'S1';
 $bid = new BidDAO();
+$coursedao = new CourseDAO();
 $section = new SectionDAO();
-$bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
+
+$courses = $coursedao->retrieveAllCourses();
+foreach($courses as $course)
+{
+    $courseId = $course->getCourseId(); 
+    $sectionId = $section->retrieveSectionIdsByCourse($courseId);
+
+    $bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
+    $sectionSize = $section->retrieveSectionSize($courseId,$sectionId);
+}
+var_dump($bidByUserid);
+
 
 var_dump($bidByUserid);
 $count = 1;
 $clearingPrice = NULL;
 $result = [];
-for($i = 0; $i < 10; $i++)
+for($i = 0; $i < $sectionSize; $i++)
 {
     // echo "{$bidByUserid[$i][1]}";
     // echo "<br>";
-    $clearingPrice = $bidByUserid[10][1];
+    $clearingPrice = $bidByUserid[$sectionSize][1];
 }
 
 $succesfulBids = [];
