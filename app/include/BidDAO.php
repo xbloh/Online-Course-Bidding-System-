@@ -250,6 +250,8 @@ class BidDAO
 
         return $result;
     }
+
+
 }
 
 ?>
