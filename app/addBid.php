@@ -49,7 +49,7 @@
 					$course = $_SESSION['coursesAvailable'][$_POST['indexOfCourseToBid']];
 					$_SESSION['courseSelected'] = $course;
 					$sectionDAO = new SectionDAO();
-					$sections = $sectionDAO->retrieveSectionsByCourse($course);
+					$sections = $sectionDAO->retrieveSectionIdsByCourse($course);
 					$course->setSectionsAvailable($sections);
 
 					echo "<tr>
@@ -78,7 +78,8 @@
 								Add bid
 							</th>
 						</tr>";
-					foreach ($course->getSectionsAvailable() as $index => $section) {
+					foreach ($course->getSectionsAvailable() as $index => $sectionId) {
+						$section = $sectionDAO->retrieveSection($course->getCourseId(), $sectionId);
 						if (isset($_POST['indexOfSectionToBid']) && $index == $_POST['indexOfSectionToBid']) {
 									$selected = 'checked';
 
@@ -124,45 +125,48 @@
 		if(isset($_POST['sectionSelected'])) {
 			$course = $_SESSION['courseSelected'];
 			$index = $_POST['indexOfSectionToBid'];
-			$sectionSelected = $course->getSectionsAvailable()[$index];
-			$course=$sectionSelected->getCourse();
-			$student=$_SESSION['student'];
-			$courseId1=$course->getCourseId();
-			$sessionId1=$sectionSelected->getSectionId();
-			$userId=$student->getUserId();
-			$amount=0;
-			$bid = new Bid($userId, $amount, $courseId1, $sessionId1, $isAddBid = True); 
+			$sectionSelected = [$course->getCourseId(), $course->getSectionsAvailable()[$index]];
+			// $student=$_SESSION['student'];
+			// $courseId1=$course->getCourseId();
+			// $sessionId1=$sectionSelected->getSectionId();
+			// $userId=$student->getUserId();
+			// $amount=0;
+			// $bid = new Bid($userId, $amount, $courseId1, $sessionId1, $isAddBid = True); 
 
 			if(!isset($_SESSION['cart'])){
-				if(!empty($bid->validate())){
-					$_SESSION['errors']=$bid->validate();
-					printErrors();
-				}
-				else{
-					$_SESSION['cart']= [$sectionSelected];
-				}
+				// if(!empty($bid->validate())){
+				// 	$_SESSION['errors']=$bid->validate();
+				// 	printErrors();
+				// }
+				// else{
+				// 	$_SESSION['cart']= [$sectionSelected];
+				// }
+				$_SESSION['cart'] = [$sectionSelected];
 			}
 
 			else{
 			// var_dump($sectionSelected->getCourse());
-			foreach($_SESSION['cart'] as $cart){
-				$cartCourse=$cart->getCourse();
-				$sessionId=$cart->getSectionId();
-				$courseId=$cartCourse->getCourseId();
-				$bid = new Bid($userId, $amount, $courseId, $sessionId, $isAddBid = True); 
-				// var_dump($bid->validate());
-				if(empty($bid->validate())){
-					if($cartCourse->getCourseId()==$course->getCourseId() && $cart->getSectionId()==$sectionSelected->getSectionId()){
+			// foreach($_SESSION['cart'] as $cart){
+			// 	$cartCourse=$cart->getCourse();
+			// 	$sessionId=$cart->getSectionId();
+			// 	$courseId=$cartCourse->getCourseId();
+			// 	$bid = new Bid($userId, $amount, $courseId, $sessionId, $isAddBid = True); 
+			// 	// var_dump($bid->validate());
+			// 	if(empty($bid->validate())){
+			// 		if($cartCourse->getCourseId()==$course->getCourseId() && $cart->getSectionId()==$sectionSelected->getSectionId()){
 						
-					}
-					else{
-						$_SESSION['cart'][] = $sectionSelected;
-					}
+			// 		}
+			// 		else{
+			// 			$_SESSION['cart'][] = $sectionSelected;
+			// 		}
+			// 	}
+			// 	else{
+			// 		$_SESSION['errors']=$bid->validate();
+			// 	}
+			// }	
+				if (!in_array($sectionSelected, $_SESSION['cart'])) {
+					$_SESSION['cart'][] = $sectionSelected;
 				}
-				else{
-					$_SESSION['errors']=$bid->validate();
-				}
-			}	
 			}
 		}
 		// var_dump($_SESSION['errors']);
@@ -173,14 +177,14 @@
 			echo "<form action = 'placeBids.php' method = 'POST'>
 					<input type = 'submit' name = 'placeBids' value = 'Place Bids'>
 					</form>";
+			}
+			else{
+				echo "<form action = 'placeBids.php' method = 'POST'>
+						<input type = 'submit' name = 'placeBids' value = 'Place Bids'>
+						</form>";
+				printErrors();
+			}
 		}
-		else{
-			echo "<form action = 'placeBids.php' method = 'POST'>
-					<input type = 'submit' name = 'placeBids' value = 'Place Bids'>
-					</form>";
-			printErrors();
-		}
-	}
 
 		// }
 	?>
