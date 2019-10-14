@@ -97,7 +97,7 @@ class SuccessfulBidDAO
     }
 
     public function deduct_eDollars($eDollar,$biddedAmt){
-        
+        $balance_eDollar = $eDollar - $biddedAmt;
     }
 
     public function numberOfSectionsByID($userId){
