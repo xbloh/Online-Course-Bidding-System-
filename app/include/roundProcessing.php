@@ -12,23 +12,28 @@ $courses = $coursedao->retrieveAllCourses();
 foreach($courses as $course)
 {
     $courseId = $course->getCourseId(); 
-    $sectionId = $section->retrieveSectionIdsByCourse($courseId);
-
-    $bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
-    $sectionSize = $section->retrieveSectionSize($courseId,$sectionId);
+    $sectionIds = $section->retrieveSectionIds($courseId);
+    foreach($sectionIds as $sectionId)
+    {
+        $bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
+        $sectionSize = $section->retrieveSectionSize($courseId,$sectionId);
+        var_dump($bidByUserid);
+    }
+   
 }
-var_dump($bidByUserid);
 
-
-var_dump($bidByUserid);
+foreach($sectionSize as $size)
+{
+    echo $size;
+}
 $count = 1;
 $clearingPrice = NULL;
 $result = [];
-for($i = 0; $i < $sectionSize; $i++)
+for($i = 0; $i < 10; $i++)
 {
     // echo "{$bidByUserid[$i][1]}";
     // echo "<br>";
-    $clearingPrice = $bidByUserid[$sectionSize][1];
+    $clearingPrice = $bidByUserid[10][1];
 }
 
 $succesfulBids = [];
