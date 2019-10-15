@@ -58,7 +58,7 @@ class roundDAO {
             return $status;
         }
 
-        public function endRound1()
+        public function endRound2()
 		{
 			$sql = 'UPDATE rounds SET status = "completed", WHERE round = 2;';
         
