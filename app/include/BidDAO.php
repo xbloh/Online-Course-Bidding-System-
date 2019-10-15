@@ -251,6 +251,42 @@ class BidDAO
         return $result;
     }
 
+    // public function checkVariableExists($userId, $courseId, $sectionId, $checktype)
+    // {
+    //     if($checktype=='section')
+    //     {
+    //         $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId and section = :sectionId';
+    //     }
+    //     elseif($checktype=='')
+        
+
+    //     $connMgr = new ConnectionManager();
+    //     $conn = $connMgr->getConnection();
+        
+    //     $stmt = $conn->prepare($sql);
+
+    //     $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+    //     $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
+    //     $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        
+    //     // Step 3 - Execute SQL Query
+    //     $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    //     $stmt->execute();
+    //     $row = $stmt->fetch();
+    //     // var_dump($row['countnum']);
+    //     $existOK=FALSE;
+    //     // if($row=$stmt->fetch()){
+    //     if($row['countUserSectionCourse']>0){
+    //         $existOK=TRUE;
+    //     }
+    //     return $existOK;
+
+    //     // Step 4 - Retrieve Query Results (if any)
+    //     // return $row=$stmt->fetch();
+    //     $stmt = null;
+    //     $pdo = null;
+    // }
+
 
 }
 
