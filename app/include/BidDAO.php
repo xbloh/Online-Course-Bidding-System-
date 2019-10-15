@@ -173,28 +173,28 @@ class BidDAO
         return $status;
     }
 
-    public function updateBid($userId, $courseId, $sectionId, $newAmt) {
-        $sql='UPDATE BID SET AMOUNT=:newamount WHERE userid=:userid AND code=:code AND section=:section';
+    // public function updateBid($userId, $courseId, $sectionId, $newAmt) {
+    //     $sql='UPDATE BID SET AMOUNT=:newamount WHERE userid=:userid AND code=:code AND section=:section';
 
-        $connMgr = new ConnectionManager();       
-        $conn = $connMgr->getConnection();
+    //     $connMgr = new ConnectionManager();       
+    //     $conn = $connMgr->getConnection();
 
-        $stmt = $conn->prepare($sql); 
+    //     $stmt = $conn->prepare($sql); 
 
-        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
-        $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
-        $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
-        $stmt->bindParam(':newamount', $newAmt, PDO::PARAM_STR);
+    //     $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+    //     $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
+    //     $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
+    //     $stmt->bindParam(':newamount', $newAmt, PDO::PARAM_STR);
     
-        $status=FALSE;
+    //     $status=FALSE;
         
-        if($stmt->execute()){
-            $status=TRUE;
-        }
-        $stmt = null;
-        $pdo = null;
-        return $status;
-    }
+    //     if($stmt->execute()){
+    //         $status=TRUE;
+    //     }
+    //     $stmt = null;
+    //     $pdo = null;
+    //     return $status;
+    // }
 
     public function isUSerCourseSectionExists($userId, $courseId, $sectionId)
     {
