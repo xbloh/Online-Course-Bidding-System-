@@ -408,7 +408,8 @@ function doBootstrap(){
     header('Content-Type: application/json');
     echo json_encode($result, JSON_PRETTY_PRINT);
 
-
+    $roundDAO = new RoundDAO();
+    $roundDAO = startRound1();
 
 }
 ?>
