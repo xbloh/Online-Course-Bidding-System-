@@ -72,10 +72,17 @@ create table SUCCESSFUL_BID (
 	CONSTRAINT SUCCESSFUL_BID_FK2 foreign key(code,section) references SECTION(courseID,sectionID)
 );
 
+create table ROUNDS (
+    round int not null,
+    status varchar(10) not null
+);
+
+INSERT INTO ROUNDS (round, status) VALUES (0, 'Begin');
+
 LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/course.csv' INTO TABLE COURSE FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
 LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/prerequisite.csv' INTO TABLE PREREQUISITE FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
 LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/section.csv' INTO TABLE SECTION FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
 LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/student.csv' INTO TABLE STUDENT FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
 LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/bid.csv' INTO TABLE BID FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
 LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/course_completed.csv' INTO TABLE COURSE_COMPLETED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
-LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/successful_bid.csv' INTO TABLE SUCCESSFUL_BID FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
+
