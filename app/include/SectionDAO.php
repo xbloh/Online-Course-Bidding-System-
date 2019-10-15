@@ -211,7 +211,7 @@ require_once 'common.php';
 	        $result = array();
 
 	        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-	        $result = [$row['size']];
+	        $result = $row['size'];
 	        return $result;
 		}
 
