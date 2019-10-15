@@ -8,7 +8,7 @@ class Sort {
 
 	function bootstrap($a, $b)
 	{
-		return strcmp(end($a),end($b));
+		return strcmp($a,$b);
 	}
 	
 

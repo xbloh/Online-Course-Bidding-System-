@@ -370,8 +370,13 @@ function doBootstrap(){
 #returning JSON format errors. remember this is only for the JSON API. Humans should not get JSON errors.
     if (!empty($errors))
     {	
-        // $sortclass = new Sort();
-        // $errors = $sortclass->sort_it($errors,"bootstrap");
+    //     for ($i=0; $i < count($errors); $i++)
+    //     {
+    //         $sortclass = new Sort();
+    //         $errors[$i]['message'] = $sortclass->sort_it($errors[$i]['message'],"bootstrap");
+    //     }
+    //     // var_dump($errors);
+
         $result = [ 
             "status" => "error",
             "num-record-loaded" => [

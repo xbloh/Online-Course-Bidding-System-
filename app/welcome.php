@@ -99,5 +99,8 @@ echo "</table>";
 <a href ="updateBid.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Update Bid</a>
 <br>
 <a href ="deleteBid.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Delete Bid</a>
+<br>
+<a href ="logout.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Logout</a>
+
 </body>
 </html>
