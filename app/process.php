@@ -6,7 +6,7 @@ if( isset($_POST['userid']) && isset($_POST['password']) )
 {
     if ($_POST['userid'] === "admin") {
         if ($_POST['password'] === "@dm1n5PM") {
-            header('Location: bootstrapinterface.php');
+            header('Location: admin.php');
             exit;
         } else {
             $_SESSION['errors'][] = "wrong admin password!";
