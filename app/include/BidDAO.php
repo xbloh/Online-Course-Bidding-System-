@@ -251,41 +251,75 @@ class BidDAO
         return $result;
     }
 
-    // public function checkVariableExists($userId, $courseId, $sectionId, $checktype)
-    // {
-    //     if($checktype=='section')
-    //     {
-    //         $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId and section = :sectionId';
-    //     }
-    //     elseif($checktype=='')
+    public function checkVariableExists($userId, $courseId, $sectionId, $checktype)
+    {
+        if($checktype=='checkall')
+        {
+            $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId and section = :sectionId';
+        }
+        elseif($checktype=='checktillcourse')
+        {
+            $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId';
+        }
         
 
-    //     $connMgr = new ConnectionManager();
-    //     $conn = $connMgr->getConnection();
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
         
-    //     $stmt = $conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
 
-    //     $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
-    //     $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
-    //     $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
         
-    //     // Step 3 - Execute SQL Query
-    //     $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    //     $stmt->execute();
-    //     $row = $stmt->fetch();
-    //     // var_dump($row['countnum']);
-    //     $existOK=FALSE;
-    //     // if($row=$stmt->fetch()){
-    //     if($row['countUserSectionCourse']>0){
-    //         $existOK=TRUE;
-    //     }
-    //     return $existOK;
+        // Step 3 - Execute SQL Query
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        // var_dump($row['countnum']);
+        $existOK=FALSE;
+        // if($row=$stmt->fetch()){
+        if($row['countUserSectionCourse']>0){
+            $existOK=TRUE;
+        }
+        return $existOK;
 
-    //     // Step 4 - Retrieve Query Results (if any)
-    //     // return $row=$stmt->fetch();
-    //     $stmt = null;
-    //     $pdo = null;
-    // }
+        // Step 4 - Retrieve Query Results (if any)
+        // return $row=$stmt->fetch();
+        $stmt = null;
+        $pdo = null;
+    }
+
+    public function updateBid($userId, $courseId, $sectionId, $newAmt, $updatetype) 
+    {
+        if($updatetype=='edollar')
+        {
+            $sql='UPDATE bid SET amount=:newamount WHERE userid=:userid AND code=:code AND section=:section';
+        }
+        elseif($updatetype=='sectionedollar')
+        {
+            $sql='UPDATE bid SET amount=:newamount AND section=:section WHERE userid=:userid AND code=:code';
+        }
+
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql); 
+
+        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+        $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
+        $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
+        $stmt->bindParam(':newamount', $newAmt, PDO::PARAM_STR);
+    
+        $status=FALSE;
+        
+        if($stmt->execute()){
+            $status=TRUE;
+        }
+        $stmt = null;
+        $pdo = null;
+        return $status;
+    }
 
 
 }

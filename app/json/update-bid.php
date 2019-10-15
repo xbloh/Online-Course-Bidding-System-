@@ -48,6 +48,28 @@
         }
         $totalAmtCart+=$bidAmt;
 
+        if(checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
+        //     if(checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
+        //         foreach ($_SESSION['bids'] as $bid) {
+        //             $StudentObj=$StudentDAO->retrieveStudentByUserId($userId);
+        //             // var_dump($StudentObj);
+        //             if($StudentObj==NULL){
+        //                 $errors[]='Invalid User';
+        //             }
+        //             else{
+        //                 $isAllowed = $bid->validate();
+        //                 $StudentAmt=$StudentObj->getEdollar();
+        //                 $biddedAmt=$bidDAO->totalAmountByID($userId);
+        //                 $totalAmtBid=$biddedAmt+$totalAmtCart;
+        //                 if($StudentAmt-$totalAmtBid<0){
+        //                     $exceedAmt=$StudentAmt-$totalAmtBid;
+        //                     $isAllowed[]="Exceeded E-dollar Amount by ".abs($exceedAmt).".(Student E-dollar: ".$StudentAmt.")";
+        //                 }
+
+        //     }
+        // }
+        }
+        else{
         // var_dump($_SESSION['bids']);
         foreach ($_SESSION['bids'] as $bid) {
             $StudentObj=$StudentDAO->retrieveStudentByUserId($userId);
@@ -106,6 +128,7 @@
                 }
             }
             }
+        }
         
         
         
