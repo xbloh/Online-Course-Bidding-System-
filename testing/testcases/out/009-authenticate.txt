@@ -1,4 +1,4 @@
 {
     "status": "error",
-    "message": ["blank password", "blank username"]
+    "message": ["blank username", "blank password"]
 }
