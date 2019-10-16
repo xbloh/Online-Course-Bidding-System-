@@ -7,6 +7,7 @@ $coursedao = new CourseDAO();
 $section = new SectionDAO();
 $successfulBid = new SuccessfulBidDAO();
 $courses = $coursedao->retrieveAllCourses();
+$studentDAO = new StudentDAO();
 $failBids = [];
 
 $clearingPrice = NULL;
@@ -31,12 +32,14 @@ foreach($courses as $course)
                 if($amount > $clearingPrice)
                 {
                     $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
-                } elseif ($amount = $clearingPrice) {
+                } elseif ($amount == $clearingPrice) {
                     if ($bidByUserid[$sectionSize][1] == $clearingPrice) {
                         $failBids[] = [$user, $amount, $courseId, $sectionId];
                     } else {
                         $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
                     }
+                } else {
+                    $failBids[] = [$user, $amount, $courseId, $sectionId];
                 }
             }
             
@@ -52,7 +55,7 @@ foreach($courses as $course)
         }
     }
 }
-var_dump($succesfulBids);
+// var_dump($succesfulBids);
 var_dump($failBids);
 foreach($succesfulBids as $successBid)
 {
@@ -61,6 +64,12 @@ foreach($succesfulBids as $successBid)
     $code = $successBid[2];
     $section = $successBid[3];
     $success = $successfulBid->successfulAddBid($userid, $amount, $code, $section);
+}
+
+foreach ($failBids as $failbid) {
+    $userid = $failbid[0];
+    $toAdd = $failbid[1];
+    $studentDAO->addEdollar($userid, $toAdd);
 }
 
 ?>

@@ -204,5 +204,25 @@ class StudentDAO{
         }
         return $result;
     }
+
+    public function addEdollar($userid, $toAdd)
+    {
+        $current = $this->retrieveStudentByUserId($userid)->getEdollar();
+        $total = $current + $toAdd;
+        $connMgr = new ConnectionManager();
+        $pdo = $connMgr->getConnection();
+
+        // Step 2 - Write & Prepare SQL Query (take care of Param Binding if necessary)
+        $sql = "UPDATE student set edollar = :total where userid = :userid
+                ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->bindParam(':total',$total,PDO::PARAM_INT);
+        
+        // Step 3 - Execute SQL Query
+        $status = $stmt->execute();
+        //echo $status;
+
+    }
 }
 ?>
