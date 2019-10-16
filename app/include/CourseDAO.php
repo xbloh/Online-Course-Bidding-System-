@@ -173,6 +173,26 @@ class CourseDAO
         return $result;
     }
     
+    public function dump()
+    {
+        $sql = 'SELECT * from course order by courseID';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':school',$school,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['course' => $row['courseID'], 'school' => $row['school'], 'title' => $row['title'], 'description' => $row['description'], 'exam date' => $row['examDate'], 'exam start' => $row['examStart'], 'exam end' => $row['examEnd']];
+        }
+        return $result;
+    }
 }
 
 ?>
