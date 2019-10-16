@@ -174,10 +174,10 @@
             $sectionId = $bid->getSection();
 
             if($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
-                $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmt, 'edollar');
+                $bidDAO->updateBidjson($userId, $courseId, $sectionId, $newAmt, 'edollar');
             }
             elseif($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
-                $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmt, 'sectionedollar');
+                $bidDAO->updateBidjson($userId, $courseId, $sectionId, $newAmt, 'sectionedollar');
             }
             elseif(!$bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
                 $bidDAO->add($bid);
