@@ -34,7 +34,7 @@
             }
         }
     }
-    if(isset($bid_array['userid']) && isset($bid_array['amount']) && isset($bid_array['course']) && isset($bid_array['section']))
+    if(isset($bid_array['userid']) && isset($bid_array['amount']) && isset($bid_array['course']) && isset($bid_array['section']) && $bid_array['userid'] != '' && $bid_array['amount'] != '' && $bid_array['course'] != '' && $bid_array['section'] != '')
     {
         $userId = $bid_array['userid'];
         $bidAmt = $bid_array['amount'];
@@ -42,110 +42,92 @@
         $sectionId = $bid_array['section'];
 
         if (isset($_SESSION['bids'])) {
-			$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $sectionId, False, True);
+			$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $sectionId, False, False, True);
 		} else {
-			$_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $sectionId, False, True)];
+			$_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $sectionId, False, False, True)];
         }
         $totalAmtCart+=$bidAmt;
 
-        if(checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
-        //     if(checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
-        //         foreach ($_SESSION['bids'] as $bid) {
-        //             $StudentObj=$StudentDAO->retrieveStudentByUserId($userId);
-        //             // var_dump($StudentObj);
-        //             if($StudentObj==NULL){
-        //                 $errors[]='Invalid User';
-        //             }
-        //             else{
-        //                 $isAllowed = $bid->validate();
-        //                 $StudentAmt=$StudentObj->getEdollar();
-        //                 $biddedAmt=$bidDAO->totalAmountByID($userId);
-        //                 $totalAmtBid=$biddedAmt+$totalAmtCart;
-        //                 if($StudentAmt-$totalAmtBid<0){
-        //                     $exceedAmt=$StudentAmt-$totalAmtBid;
-        //                     $isAllowed[]="Exceeded E-dollar Amount by ".abs($exceedAmt).".(Student E-dollar: ".$StudentAmt.")";
-        //                 }
-
-        //     }
-        // }
+        if ($bidAmt<10||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $bidAmt))||$bidAmt>999) {
+			// if($this->amount<10||$this->amount!=number_format($this->amount,2,'.','')||$this->amount>999){
+				$errors[] = "invalid amount";
         }
-        else{
-        // var_dump($_SESSION['bids']);
-        foreach ($_SESSION['bids'] as $bid) {
-            $StudentObj=$StudentDAO->retrieveStudentByUserId($userId);
-            // var_dump($StudentObj);
-            if($StudentObj==NULL){
-                $errors[]='Invalid User';
+        
+        if (!$CourseDAO->isCourseIdExists($courseId)) 
+        {
+			$errors[] = "invalid course";
+        }
+
+        if (!$SectionDAO->isSectionIdExists($sectionId)) {
+			$errors[] = "invalid section";
+        }
+        
+        $StudentObj=$StudentDAO->retrieveStudentByUserId($userId);
+        if($StudentObj==NULL)
+        {
+            $errors[]='invalid userid';
+        }
+        
+        if($errors==[] && $bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
+            $StudentAmt=$StudentObj->getEdollar();
+            $biddedAmt=$bidDAO->totalAmountByID($userId);
+            $totalAmt=$StudentAmt+$biddedAmt;
+            if($totalAmt-$totalAmtCart<0){
+                $exceedAmt=$totalAmt-$totalAmtCart;
+                $isAllowed[]="insufficient e$";
             }
-            else{
+        }
+
+        elseif($errors==[] && $bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
+            foreach ($_SESSION['bids'] as $bid) {
+                $StudentAmt=$StudentObj->getEdollar();
+                $biddedAmt=$bidDAO->totalAmountByID($userId);
+                $totalAmt=$StudentAmt+$biddedAmt;
+                if($totalAmt-$totalAmtCart<0)
+                {
+                    $exceedAmt=$totalAmt-$totalAmtCart;
+                    $isAllowed[]="insufficient e$";
+                }
+
+                $courseId=$bid->getCode();
+                $sectionId=$bid->getSection();
+                $currentBidDayTime = $SectionDAO->retrieveSectionDayTime($courseId,$sectionId);
+                $currentBidDate=$currentBidDayTime[0];
+                $currentBidStart=$currentBidDayTime[1];
+                $currentBidEnd=$currentBidDayTime[2];
+        
+                $bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($userId);
+                foreach ($bidded_modules as $bidded_module)
+                {
+                    if($bidded_module[0] != $courseId && $bidded_module[1] != $sectionId)
+                    {
+                        $moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
+                        if($currentBidDate==$moduleClassDateTime[0]){
+                            if($moduleClassDateTime[1]<=$currentBidStart||$moduleClassDateTime[2]<=$currentBidEnd){
+                                $errors[] = "class timetable clash";
+                            }
+                        }
+                    }  
+                }
+            }
+        }   
+        elseif($errors==[] && !$bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall'))
+        {
+        foreach ($_SESSION['bids'] as $bid) {
             $isAllowed = $bid->validate();
             $noOfSectionBidded=$bidDAO->numberOfSectionsByID($userId);
             if($noOfSectionBidded+count($_SESSION['bids'])>5){
                 $exceedbids=$noOfSectionBidded+count($_SESSION['bids'])-5;
-                $isAllowed[]="Exceeded Section Limit by ".$exceedbids.".(Max 5)";
+                $isAllowed[]="section limit reached";
             }
-            $StudentAmt=$StudentObj->getEdollar();
-            $biddedAmt=$bidDAO->totalAmountByID($userId);
-            $totalAmtBid=$biddedAmt+$totalAmtCart;
-            if($StudentAmt-$totalAmtBid<0){
-                $exceedAmt=$StudentAmt-$totalAmtBid;
-                $isAllowed[]="Exceeded E-dollar Amount by ".abs($exceedAmt).".(Student E-dollar: ".$StudentAmt.")";
-            }
-            
-            $courseId=$bid->getCode();
-            $sectionId=$bid->getSection();
-            $currentBidDayTime = $SectionDAO->retrieveSectionDayTime($courseId,$sectionId);
-            $currentBidDate=$currentBidDayTime[0];
-            $currentBidStart=$currentBidDayTime[1];
-            $currentBidEnd=$currentBidDayTime[2];
-            foreach ($_SESSION['bids'] as $bid2) {
-                if($bid2!=$bid){
-                $courseId2=$bid2->getCode();
-                $sectionId2=$bid2->getSection();
-                $moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($courseId2,$sectionId2);
-                    if($currentBidDate==$moduleClassDateTime[0]){
-                        if($moduleClassDateTime[1]<=$currentBidStart||$moduleClassDateTime[2]<=$currentBidEnd){
-                        $isAllowed[] = "Class timetable clash  ".$courseId."  ".$sectionId;
-                    }
-                }
-            }
-            }
-        
-            $courseId=$bid->getCode();
-            $sectionId=$bid->getSection();
-            $currentBidDayTime2 = $CourseDAO->retrieveExamDateTime($courseId);
-            $currentBidDate2=$currentBidDayTime2[0];
-            $currentBidStart2=$currentBidDayTime2[1];
-            $currentBidEnd2=$currentBidDayTime2[2];
-            foreach ($_SESSION['bids'] as $bid2) {
-                if($bid2!=$bid){
-                $courseId2=$bid2->getCode();
-                $moduleExamDateTime=$CourseDAO->retrieveExamDateTime($courseId2);
-                if($currentBidDate2==$moduleExamDateTime[0]){
-                    if($moduleExamDateTime[1]<=$currentBidStart2||$moduleExamDateTime[2]>=$currentBidEnd2){
-                        $isAllowed[] = "Exam timetable clash  ".$courseId."  ".$sectionId;
-                    }
-                }
-            }
-            }
-        }
-        
-        
-        
-            // var_dump(count($_SESSION['bids']));
-            // var_dump($isAllowed);
-            if (!empty($isAllowed)) {
-                // var_dump($isAllowed);
-                foreach($isAllowed as $errorCode){
-                    // echo $errorCode;
-                    if(!in_array($errorCode, $errors)){
-                        array_push($errors, $errorCode);
-                    }
-                }
-            }
-        }
-        }
 
+            $StudentAmt=$StudentObj->getEdollar();
+            if($StudentAmt-$totalAmtCart<0){
+                $exceedAmt=$StudentAmt-$totalAmtCart;
+                $isAllowed[]="insufficient e$";
+            }
+        }   
+        }
     }
     else
     {
@@ -163,17 +145,21 @@
                 array_push($errors,("missing " . $missing));
             }
         }
-
-        // if (!empty($message)) {
-        //     $errors[] = ["message" => $message];
-        // }
         
+    }
+
+    if (!empty($isAllowed)) {
+        foreach($isAllowed as $errorCode){
+            if(!in_array($errorCode, $errors)){
+                array_push($errors, $errorCode);
+            }
+        }
     }
 
     if (!empty($errors))
     {	
-        // $sortclass = new Sort();
-        // $errors = $sortclass->sort_it($errors,"bootstrap");
+        $sortclass = new Sort();
+        $errors = $sortclass->sort_it($errors,"bootstrap");
         $result = [ 
             "status" => "error",
             "message" => $errors
@@ -182,7 +168,20 @@
     else
     {	
         foreach ($_SESSION['bids'] as $bid) {
-            $bidDAO->add($bid);
+            $userId = $bid->getUserid();
+            $newAmt = $bid->getAmount();
+            $courseId = $bid->getCode();
+            $sectionId = $bid->getSection();
+
+            if($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
+                $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmt, 'edollar');
+            }
+            elseif($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
+                $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmt, 'sectionedollar');
+            }
+            elseif(!$bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
+                $bidDAO->add($bid);
+            }
         }
         $result = [ 
             "status" => "success",

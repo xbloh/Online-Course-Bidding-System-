@@ -270,13 +270,16 @@ class BidDAO
 
         $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
         $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
-        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        if($checktype=='checkall')
+        {
+            $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        }
         
         // Step 3 - Execute SQL Query
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         $row = $stmt->fetch();
-        // var_dump($row['countnum']);
+        // var_dump($row);
         $existOK=FALSE;
         // if($row=$stmt->fetch()){
         if($row['countUserSectionCourse']>0){
@@ -298,7 +301,7 @@ class BidDAO
         }
         elseif($updatetype=='sectionedollar')
         {
-            $sql='UPDATE bid SET amount=:newamount AND section=:section WHERE userid=:userid AND code=:code';
+            $sql='UPDATE bid SET amount=:newamount ,section=:section WHERE userid=:userid AND code=:code';
         }
 
         $connMgr = new ConnectionManager();       
