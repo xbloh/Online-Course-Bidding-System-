@@ -12,7 +12,14 @@
 	$sectionStudentDAO = new SuccessfulBidDAO();
 
 	$courses = $courseDAO->dump();
-	$result = ['status' => 'success', 'course' => $courses];
+	$students = $studentDAO->dump();
+	$sections = $sectionDAO->dump();
+	$prereq = $prerequisiteDAO->dump();
+	$cc = $completedCourseDAO->dump();
+	$bids = $bidDAO->dump();
+	$ss = $sectionStudentDAO->dump();
+
+	$result = ['status' => 'success', 'course' => $courses, 'section' => $sections, 'student' => $students, 'prerequisite' => $prereq, 'bid' => $bids, 'completed-course' => $cc, 'section-student' => $ss];
 	//var_dump($result);
 	header('Content-Type: application/json');
     echo json_encode($result, JSON_PRETTY_PRINT);
