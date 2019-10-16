@@ -43,22 +43,22 @@
         $StudentObj=$StudentDAO->retrieveStudentByUserId($userId);
         if($StudentObj==NULL)
         {
-            $errors[]='invalid userid';
+            $errors[]='Invalid User';
         }
 
         $bidExist=$bidDAO->isUSerCourseSectionExists($userId, $courseId, $sectionId);
         if(!$bidExist)
         {
-            $errors[]='no such bid';
+            $errors[]='No such bid';
         }
 
         if (!$CourseDAO->isCourseIdExists($courseId)) 
         {
-			$errors[] = "invalid course";
+			$errors[] = "invalid Course";
         }
         
 		if (!$SectionDAO->isSectionIdExists($sectionId)) {
-			$errors[] = "invalid section";
+			$errors[] = "invalid Section";
 		}
 
         
@@ -89,11 +89,8 @@
         }
         if (!empty($errors))
         {	
-        // // var_dump($errors);
-        // for ($i=0; $i < count($errors); $i++)
-        // {
-            $sortclass = new Sort();
-            $errors = $sortclass->sort_it($errors,"bootstrap");
+            // $sortclass = new Sort();
+            // $errors = $sortclass->sort_it($errors,"bootstrap");
             $result = [ 
                 "status" => "error",
                 "message" => $errors

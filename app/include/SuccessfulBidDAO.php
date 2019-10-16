@@ -5,7 +5,7 @@ require_once 'common.php';
  */
 class SuccessfulBidDAO
 {
-	public function successfulAddBid($userid, $amount, $code, $section){
+	public function successfully_add_bid($bid){
 
 
         $sql = 'INSERT INTO SUCCESSFUL_BID (userid, amount, code, section)
@@ -16,10 +16,18 @@ class SuccessfulBidDAO
         $conn = $connMgr->getConnection();
         
         $stmt = $conn->prepare($sql); 
-        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $userId = $bid->getUserid();
+        $amount = $bid->getAmount();
+        $code = $bid->getCode();
+        $sectionId = $bid->getSection();
+        if (!is_string($sectionId)) {
+            $sectionId = $sectionId->getSectionId();
+        }
+
+        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
         $stmt->bindParam(':amount', $amount, PDO::PARAM_STR);
         $stmt->bindParam(':code', $code, PDO::PARAM_STR);
-        $stmt->bindParam(':section', $section, PDO::PARAM_STR);
+        $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
         
         $isAddOK = False;
         if ($stmt->execute()) {
