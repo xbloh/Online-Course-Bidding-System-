@@ -1,6 +1,6 @@
 <?php
 
-require_once 'common.php';
+require_once 'include/common.php';
 
 $bid = new BidDAO();
 $coursedao = new CourseDAO();

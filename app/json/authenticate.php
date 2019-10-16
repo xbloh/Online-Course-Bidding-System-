@@ -32,7 +32,7 @@
 	            echo json_encode($result, JSON_PRETTY_PRINT);
 	            exit;
 	        } else {
-	            $result = ["status" => "error", "message" => "invalid password"];
+	            $result = ["status" => "error", "message" => ["invalid password"]];
 	            header('Content-Type: application/json');
 	            echo json_encode($result, JSON_PRETTY_PRINT);
 	            exit;
@@ -50,12 +50,12 @@
 		    		header('Content-Type: application/json');
 	            	echo json_encode($result, JSON_PRETTY_PRINT);
 		    	} else {
-		    		$result = ["status" => "error", "message" => $result[0]];
+		    		$result = ["status" => "error", "message" => [$result[0]]];
 		    		header('Content-Type: application/json');
 	            	echo json_encode($result, JSON_PRETTY_PRINT);
 		    	}
 		    } else {
-		    	$result = ["status" => "error", "message" => "invalid username"];
+		    	$result = ["status" => "error", "message" => ["invalid username"]];
 		    	header('Content-Type: application/json');
             	echo json_encode($result, JSON_PRETTY_PRINT);
 		    }
