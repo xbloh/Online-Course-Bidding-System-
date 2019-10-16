@@ -409,7 +409,7 @@ function doBootstrap(){
     echo json_encode($result, JSON_PRETTY_PRINT);
 
     $roundDAO = new RoundDAO();
-    $roundDAO->startRound1();
+    $roundDAO = startRound1();
 
 }
 ?>
