@@ -126,6 +126,9 @@ if ($bidErrors == 0) {
 	$bidDAO = new BidDAO();
 	foreach ($_SESSION['bids'] as $bid) {
 		$bidDAO->add($bid);
+		$userid = $bid->getUserid();
+		$amount = $bid->getAmount();
+		$StudentDAO->deductEdollar($userid, $amount);
 	}
 	echo "<h1>BIDS PLACED!!! GOOD LUCK</h1>
 	<a href = 'welcome.php'>go back home</a>";
