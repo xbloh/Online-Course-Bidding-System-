@@ -10,6 +10,7 @@ $bidDAO = new BidDAO();
 $bidList = [];
 $allBid = [];
 $bids = $bidDAO->retrieveCourseIdSectionIdBidded($userId);
+$_SESSION['errors']=[];
 
 foreach($bids as $bid)
 
@@ -74,15 +75,23 @@ if(isset($_POST['update']))
     $section = $_POST['sectionId'];
     $newAmt = $_POST['newAmt'];
     $StudentDAO = new StudentDAO();
+
     $Student=$StudentDAO->retrieveStudentByUserId($userId);
     $studentAmt=$Student->getEdollar();
 
     foreach($newAmt as $amount){
+        if ($amount<10 || !(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $amount)) || $amount>999) {
+            // if($amount<10||$amount!=number_format($amount,2,'.','')||$amount>999){
+                $_SESSION['errors'][] = "Invalid amount";
+                break;
+        }
         $studentAmt-=$amount;
     }
+
     if($studentAmt<0){
-        $_SESSION['errors']=['Exceed e-dollar amount'];
+        $_SESSION['errors'][]='Exceed e-dollar amount';
     }
+
     if(!empty($_SESSION['errors'])){
         printErrors();
     }
