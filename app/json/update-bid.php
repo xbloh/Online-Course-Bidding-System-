@@ -158,7 +158,7 @@
 
     if (!empty($errors))
     {	
-        $sortclass = new Sort();
+        $sortclass = new sort();
         $errors = $sortclass->sort_it($errors,"bootstrap");
         $result = [ 
             "status" => "error",

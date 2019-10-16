@@ -91,6 +91,11 @@ class Student
 
 		return $errors;
 	}
+
+	public function addEdollar($toAdd)
+	{
+		$this->edollar += $toAdd;
+	}
 }
 
 ?>

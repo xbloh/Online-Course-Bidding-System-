@@ -92,7 +92,7 @@
         // // var_dump($errors);
         // for ($i=0; $i < count($errors); $i++)
         // {
-            $sortclass = new Sort();
+            $sortclass = new sort();
             $errors = $sortclass->sort_it($errors,"bootstrap");
             $result = [ 
                 "status" => "error",
