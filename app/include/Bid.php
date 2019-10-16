@@ -162,7 +162,7 @@ class Bid
 	if($this->isCart){
 		if ($this->amount<10||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $this->amount))||$this->amount>999) {
 			// if($this->amount<10||$this->amount!=number_format($this->amount,2,'.','')||$this->amount>999){
-				$errors[] = "Invalid Amount(more than 10 and les than 999)";
+				$errors[] = "Invalid Amount(more than 10 and less than 999)";
 		}
 
 		$student = $StudentDAO->retrieveStudentByUserId($this->userid);
