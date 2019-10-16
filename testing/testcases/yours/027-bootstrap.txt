@@ -1,0 +1,54 @@
+{
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "student.csv": 24
+        },
+        {
+            "course.csv": 24
+        },
+        {
+            "section.csv": 35
+        },
+        {
+            "prerequisite.csv": 8
+        },
+        {
+            "course_completed.csv": 4
+        },
+        {
+            "bid.csv": 20
+        }
+    ],
+    "error": [
+        {
+            "file": "student.csv",
+            "line": 3,
+            "message": [
+                "invalid userid",
+                "invalid e-dollar"
+            ]
+        },
+        {
+            "file": "student.csv",
+            "line": 8,
+            "message": [
+                "invalid e-dollar"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 2,
+            "message": [
+                "invalid UserId"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 6,
+            "message": [
+                "invalid UserId"
+            ]
+        }
+    ]
+}

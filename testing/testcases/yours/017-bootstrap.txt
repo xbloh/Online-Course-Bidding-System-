@@ -1,0 +1,41 @@
+{
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "student.csv": 26
+        },
+        {
+            "course.csv": 24
+        },
+        {
+            "section.csv": 35
+        },
+        {
+            "prerequisite.csv": 8
+        },
+        {
+            "course_completed.csv": 4
+        },
+        {
+            "bid.csv": 29
+        }
+    ],
+    "error": [
+        {
+            "file": "bid.csv",
+            "line": 10,
+            "message": [
+                "Class timetable clash",
+                "Class timetable clash",
+                "Section limit reached"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 21,
+            "message": [
+                "Not enough e-dollar"
+            ]
+        }
+    ]
+}
