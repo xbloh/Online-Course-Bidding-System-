@@ -1,2 +1,0 @@
-username=jerry.ng.2009
-password=qwerty139
