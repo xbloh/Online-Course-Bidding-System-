@@ -1,4 +1,4 @@
 {
     "status": "error",
-    "message": "invalid username"
+    "message": ["invalid username"]
 }
