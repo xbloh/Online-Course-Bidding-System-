@@ -19,8 +19,12 @@
 	$bids = $bidDAO->dump();
 	$ss = $sectionStudentDAO->dump();
 
-	$result = ['status' => 'success', 'course' => $courses, 'section' => $sections, 'student' => $students, 'prerequisite' => $prereq, 'bid' => $bids, 'completed-course' => $cc, 'section-student' => $ss];
+	$result = ['status' => 'success', 'course' => $courses,	'section' => $sections, 'student' => $students, 'prerequisite' => $prereq, 'bid' => $bids, 'completed-course' => $cc, 'section-student' => $ss];
+	// foreach ($courses as $key => $value) {
+	// 	$result['course'][] = $value;
+	// }
 	//var_dump($result);
+
 	header('Content-Type: application/json');
     echo json_encode($result, JSON_PRETTY_PRINT);
 

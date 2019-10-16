@@ -324,6 +324,26 @@ class BidDAO
         return $status;
     }
 
+    public function dump()
+    {
+        $sql = 'SELECT * from bid order by code, section, amount desc, userid';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['userid' => $row['userid'], 'amount' => $row['amount'], 'course' => $row['code'], 'section' => $row['section']];
+        }
+        return $result;
+    }
+
 
 }
 
