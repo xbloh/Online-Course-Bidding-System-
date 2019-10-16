@@ -17,7 +17,6 @@ if( isset($_POST['userid']) && isset($_POST['password']) )
     $userid = $_POST['userid'];
 
     $_SESSION['userid']=$userid;
-    header('Location: deleteBid.php');
     
     $password = $_POST['password'];
 
