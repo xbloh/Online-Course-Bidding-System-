@@ -247,6 +247,26 @@ class SuccessfulBidDAO
         return $result;
     }
 
+    public function dump()
+    {
+        $sql = 'SELECT * from successful_bid order by code, userid';
+
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['userid' => $row['userid'], 'course' => $row['code'], 'section' => $row['section'], 'amount' => $row['amount']];
+        }
+        return $result;
+    }
+
 
 }
 
