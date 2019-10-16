@@ -215,6 +215,26 @@ require_once 'common.php';
 	        return $result;
 		}
 
+		public function dump()
+	    {
+	        $sql = 'SELECT * from section order by courseID, sectionID';
+
+	        $connMgr = new ConnectionManager();      
+	        $conn = $connMgr->getConnection();
+
+	        $stmt = $conn->prepare($sql);
+	        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+	        $stmt->execute();
+
+	        $result = array();
+
+
+	        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	            $result[] = ['course' => $row['courseID'], 'section' => $row['sectionID'], 'day' => $row['day'], 'start' => $row['start'], 'start' => $row['start'], 'end' => $row['end'], 'instructor' => $row['instructor'], 'venue' => $row['venue'], 'size' => $row['size']];
+	        }
+	        return $result;
+	    }
+
 	}
 
 ?>

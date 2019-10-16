@@ -166,6 +166,26 @@ class PrerequisiteDAO
         $stmt = null;
         $pdo = null;
     }
+
+    public function dump()
+    {
+        $sql = 'SELECT * from prerequisite order by course, prerequisite';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['course' => $row['course'], 'prerequisite' => $row['prerequisite']];
+        }
+        return $result;
+    }
 }
 
 ?>

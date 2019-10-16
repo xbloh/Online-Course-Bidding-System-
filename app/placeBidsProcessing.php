@@ -15,6 +15,18 @@ foreach ($_SESSION['cart'] as $sectionSelected) {
 	$sectionId = $sectionSelected[1];
 	$identifier = $courseId . $sectionId;
 
+	if ($_POST[$identifier]<10||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $_POST[$identifier]))||$_POST[$identifier]>999) {
+		$_SESSION['errors']=['Input should only be numbers'];
+		echo "<h1>Bids cannot be placed because of:</h1>";
+		printErrors();
+		echo "<a href = 'welcome.php'>go back home</a>";
+		unset($_SESSION['bids']);
+		unset($_SESSION['cart']);
+		die;
+	}
+
+
+
 
 	if (isset($_POST[$identifier])) {
 		$bidAmt = $_POST[$identifier] + 0;
