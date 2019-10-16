@@ -1,0 +1,81 @@
+{
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "student.csv": 25
+        },
+        {
+            "course.csv": 23
+        },
+        {
+            "section.csv": 33
+        },
+        {
+            "prerequisite.csv": 7
+        },
+        {
+            "course_completed.csv": 3
+        },
+        {
+            "bid.csv": 20
+        }
+    ],
+    "error": [
+        {
+            "file": "student.csv",
+            "line": 12,
+            "message": [
+                "blank school"
+            ]
+        },
+        {
+            "file": "course.csv",
+            "line": 13,
+            "message": [
+                "blank exam date"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 25,
+            "message": [
+                "invalid course"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 29,
+            "message": [
+                "blank venue"
+            ]
+        },
+        {
+            "file": "prerequisite.csv",
+            "line": 8,
+            "message": [
+                "blank prerequisite"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 3,
+            "message": [
+                "blank code"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 5,
+            "message": [
+                "blank amount"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 8,
+            "message": [
+                "invalid UserId"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "student.csv": 26
+        },
+        {
+            "course.csv": 24
+        },
+        {
+            "section.csv": 34
+        },
+        {
+            "prerequisite.csv": 8
+        },
+        {
+            "course_completed.csv": 4
+        },
+        {
+            "bid.csv": 22
+        }
+    ],
+    "error": [
+        {
+            "file": "section.csv",
+            "line": 20,
+            "message": [
+                "invalid instructor",
+                "invalid size"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 9,
+            "message": [
+                "invalid Amount"
+            ]
+        }
+    ]
+}

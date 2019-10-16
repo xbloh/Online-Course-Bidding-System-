@@ -70,8 +70,8 @@
         
         if($errors==[] && $bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
             $StudentAmt=$StudentObj->getEdollar();
-            $biddedAmt=$bidDAO->totalAmountByID($userId);
-            $totalAmt=$StudentAmt+$biddedAmt;
+            $biddedAmt=$bidDAO->retrieveBiddedAmt($userId, $courseId, $sectionId);
+            $totalAmt=$StudentAmt+$biddedAmt[0];
             if($totalAmt-$totalAmtCart<0){
                 $exceedAmt=$totalAmt-$totalAmtCart;
                 $isAllowed[]="insufficient e$";
@@ -174,10 +174,10 @@
             $sectionId = $bid->getSection();
 
             if($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
-                $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmt, 'edollar');
+                $bidDAO->updateBidjson($userId, $courseId, $sectionId, $newAmt, 'edollar');
             }
             elseif($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
-                $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmt, 'sectionedollar');
+                $bidDAO->updateBidjson($userId, $courseId, $sectionId, $newAmt, 'sectionedollar');
             }
             elseif(!$bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
                 $bidDAO->add($bid);

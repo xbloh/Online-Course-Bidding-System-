@@ -184,5 +184,25 @@ class StudentDAO{
         // generic password validation (not user specific)
         return True;
     }
+
+    public function dump()
+    {
+        $sql = 'SELECT * from student order by userid';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['userid' => $row['userid'], 'password' => $row['password'], 'name' => $row['name'], 'school' => $row['school'], 'edollar' => $row['edollar']];
+        }
+        return $result;
+    }
 }
 ?>

@@ -5,15 +5,15 @@
 
 
 	// isMissingOrEmpty(...) is in common.php
-	$errors = [ isMissingOrEmpty('username'), 
-	            isMissingOrEmpty('password') ];
+	$errors =  [isMissingOrEmpty('username'), 
+	            isMissingOrEmpty('password')];
 	$errors = array_filter($errors);
 
 
 	if (!isEmpty($errors)) {
 	    $result = [
 	        "status" => "error",
-	        "messages" => array_values($errors)];
+	        "message" => array_values($errors)];
 	        header('Content-Type: application/json');
 	        echo json_encode($result, JSON_PRETTY_PRINT);
 	        exit;
@@ -32,7 +32,7 @@
 	            echo json_encode($result, JSON_PRETTY_PRINT);
 	            exit;
 	        } else {
-	            $result = ["status" => "error", "message" => "invalid password"];
+	            $result = ["status" => "error", "message" => ["invalid password"]];
 	            header('Content-Type: application/json');
 	            echo json_encode($result, JSON_PRETTY_PRINT);
 	            exit;
@@ -50,12 +50,12 @@
 		    		header('Content-Type: application/json');
 	            	echo json_encode($result, JSON_PRETTY_PRINT);
 		    	} else {
-		    		$result = ["status" => "error", "message" => $result[0]];
+		    		$result = ["status" => "error", "message" => [$result[0]]];
 		    		header('Content-Type: application/json');
 	            	echo json_encode($result, JSON_PRETTY_PRINT);
 		    	}
 		    } else {
-		    	$result = ["status" => "error", "message" => "invalid username"];
+		    	$result = ["status" => "error", "message" => ["invalid username"]];
 		    	header('Content-Type: application/json');
             	echo json_encode($result, JSON_PRETTY_PRINT);
 		    }

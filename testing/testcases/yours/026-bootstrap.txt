@@ -1,0 +1,52 @@
+{
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "student.csv": 26
+        },
+        {
+            "course.csv": 24
+        },
+        {
+            "section.csv": 32
+        },
+        {
+            "prerequisite.csv": 8
+        },
+        {
+            "course_completed.csv": 4
+        },
+        {
+            "bid.csv": 22
+        }
+    ],
+    "error": [
+        {
+            "file": "section.csv",
+            "line": 4,
+            "message": [
+                "invalid course",
+                "invalid venue",
+                "invalid size"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 7,
+            "message": [
+                "invalid start",
+                "invalid size"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 22,
+            "message": [
+                "invalid course",
+                "invalid section",
+                "invalid day",
+                "invalid venue"
+            ]
+        }
+    ]
+}
