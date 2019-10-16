@@ -217,7 +217,7 @@ class StudentDAO{
                 ";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
-        $stmt->bindParam(':total',$total,PDO::PARAM_INT);
+        $stmt->bindParam(':total',$total,PDO::PARAM_STR);
         
         // Step 3 - Execute SQL Query
         $status = $stmt->execute();
@@ -237,7 +237,7 @@ class StudentDAO{
                 ";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
-        $stmt->bindParam(':total',$total,PDO::PARAM_INT);
+        $stmt->bindParam(':total',$total,PDO::PARAM_STR);
         
         // Step 3 - Execute SQL Query
         $status = $stmt->execute();
