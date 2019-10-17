@@ -40,7 +40,7 @@
 	    } else {
 
 
-		    $dao = new StudentDao();
+		    $dao = new StudentDAO();
 		    $username_valid = $dao->isUserIdValid($username);
 
 		    if ($username_valid) {
