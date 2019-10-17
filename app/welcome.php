@@ -54,7 +54,7 @@ $newEDollar = $eDollar - $totalAmtBid;
 
 ?>
 <body>
-<h1>Welcome to BOIS, <?php echo $name; ?></h1>
+<h1>Welcome to BIOS, <?php echo $name; ?></h1>
 <br>
 <h3>You currently have <?php echo $newEDollar; ?> eDollars left</h3>
 <br>
