@@ -172,15 +172,21 @@
             $newAmt = $bid->getAmount();
             $courseId = $bid->getCode();
             $sectionId = $bid->getSection();
-
+            $biddedAmt=$bidDAO->retrieveBiddedAmt($userId, $courseId, $sectionId);
+            $currentBidAmt=$bidDAO->retrieveBiddedAmtNoSection($userId, $courseId);
             if($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
                 $bidDAO->updateBidjson($userId, $courseId, $sectionId, $newAmt, 'edollar');
+                $StudentDAO->addEdollar($userId, $biddedAmt[0]);
+                $StudentDAO->deductEdollar($userId, $newAmt);
             }
             elseif($bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
                 $bidDAO->updateBidjson($userId, $courseId, $sectionId, $newAmt, 'sectionedollar');
+                $StudentDAO->addEdollar($userId, $currentBidAmt);
+                $StudentDAO->deductEdollar($userId, $newAmt);
             }
             elseif(!$bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checkall')){
                 $bidDAO->add($bid);
+                $StudentDAO->deductEdollar($userId, $newAmt);
             }
         }
         $result = [ 

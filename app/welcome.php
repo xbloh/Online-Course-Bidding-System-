@@ -52,7 +52,7 @@ foreach($bids as $bid)
 
 ?>
 <body>
-<h1>Welcome to BOIS, <?php echo $name; ?></h1>
+<h1>Welcome to BIOS, <?php echo $name; ?></h1>
 <br>
 <h3>You currently have <?php echo $eDollar; ?> eDollars left</h3>
 <br>

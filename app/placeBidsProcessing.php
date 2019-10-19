@@ -55,10 +55,8 @@ foreach ($_SESSION['bids'] as $bid) {
 	}
 	$StudentObj=$StudentDAO->retrieveStudentByUserId($userId);
 	$StudentAmt=$StudentObj->getEdollar();
-	$biddedAmt=$bidDAO->totalAmountByID($userId);
-	$totalAmtBid=$biddedAmt+$totalAmtCart;
-	if($StudentAmt-$totalAmtBid<0){
-		$exceedAmt=$StudentAmt-$totalAmtBid;
+	if($StudentAmt-$totalAmtCart<0){
+		$exceedAmt=$totalAmtCart-$StudentAmt;
 		$isAllowed[]="Exceeded E-dollar Amount by ".abs($exceedAmt).".(Student E-dollar: ".$StudentAmt.")";
 	}
 	
