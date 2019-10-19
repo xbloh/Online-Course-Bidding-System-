@@ -30,12 +30,12 @@ require_once 'include/common.php';
 $student = $_SESSION['student'];
 $name = $student->getName();
 $userId = $student->getUserId();
-$eDollar = $student->getEdollar();
-
 
 $coursesCompletedDAO = new CoursesCompletedDAO();
 $bidDAO = new BidDAO();
 $courseDAO = new CourseDAO();
+$studentDAO = new StudentDAO();
+$eDollar = $studentDAO->retrieveStudentByUserId($userId)->getEdollar();
 $coursesCompleted = $coursesCompletedDAO->retrieveCoursesCompleted($student);
 $student->setCoursesCompleted($coursesCompleted);
 
@@ -49,14 +49,12 @@ foreach($bids as $bid)
     
     $bidList[] = [$code, $section, $bidAmt];
 }
-$totalAmtBid = $bidDAO->totalAmountByID($userId);
-$newEDollar = $eDollar - $totalAmtBid;
 
 ?>
 <body>
 <h1>Welcome to BOIS, <?php echo $name; ?></h1>
 <br>
-<h3>You currently have <?php echo $newEDollar; ?> eDollars left</h3>
+<h3>You currently have <?php echo $eDollar; ?> eDollars left</h3>
 <br>
 <h2>Your Successful Bid(s):<h2>
 
