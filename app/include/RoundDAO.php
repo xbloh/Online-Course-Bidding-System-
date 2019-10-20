@@ -34,7 +34,7 @@ class RoundDAO {
 
     public function startRound1()
 		{
-			$sql = 'UPDATE rounds SET round = 1, status = "active" WHERE round = 0';
+			$sql = 'UPDATE rounds SET round = 1, status = "active"';
         
 	        $connMgr = new ConnectionManager();      
 	        $conn = $connMgr->getConnection();
