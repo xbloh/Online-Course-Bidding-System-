@@ -18,6 +18,20 @@ class RoundDAO {
         return $row['round'];            
     }
 
+    public function retrieveRoundStatus()
+    {
+        $sql = "SELECT status from rounds";
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        return $row['status']; 
+    }
+
     public function startRound1()
 		{
 			$sql = 'UPDATE rounds SET round = 1, status = "active" WHERE round = 0';
