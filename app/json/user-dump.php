@@ -20,12 +20,12 @@
 
         header('Content-Type: application/json');
         echo json_encode($out, JSON_PRETTY_PRINT);
-        exit;
+        exit();
 	} else {
 		$out = ["status" => "error" , "message" => ["invalid userid"]];
 		header('Content-Type: application/json');
         echo json_encode($out, JSON_PRETTY_PRINT);
-        exit;
+        exit();
 	}
 
 ?>
