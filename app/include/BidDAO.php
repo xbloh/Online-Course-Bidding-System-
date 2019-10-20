@@ -8,8 +8,8 @@ class BidDAO
 	public function add($bid){
 
 
-        $sql = 'INSERT INTO BID (userid, amount, code, section)
-                VALUES (:userid, :amount, :code, :section)
+        $sql = 'INSERT INTO BID (userid, amount, code, section, result)
+                VALUES (:userid, :amount, :code, :section, "-")
                 ';
 
         $connMgr = new ConnectionManager();       
@@ -380,7 +380,7 @@ class BidDAO
 
         $i = 1;
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = ['row' => $i, 'userid' => $row['userid'], 'amount' => $row['amount']];
+            $result[] = ['row' => $i, 'userid' => $row['userid'], 'amount' => $row['amount'], 'result' => $row['result']];
             $i ++;
         }
         return $result;
