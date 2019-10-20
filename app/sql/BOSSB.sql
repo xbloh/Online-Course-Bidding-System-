@@ -52,6 +52,7 @@ create table BID (
     amount decimal(5,2) not null,
     code varchar(100),
     section varchar(2) not null,
+    result varchar(3) not null,
 	CONSTRAINT BID_PK primary key (userid,code,section)
 );
 
@@ -69,11 +70,3 @@ create table ROUNDS (
 );
 
 INSERT INTO ROUNDS (round, status) VALUES (0, 'Begin');
-
-LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/course.csv' INTO TABLE COURSE FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
-LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/prerequisite.csv' INTO TABLE PREREQUISITE FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
-LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/section.csv' INTO TABLE SECTION FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
-LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/student.csv' INTO TABLE STUDENT FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
-LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/bid.csv' INTO TABLE BID FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
-LOAD DATA LOCAL INFILE 'C:/Users/Tricia/Documents/GitHub/project-g4t4/app/sql/sample_data/course_completed.csv' INTO TABLE COURSE_COMPLETED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
-
