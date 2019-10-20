@@ -366,9 +366,9 @@ class BidDAO
         return $result;
     }
 
-    public function retrieveBySection($courseId, $sectionId)
+    public function bidDump($courseId, $sectionId, $round)
     {
-        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId order by amount desc, userid';
+        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and round = :round order by amount desc, userid';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -376,6 +376,7 @@ class BidDAO
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':courseId', $courseId, PDO::PARAM_STR);
         $stmt->bindParam(':sectionId', $sectionId, PDO::PARAM_STR);
+        $stmt->bindParam(':round', $round, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 

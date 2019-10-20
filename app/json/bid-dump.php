@@ -5,6 +5,9 @@
 	$bidDAO = new BidDAO();
 	$courseDAO = new CourseDAO();
 	$sectionDAO = new SectionDAO();
+	$roundDAO = new RoundDAO();
+	$round = $roundDAO->retrieveCurrentRound();
+
 	$errors = [];
 
 	$request = json_decode($_REQUEST['r']);
@@ -27,7 +30,7 @@
         exit();
 	}
 
-	$bids = $bidDAO->retrieveBySection($course, $section);
+	$bids = $bidDAO->bidDump($course, $section, $round);
 	$out = ["status" => "success", "bids" => $bids];
 	header('Content-Type: application/json');
 	echo json_encode($out, JSON_PRETTY_PRINT);
