@@ -2,6 +2,8 @@
 require_once 'common.php';
 
 function doBootstrap(){
+    $roundDAO = new RoundDAO();
+    $roundDAO->startRound1();
     $errors = array();
 
     #need tmp_name (temporary name) to create for the file and stored inside apache temp folder for proper read address
@@ -408,8 +410,7 @@ function doBootstrap(){
     header('Content-Type: application/json');
     echo json_encode($result, JSON_PRETTY_PRINT);
 
-    $roundDAO = new RoundDAO();
-    $roundDAO->startRound1();
+
 
 }
 ?>

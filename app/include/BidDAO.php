@@ -7,9 +7,11 @@ class BidDAO
 {
 	public function add($bid){
 
+        $roundDAO = new RoundDAO();
+        $current = $roundDAO->retrieveCurrentRound();
 
-        $sql = 'INSERT INTO BID (userid, amount, code, section, result)
-                VALUES (:userid, :amount, :code, :section, "-")
+        $sql = 'INSERT INTO BID (userid, amount, code, section, result, round)
+                VALUES (:userid, :amount, :code, :section, "-", :current)
                 ';
 
         $connMgr = new ConnectionManager();       
@@ -28,6 +30,7 @@ class BidDAO
         $stmt->bindParam(':amount', $amount, PDO::PARAM_STR);
         $stmt->bindParam(':code', $code, PDO::PARAM_STR);
         $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
+        $stmt->bindParam(':current', $current, PDO::PARAM_INT);
         
         $isAddOK = False;
         if ($stmt->execute()) {

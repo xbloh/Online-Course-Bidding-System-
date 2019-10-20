@@ -53,6 +53,7 @@ create table BID (
     code varchar(100),
     section varchar(2) not null,
     result varchar(3) not null,
+    round int not null,
 	CONSTRAINT BID_PK primary key (userid,code,section)
 );
 
