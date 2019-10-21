@@ -390,6 +390,27 @@ class BidDAO
         return $result;
     }
 
+    public function retrieveSuccessfulBids($courseId, $sectionId)
+    {
+        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and result = "in" order by userid';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseId', $courseId, PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId', $sectionId, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['userid' => $row['userid'], 'amount' => $row['amount']];
+        }
+        return $result;
+    }
+
 }
 
 ?>
