@@ -1,3 +1,8 @@
+<?php
+
+require_once 'include/protect_admin.php';
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,3 +31,4 @@
 <br>
 </body>
 </html>
+
