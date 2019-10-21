@@ -127,16 +127,17 @@ require_once 'common.php';
 			
 		}
 
-		public function isSectionIdExists($sectionId)
+		public function isSectionIdExists($courseId, $sectionId)
 	    {
 
-			$sql = 'SELECT COUNT(*) as countSection from section where sectionID=:sectionId';
+			$sql = 'SELECT COUNT(*) as countSection from section where courseID = :courseId and sectionID=:sectionId';
 				
 			$connMgr = new ConnectionManager();      
 			$conn = $connMgr->getConnection();
 
 			$stmt = $conn->prepare($sql);
 			$stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+			$stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
 			
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$stmt->execute();
