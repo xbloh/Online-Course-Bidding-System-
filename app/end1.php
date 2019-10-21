@@ -55,20 +55,22 @@ foreach($courses as $course)
         }
     }
 }
-// var_dump($succesfulBids);
+var_dump($succesfulBids);
 var_dump($failBids);
 foreach($succesfulBids as $successBid)
 {
     $userid = $successBid[0];
-    $amount = $successBid[1];
     $code = $successBid[2];
     $section = $successBid[3];
-    $success = $successfulBid->successfulAddBid($userid, $amount, $code, $section);
+    $bidStatus = 'in';
+    $bid->updateStatus($userid, $code, $section, $bidStatus);
 }
 
 foreach ($failBids as $failbid) {
     $userid = $failbid[0];
     $toAdd = $failbid[1];
+    $bidStatus = 'out';
+    $bid->updateStatus($userid, $code, $section, $bidStatus);
     $studentDAO->addEdollar($userid, $toAdd);
 }
 

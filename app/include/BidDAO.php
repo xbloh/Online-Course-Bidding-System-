@@ -390,6 +390,30 @@ class BidDAO
         return $result;
     }
 
+    public function updateStatus($userid, $code, $section, $bidStatus) {
+        $sql= 'UPDATE BID SET RESULT=:bidStatus WHERE userid=:userid AND code=:code AND section=:section';
+
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql); 
+
+        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+        $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
+        $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
+        $stmt->bindParam(':bidStatus', $bidStatus, PDO::PARAM_STR);
+    
+        $status=FALSE;
+        
+        if($stmt->execute()){
+            $status=TRUE;
+        }
+        $stmt = null;
+        $pdo = null;
+        return $status;
+        
+    }
+
 }
 
 ?>
