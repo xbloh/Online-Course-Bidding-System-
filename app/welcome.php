@@ -27,6 +27,8 @@
 
 require_once 'include/common.php';
 
+require_once 'include/protect.php';
+
 $student = $_SESSION['student'];
 $name = $student->getName();
 $userId = $student->getUserId();
