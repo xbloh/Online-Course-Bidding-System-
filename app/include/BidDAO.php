@@ -398,9 +398,9 @@ class BidDAO
 
         $stmt = $conn->prepare($sql); 
 
-        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
-        $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
-        $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':code', $code, PDO::PARAM_STR);
+        $stmt->bindParam(':section', $section, PDO::PARAM_STR);
         $stmt->bindParam(':bidStatus', $bidStatus, PDO::PARAM_STR);
     
         $status=FALSE;
@@ -411,6 +411,7 @@ class BidDAO
         $stmt = null;
         $pdo = null;
         return $status;
+    }
         
     public function retrieveSuccessfulBids($courseId, $sectionId)
     {
