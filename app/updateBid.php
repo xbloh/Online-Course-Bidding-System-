@@ -116,6 +116,9 @@ if(isset($_POST['update']))
         $courseId = $code[$i];
         $sectionId = $section[$i];
         $newAmount = $newAmt[$i];
+        $oldAmt = $bidDAO->retrieveBiddedAmt($userId, $courseId, $sectionId);
+        $StudentDAO->addEdollar($userId, $oldAmt);
+        $StudentDAO->deductEdollar($userId, $newAmount);
 
         $i++;
 
