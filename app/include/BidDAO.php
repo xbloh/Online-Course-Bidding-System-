@@ -96,7 +96,7 @@ class BidDAO
             $result[] = $row['amount'];
         }
 
-        return $result[0];
+        return $result;
     }
 
     public function retrieveBiddedAmtNoSection($userid, $code)
