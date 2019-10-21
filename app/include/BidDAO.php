@@ -434,6 +434,26 @@ class BidDAO
         return $result;
     }
 
+    public function retrieveUserSuccessfulBids($userId)
+    {
+        $sql = 'SELECT * from bid where userid = :userId and result = "in" order by userid';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['code' => $row['code'], 'section' => $row['section']];
+        }
+        return $result;
+    }
+
 }
 
 ?>
