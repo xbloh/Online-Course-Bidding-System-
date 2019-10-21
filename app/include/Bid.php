@@ -265,14 +265,12 @@ class Bid
 			$errors[] = "course completed";
 		}
 	}
-
-
-
 	return $errors;
-	
-		
-
 	}
+	// public function validate2()
+	// {
+
+	// }
 
 }
 ?>
