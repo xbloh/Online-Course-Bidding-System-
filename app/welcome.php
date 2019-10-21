@@ -69,7 +69,7 @@ echo "<table cellspacing='10px' cellpadding='3px'>
 foreach($bidList as $bidDisplay) {
     $displayCode = $bidDisplay[0];
     $displaySection = $bidDisplay[1];
-    $displayBid = $bidDisplay[2][0];
+    $displayBid = $bidDisplay[2];
     $course = $courseDAO->retrieveCourseById($displayCode);
     $courseName = $course->getTitle();
     echo "

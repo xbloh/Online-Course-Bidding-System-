@@ -103,7 +103,7 @@
         {	
             $biddedAmt=$bidDAO->retrieveBiddedAmt($userId, $courseId, $sectionId);
             $bidDAO->deleteBid($userId, $courseId, $sectionId);
-            $StudentDAO->addEdollar($userId, $biddedAmt[0]);
+            $StudentDAO->addEdollar($userId, $biddedAmt);
             $result = [ 
                 "status" => "success",
             ];

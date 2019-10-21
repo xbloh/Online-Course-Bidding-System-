@@ -11,7 +11,7 @@ if(isset($_POST['deleteCourseSection']))
 {
     // foreach($_POST['deleteCourseSection'] as $check){
     $CourseSection=explode('+', $_POST['deleteCourseSection']);
-    $amount = $bidDAO->retrieveBiddedAmt($userId, $CourseSection[0], $CourseSection[1])[0];
+    $amount = $bidDAO->retrieveBiddedAmt($userId, $CourseSection[0], $CourseSection[1]);
     $studentDAO->addEdollar($userId, $amount);
     $deleteStatus=$bidDAO->deleteBid($userId, $CourseSection[0], $CourseSection[1]);
     if($deleteStatus){
