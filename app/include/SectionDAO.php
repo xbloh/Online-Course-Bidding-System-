@@ -233,7 +233,27 @@ require_once 'common.php';
 	            $result[] = ['course' => $row['courseID'], 'section' => $row['sectionID'], 'day' => $row['day'], 'start' => $row['start'], 'start' => $row['start'], 'end' => $row['end'], 'instructor' => $row['instructor'], 'venue' => $row['venue'], 'size' => $row['size']];
 	        }
 	        return $result;
-	    }
+		}
+		
+		// public function addSize($courseId, $sec)
+	    // {
+		// 	$currentSize = $this->retrieveStudentByUserId($userid)->getEdollar();
+		// 	$total = $current + $toAdd;
+		// 	$connMgr = new ConnectionManager();
+		// 	$pdo = $connMgr->getConnection();
+
+		// 	// Step 2 - Write & Prepare SQL Query (take care of Param Binding if necessary)
+		// 	$sql = "UPDATE student set edollar = :total where userid = :userid
+		// 			";
+		// 	$stmt = $pdo->prepare($sql);
+		// 	$stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+		// 	$stmt->bindParam(':total',$total,PDO::PARAM_STR);
+			
+		// 	// Step 3 - Execute SQL Query
+		// 	$status = $stmt->execute();
+		// 	//echo $status;
+		// }
+
 
 	}
 
