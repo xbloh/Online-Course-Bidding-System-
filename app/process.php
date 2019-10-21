@@ -6,6 +6,8 @@ if( isset($_POST['userid']) && isset($_POST['password']) )
 {
     if ($_POST['userid'] === "admin") {
         if ($_POST['password'] === "@dm1n5PM") {
+            #set admin to session
+            $_SESSION['admin'] = 'set admin';
             header('Location: admin.php');
             exit;
         } else {
