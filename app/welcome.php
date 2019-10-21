@@ -100,6 +100,8 @@ echo "</table>";
 <br>
 <a href ="deleteBid.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Delete Bid</a>
 <br>
+<a href ="dropSection.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Drop a section</a>
+<br>
 <a href ="logout.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Logout</a>
 
 </body>

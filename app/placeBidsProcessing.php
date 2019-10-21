@@ -5,9 +5,12 @@ $bidDAO = new BidDAO();
 $StudentDAO = new StudentDAO();
 $SectionDAO = new SectionDAO;
 $CourseDAO = new CourseDAO;
+$roundDAO = new RoundDAO();
 $student = $_SESSION['student'];
 $userId = $student->getUserId();
 $totalAmtCart=0;
+$currentRnd = $roundDAO->retrieveCurrentRound();
+$rndStatus = $roundDAO->retrieveRoundStatus();
 
 foreach ($_SESSION['cart'] as $sectionSelected) {
 	if($sectionSelected!=NULL){
@@ -25,12 +28,8 @@ foreach ($_SESSION['cart'] as $sectionSelected) {
 			die;
 		}
 
-
-
-
 		if (isset($_POST[$identifier])) {
 			$bidAmt = $_POST[$identifier] + 0;
-
 
 			if (isset($_SESSION['bids'])) {
 				$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $sectionId, False, True);
@@ -46,6 +45,7 @@ $bidErrors = 0;
 
 
 // var_dump($_SESSION['bids']);
+
 foreach ($_SESSION['bids'] as $bid) {
 	$isAllowed = $bid->validate();
 	$noOfSectionBidded=$bidDAO->numberOfSectionsByID($userId);
