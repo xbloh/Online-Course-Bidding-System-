@@ -183,12 +183,12 @@ class BidDAO
         // Add code to delete a record from employmentstat table in database, 
         // given the id of an existing record
         // $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $status=FALSE;
+        $status=False;
         // $status=$stmt->execute();
         // echo"$userId, $courseId,$sectionId";
         // if(!$status){
         if($stmt->execute()){
-            $status=TRUE;
+            $status=True;
         }
         $stmt = null;
         $pdo = null;

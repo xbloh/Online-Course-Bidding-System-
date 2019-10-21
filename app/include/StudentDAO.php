@@ -222,7 +222,7 @@ class StudentDAO{
         // Step 3 - Execute SQL Query
         $status = $stmt->execute();
         //echo $status;
-
+        return $status;
     }
 
     public function deductEdollar($userid, $amount)
