@@ -1,7 +1,6 @@
 <?php
 
 require_once 'include/common.php';
-require_once 'include/protect.php';
 
 $bidDAO = new BidDAO();
 $StudentDAO = new StudentDAO();
