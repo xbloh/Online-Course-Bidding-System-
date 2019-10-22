@@ -1,4 +1,6 @@
 <?php
+require_once 'include/protect_admin.php';
+
 class sort {
 	function title($a, $b)
 	{

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'include/common.php';
+require_once 'common.php';
 require_once 'include/protect_admin.php';
 
 $bid = new BidDAO();
@@ -8,8 +8,6 @@ $coursedao = new CourseDAO();
 $section = new SectionDAO();
 $successfulBid = new SuccessfulBidDAO();
 $courses = $coursedao->retrieveAllCourses();
-$studentDAO = new StudentDAO();
-$failBids = [];
 
 $clearingPrice = NULL;
 $succesfulBids = [];
@@ -24,8 +22,8 @@ foreach($courses as $course)
         var_dump($bidByUserid);
         if(count($bidByUserid) >= $sectionSize)
         {
-            $clearingPrice = $bidByUserid[$sectionSize-1][1];
-            //echo $clearingPrice;
+            $clearingPrice = $bidByUserid[$sectionSize][1];
+            echo $clearingPrice;
             foreach($bidByUserid as $bidUser)
             {
                 $user = $bidUser[0];
@@ -33,14 +31,6 @@ foreach($courses as $course)
                 if($amount > $clearingPrice)
                 {
                     $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
-                } elseif ($amount == $clearingPrice) {
-                    if ($bidByUserid[$sectionSize][1] == $clearingPrice) {
-                        $failBids[] = [$user, $amount, $courseId, $sectionId];
-                    } else {
-                        $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
-                    }
-                } else {
-                    $failBids[] = [$user, $amount, $courseId, $sectionId];
                 }
             }
             
@@ -57,22 +47,13 @@ foreach($courses as $course)
     }
 }
 var_dump($succesfulBids);
-var_dump($failBids);
 foreach($succesfulBids as $successBid)
 {
     $userid = $successBid[0];
+    $amount = $successBid[1];
     $code = $successBid[2];
     $section = $successBid[3];
-    $bidStatus = 'in';
-    $bid->updateStatus($userid, $code, $section, $bidStatus);
-}
-
-foreach ($failBids as $failbid) {
-    $userid = $failbid[0];
-    $toAdd = $failbid[1];
-    $bidStatus = 'out';
-    $bid->updateStatus($userid, $code, $section, $bidStatus);
-    $studentDAO->addEdollar($userid, $toAdd);
+    $success = $successfulBid->successfulAddBid($userid, $amount, $code, $section);
 }
 
 ?>
