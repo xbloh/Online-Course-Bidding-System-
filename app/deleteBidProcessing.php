@@ -1,5 +1,7 @@
 <?php
 require_once 'include/common.php';
+require_once 'include/protect.php';
+
 $userId=$_SESSION['student']->getUserId();
 // $section='S1';
 // $course='IS102';

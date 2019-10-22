@@ -1,5 +1,5 @@
 <?php
-
+require_once 'include/protect.php';
 class Course_Completed
 {
 	private $userid;

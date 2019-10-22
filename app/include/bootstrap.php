@@ -1,5 +1,6 @@
 <?php
 require_once 'common.php';
+require_once 'include/protect_admin.php';
 
 function doBootstrap(){
     $roundDAO = new RoundDAO();
