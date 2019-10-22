@@ -1,5 +1,4 @@
 <?php
-require_once 'include/protect.php';
 
 class SuccessfulBid
 {

@@ -3,7 +3,7 @@
 // Session should have a student object stored in it (need research, apparently session storing objects can't work well with huge traffic flow)
 
 require_once 'include/common.php';
-require_once 'include/protect.php';
+//require_once 'include/protect.php';
 
 $student = $_SESSION['student'];
 

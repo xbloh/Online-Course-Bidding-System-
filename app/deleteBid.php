@@ -5,7 +5,7 @@
 </head>
 <?php
 require_once 'include/common.php';
-require_once 'include/protect.php';
+//require_once 'include/protect.php';
 
 $userid=$_SESSION['userid'];
 $bidDAO= new BidDAO();
