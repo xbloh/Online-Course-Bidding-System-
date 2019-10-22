@@ -254,6 +254,27 @@ require_once 'common.php';
 		// 	//echo $status;
 		// }
 
+		public function updateSize($courseId, $sectionId, $newSize) {
+			$sql='UPDATE section SET size=:newsize WHERE courseID=:courseid AND sectionID=:sectionid';
+	
+			$connMgr = new ConnectionManager();       
+			$conn = $connMgr->getConnection();
+	
+			$stmt = $conn->prepare($sql); 
+	
+			$stmt->bindParam(':newsize', $newSize, PDO::PARAM_STR);
+			$stmt->bindParam(':courseid', $courseId, PDO::PARAM_STR);
+			$stmt->bindParam(':sectionid', $sectionId, PDO::PARAM_STR);
+		
+			$status=FALSE;
+			
+			if($stmt->execute()){
+				$status=TRUE;
+			}
+			$stmt = null;
+			$pdo = null;
+			return $status;
+		}
 
 	}
 
