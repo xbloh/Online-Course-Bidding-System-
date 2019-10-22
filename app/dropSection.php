@@ -1,7 +1,7 @@
 <?php
 
 	require_once 'include/common.php';
-	//require_once 'include/protect.php';
+	require_once 'include/protect.php';
 	
 	$bidDAO = new BidDAO();
 	$userId = $_SESSION['student']->getUserId();

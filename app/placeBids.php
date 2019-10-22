@@ -1,6 +1,7 @@
 <?php
 	// for all bid validations
 	require_once 'include/common.php';
+	require_once 'include/protect.php';
 	
 	$sectionDAO = new SectionDAO();
 	// ignore validations first

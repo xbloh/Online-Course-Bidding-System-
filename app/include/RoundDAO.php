@@ -1,7 +1,6 @@
 <?php
 
 require_once 'common.php';
-//require_once 'include/protect_admin.php';
 
 class RoundDAO {
 

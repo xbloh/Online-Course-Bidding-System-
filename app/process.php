@@ -1,7 +1,6 @@
 <?php
 
 require_once 'include/common.php';
-//require_once 'include/protect.php';
 
 if( isset($_POST['userid']) && isset($_POST['password']) )
 {

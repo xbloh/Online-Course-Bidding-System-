@@ -14,7 +14,7 @@
 					<select name='indexOfCourseToBid'>
 						<?php
 							require 'include/common.php';
-							//require_once 'include/protect.php';
+							require_once 'include/protect.php';
 							
 							foreach ($_SESSION['coursesAvailable'] as $index => $course) {
 								
