@@ -40,8 +40,7 @@ $updatedList = [];
 foreach($bidList as $bidDisplay) {
     $displayCode = $bidDisplay[0];
     $displaySection = $bidDisplay[1];
-    $displayBid = $bidDisplay[2][0];
-
+    $displayBid = $bidDisplay[2];
     $count++;
     echo "
     <tr>
