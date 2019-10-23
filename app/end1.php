@@ -5,7 +5,7 @@ require_once 'include/protect_admin.php';
 
 $bid = new BidDAO();
 $coursedao = new CourseDAO();
-$section = new SectionDAO();
+$sectiondao = new SectionDAO();
 $successfulBid = new SuccessfulBidDAO();
 $courses = $coursedao->retrieveAllCourses();
 $studentDAO = new StudentDAO();
@@ -16,11 +16,11 @@ $succesfulBids = [];
 foreach($courses as $course)
 {
     $courseId = $course->getCourseId(); 
-    $sectionIds = $section->retrieveSectionIds($courseId);
+    $sectionIds = $sectiondao->retrieveSectionIds($courseId);
     foreach($sectionIds as $sectionId)
     {
         $bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
-        $sectionSize = $section->retrieveSectionSize($courseId,$sectionId);
+        $sectionSize = $sectiondao->retrieveSectionSize($courseId,$sectionId);
         //var_dump($bidByUserid);
         if(count($bidByUserid) >= $sectionSize)
         {
@@ -115,9 +115,9 @@ foreach($courseList as $course)
     $takenSlot = 0;
     $takenSlot = count($course);
     $availableSlot =  $sectionSize - $takenSlot;
-    var_dump([$courseId, $sectionId, $availableSlot]);
-
-    //$section->updateSize($courseId, $sectionId, $availableSlot);
+    // var_dump([$courseId, $sectionId, $availableSlot]);
+    $sectiondao->updateSize($courseId, $sectionId, $availableSlot);
 }
+
 
 ?>
