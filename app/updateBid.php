@@ -1,6 +1,7 @@
 <?php
 
 require_once 'include/common.php';
+require_once 'include/protect.php';
 
 $student = $_SESSION['student'];
 $name = $student->getName();
@@ -39,8 +40,7 @@ $updatedList = [];
 foreach($bidList as $bidDisplay) {
     $displayCode = $bidDisplay[0];
     $displaySection = $bidDisplay[1];
-    $displayBid = $bidDisplay[2][0];
-
+    $displayBid = $bidDisplay[2];
     $count++;
     echo "
     <tr>

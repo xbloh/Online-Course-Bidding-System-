@@ -1,5 +1,6 @@
 <?php
 require_once 'include/common.php';
+
 $userId=$_SESSION['student']->getUserId();
 // $section='S1';
 // $course='IS102';

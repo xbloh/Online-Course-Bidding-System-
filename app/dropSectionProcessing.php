@@ -1,6 +1,5 @@
 <?php
 	require_once 'include/common.php';
-	require_once 'include/protect.php';
 
 	$toDrop = [];
 	$bidDAO = new BidDAO();

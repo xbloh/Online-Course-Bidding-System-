@@ -1,5 +1,4 @@
 <?php
-
 class Course_Completed
 {
 	private $userid;
