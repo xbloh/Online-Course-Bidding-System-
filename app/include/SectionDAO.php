@@ -256,7 +256,7 @@ require_once 'common.php';
 		// }
 
 		public function updateSize($courseId, $sectionId, $newSize) {
-			$sql='UPDATE section SET size=:newsize WHERE courseID=:courseid AND sectionID=:sectionid';
+			$sql= 'UPDATE section SET size=:newsize WHERE courseID=:courseid AND sectionID=:sectionid';
 	
 			$connMgr = new ConnectionManager();       
 			$conn = $connMgr->getConnection();

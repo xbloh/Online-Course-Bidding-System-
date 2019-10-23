@@ -86,14 +86,14 @@ echo "<table cellspacing='10px' cellpadding='3px'>
 $courseList = [];
 foreach($succesfulBids as $successBid) {
     $courseSectionId = $successBid[2] . "-". $successBid[3];
-    $courseList[$courseSectionId][] = [$successBid[0], $successBid[1], $successBid[3]];
+    $courseList[$courseSectionId][] = [$successBid[0], $successBid[1], $successBid[2], $successBid[3]];
     echo "
     <tr>
         <td>
             $successBid[0]
         </td>
         <td>
-         $successBid[2]
+            $successBid[2]
         </td>
         <td>
             $successBid[3]
@@ -108,10 +108,15 @@ echo "</table>";
 
 foreach($courseList as $course)
 {
-    //echo $course;
+    //var_dump($course);
+    $courseId = $course[0][2];
+    $sectionId = $course[0][3];
     $takenSlot = 0;
     $takenSlot = count($course);
     $availableSlot =  $sectionSize - $takenSlot;
+    var_dump([$courseId, $sectionId, $availableSlot]);
+
     //$section->updateSize($courseId, $sectionId, $availableSlot);
 }
+
 ?>
