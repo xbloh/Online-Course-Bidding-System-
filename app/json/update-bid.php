@@ -45,11 +45,11 @@
         $courseId = $bid_array['course'];
         $sectionId = $bid_array['section'];
 
-        if (isset($_SESSION['bids'])) {
-			$_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $sectionId, False, False, True);
-		} else {
-			$_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $sectionId, False, False, True)];
-        }
+        // if (isset($_SESSION['bids'])) {
+        $_SESSION['bids'][] = new Bid($userId, $bidAmt, $courseId, $sectionId, False, False, True);
+        // } else {
+            // $_SESSION['bids'] = [new Bid($userId, $bidAmt, $courseId, $sectionId, False, False, True)];
+        // }
         $totalAmtCart+=$bidAmt;
 
         if ($bidAmt<10||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $bidAmt))||$bidAmt>999) {
@@ -80,6 +80,14 @@
                 $exceedAmt=$totalAmt-$totalAmtCart;
                 $isAllowed[]="insufficient e$";
             }
+
+            if($currentRnd == '2' && $rndStatus == 'active')
+            {   
+                if(!$bidDAO->checkRoundTwo($userId, $courseId, $sectionId))
+                {
+                    $isAllowed[] = "invalid bid for round 1";
+                }
+            }
         }
 
         elseif($errors==[] && $bidDAO->checkVariableExists($userId, $courseId, $sectionId, $checktype='checktillcourse')){
@@ -92,6 +100,14 @@
                     $exceedAmt=$totalAmt-$totalAmtCart;
                     $isAllowed[]="insufficient e$";
                 }
+
+                // if($currentRnd == '2' && $rndStatus == 'active')
+                // {   
+                //     if(!$bidDAO->checkRoundTwo($userId, $courseId, $sectionId))
+                //     {
+                //         $isAllowed[] = "invalid bid for round 1";
+                //     }
+                // }
 
                 $courseId=$bid->getCode();
                 $sectionId=$bid->getSection();

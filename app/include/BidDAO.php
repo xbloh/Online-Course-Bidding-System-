@@ -621,6 +621,33 @@ class BidDAO
         return $result;
     }
 
+    public function checkRoundTwo($userId, $courseId, $sectionId)
+    {
+        $sql = 'SELECT * from bid where userid = :userid and code = :courseId and section = :sectionId';
+
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        $stmt->bindParam(':userid',$userId,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $result = $row['round'];
+        $correct = FALSE;
+        if($result=='2')
+        {
+            $correct = TRUE;
+        }
+        return $correct;
+        
+    }
+
 }
 
 ?>
