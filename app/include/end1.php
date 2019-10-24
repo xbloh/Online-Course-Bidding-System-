@@ -6,7 +6,6 @@ require_once 'include/protect_admin.php';
 $bid = new BidDAO();
 $coursedao = new CourseDAO();
 $section = new SectionDAO();
-$successfulBid = new SuccessfulBidDAO();
 $courses = $coursedao->retrieveAllCourses();
 
 $clearingPrice = NULL;
@@ -53,7 +52,6 @@ foreach($succesfulBids as $successBid)
     $amount = $successBid[1];
     $code = $successBid[2];
     $section = $successBid[3];
-    $success = $successfulBid->successfulAddBid($userid, $amount, $code, $section);
 }
 
 ?>

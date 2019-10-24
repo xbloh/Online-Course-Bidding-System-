@@ -336,6 +336,7 @@ function doBootstrap(){
                         $currentErrors = $new_bid->validate();
                         if (empty($currentErrors)) {
                             $bidDAO->add($new_bid);
+                            $studentDAO->deductEdollar($data[0], $data[1]);
                             $bid_processed++;
                         } else {
                             foreach ($currentErrors as $error) {
