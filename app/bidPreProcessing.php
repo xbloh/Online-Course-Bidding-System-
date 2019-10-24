@@ -7,15 +7,24 @@ require_once 'include/common.php';
 $student = $_SESSION['student'];
 
 // for round 1 bidding i.e. $isRound1 == True, for now just set as true
-$isRound1 = True;
+$roundDAO = new RoundDAO();
+$status = $roundDAO->retrieveRoundStatus();
+if ($status == 'active') {
+	$round = $roundDAO->retrieveCurrentRound();
+} else {
+	$round = 0;
+}
+
 $courseDAO = new CourseDAO();
 
-if ($isRound1) {
+if ($round == 1) {
 	$school = $student->getSchool();
 	$coursesAvailable = $courseDAO->retrieveCoursesBySchool($school);
 
-} elseif ($isRound2) {
+} elseif ($round == 2) {
 	$coursesAvailable = $courseDAO->retrieveAllCourses();
+} else {
+	$coursesAvailable = [];
 }
 
 //courses available will be added as an array of course objects into SESSION
