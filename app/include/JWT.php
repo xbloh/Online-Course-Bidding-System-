@@ -198,7 +198,7 @@ class JWT
 	 * @return string The JSON web token
 	 */
 	public static function generate_token($username, $secret_key) {
-		$token_arr = [ 'status' => 'success',  'token' => $secret_key];
+		$token_arr = [ 'username' => $username,  'datetime' => date('Y-m-d H:i:s')];
 
 		$token = JWT::encode($token_arr, $secret_key);
 		return $token;    
@@ -215,8 +215,8 @@ class JWT
 	public static function verify_token($token, $secret_key) {
 		try {
 			$json_object = JWT::decode($token, $secret_key);
-			// var_dump($json_object);
-			// return true;
+			//var_dump($json_object);
+			//return true;
 
 			$now = new DateTime();
 			$now = $now->getTimestamp();
@@ -230,6 +230,7 @@ class JWT
 			} else {
 				return false;
 			}
+			return $json_object->{'username'};
 		} catch (Exception $ex) {
 			return false;
 		}

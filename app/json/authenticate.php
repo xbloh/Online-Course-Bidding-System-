@@ -38,27 +38,10 @@
 	            exit;
 	        }
 	    } else {
-
-
-		    $dao = new StudentDAO();
-		    $username_valid = $dao->isUserIdValid($username);
-
-		    if ($username_valid) {
-		    	$result = $dao->authenticate($username, $password);
-		    	if ($result[0] == "success") {
-		    		$result = ["status" => "success", "token" => generate_token($username)];
-		    		header('Content-Type: application/json');
-	            	echo json_encode($result, JSON_PRETTY_PRINT);
-		    	} else {
-		    		$result = ["status" => "error", "message" => [$result[0]]];
-		    		header('Content-Type: application/json');
-	            	echo json_encode($result, JSON_PRETTY_PRINT);
-		    	}
-		    } else {
-		    	$result = ["status" => "error", "message" => ["invalid username"]];
-		    	header('Content-Type: application/json');
-            	echo json_encode($result, JSON_PRETTY_PRINT);
-		    }
+	    	$result = ["status" => "error", "message" => ["invalid username"]];
+            header('Content-Type: application/json');
+            echo json_encode($result, JSON_PRETTY_PRINT);
+            exit;
 
 		}
 
