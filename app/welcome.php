@@ -57,14 +57,20 @@ foreach($bids as $bid)
     $winList = $bidDAO->winBids($code, $section, $vacancy, 2);
     $minBidAmt = $bidDAO->minBid($code, $section, $vacancy, 2, $winList);
     $result = $bid[2];
+
     $status = 'Unsuccessful';
+
     if($result=='in')
     {
         $status = 'Successful';
     }
-	if($currentRnd == '2' && $rndStatus == 'active')
+	if(($currentRnd == '2' && $rndStatus == 'active') || $rndStatus == 'completed')
 	{
-        if($bid[3]=='2')
+        if($bid[3]=='1')
+        {
+            $bidList[] = [$code, $section, $bidAmt, $status, $minBidAmt];
+        }
+        else
         {
             $bidList[] = [$code, $section, $bidAmt, $status, $minBidAmt];
         }
@@ -79,6 +85,7 @@ foreach($bids as $bid)
 <body>
 <h1>Welcome to BIOS, <?php echo $name; ?></h1>
 <br>
+<h2>Round <font style = "color:#1c87c9"><?php echo $roundDAO->retrieveCurrentRound();?></font> is currently <font style = "color:#1c87c9"><?php echo $roundDAO->retrieveRoundStatus();?></font></h2>
 <h3>You currently have <?php echo $eDollar; ?> eDollars left</h3>
 <br>
 
@@ -101,9 +108,14 @@ echo "<table cellspacing='10px' cellpadding='3px'>
 if($currentRnd == '2' && $rndStatus == 'active')
 {
     echo "<th>Bid Status</th>
-        <th>Minimum Bid</th>";
+          <th>Minimum Bid</th>";
+}
+if($currentRnd == '1' && $rndStatus == 'completed')
+{
+    echo "<th>Bid Status</th>";
 }
 echo"</tr>";
+
 foreach($bidList as $bidDisplay) {
     $displayCode = $bidDisplay[0];
     $displaySection = $bidDisplay[1];
@@ -149,7 +161,30 @@ foreach($bidList as $bidDisplay) {
             </td>
             <td>
                 $displayBid
-            </td>";
+            </td>
+            ";
+    }
+    
+    elseif($currentRnd == '1' && $rndStatus == 'completed')
+    {
+        echo "
+        <tr>
+            <td>
+                $courseName
+            </td>
+            <td>
+                $displayCode
+            </td>
+            <td>
+                $displaySection
+            </td>
+            <td>
+                $displayBid
+            </td>
+            <td>
+                {$bidDisplay[3]}
+            </td>
+            ";
     }
     echo "</tr>";
 }

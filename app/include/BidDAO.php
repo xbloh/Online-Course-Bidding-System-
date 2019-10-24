@@ -11,7 +11,7 @@ class BidDAO
         $current = $roundDAO->retrieveCurrentRound();
 
         $sql = 'INSERT INTO BID (userid, amount, code, section, result, round)
-                VALUES (:userid, :amount, :code, :section, "pending", :current)
+                VALUES (:userid, :amount, :code, :section, "-", :current)
                 ';
 
         $connMgr = new ConnectionManager();       

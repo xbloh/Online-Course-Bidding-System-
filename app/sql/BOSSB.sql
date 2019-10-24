@@ -57,14 +57,6 @@ create table BID (
 	CONSTRAINT BID_PK primary key (userid,code,section)
 );
 
-create table SUCCESSFUL_BID (
-    userid varchar(128) not null,
-    amount decimal(5,2) not null,
-    code varchar(100),
-    section varchar(2) not null,
-	CONSTRAINT SUCCESSFUL_BID_PK primary key (userid,code,section)
-);
-
 create table ROUNDS (
     round int not null,
     status varchar(10) not null
