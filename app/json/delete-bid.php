@@ -12,6 +12,10 @@
     $totalAmtCart = 0;
     $checkMissing = ['userid', 'course', 'section'];
 
+    $roundDAO = new RoundDAO();
+    $currentRnd = $roundDAO->retrieveCurrentRound();
+    $rndStatus = $roundDAO->retrieveRoundStatus();
+
     if(isset($_REQUEST['r']))
     {   
         $php_response = json_decode($_REQUEST['r']);
@@ -57,11 +61,10 @@
 			$errors[] = "invalid course";
         }
         
-		if (!$SectionDAO->isSectionIdExists($sectionId)) {
+		if (!$SectionDAO->isSectionIdExists($courseId, $sectionId)) {
 			$errors[] = "invalid section";
-		}
-
-        
+        }
+               
 
         }
         else
@@ -104,6 +107,24 @@
             $biddedAmt=$bidDAO->retrieveBiddedAmt($userId, $courseId, $sectionId);
             $bidDAO->deleteBid($userId, $courseId, $sectionId);
             $StudentDAO->addEdollar($userId, $biddedAmt);
+    
+            if($currentRnd == '2' && $rndStatus == 'active')
+            {
+                $vacancy = $SectionDAO->retrieveSectionSize($courseId, $sectionId);
+                $winList = $bidDAO->winBids($courseId, $sectionId, $vacancy, 2);
+                $allRoundTwo = $bidDAO->retrieveAllByCourseSection($courseId, $sectionId, 2);
+                for ($index=0; $index < count($allRoundTwo); $index++) 
+                {
+                    if(!in_array($index, $winList))
+                    {
+                        $bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'out');
+                    } 
+                    else
+                    {
+                        $bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'in');
+                    }
+                }
+            }
             $result = [ 
                 "status" => "success",
             ];
