@@ -1,5 +1,6 @@
 <?php
 	require_once '../include/common.php';
+	include '../include/json-protect.php';
 	
 	$request = json_decode($_REQUEST['r']);
 	$userId = $request->userid;

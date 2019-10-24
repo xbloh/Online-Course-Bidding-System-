@@ -1,7 +1,7 @@
 <?php
 
 	require_once '../include/common.php';
-	require_once '../include/token.php';
+	include '../include/json-protect.php';
 
 	$courseDAO = new CourseDAO();
 	$sectionDAO = new SectionDAO();

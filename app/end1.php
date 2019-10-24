@@ -5,7 +5,7 @@ require_once 'include/protect_admin.php';
 
 $bid = new BidDAO();
 $coursedao = new CourseDAO();
-$section = new SectionDAO();
+$sectiondao = new SectionDAO();
 $successfulBid = new SuccessfulBidDAO();
 $courses = $coursedao->retrieveAllCourses();
 $studentDAO = new StudentDAO();
@@ -16,12 +16,12 @@ $succesfulBids = [];
 foreach($courses as $course)
 {
     $courseId = $course->getCourseId(); 
-    $sectionIds = $section->retrieveSectionIds($courseId);
+    $sectionIds = $sectiondao->retrieveSectionIds($courseId);
     foreach($sectionIds as $sectionId)
     {
         $bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
-        $sectionSize = $section->retrieveSectionSize($courseId,$sectionId);
-        var_dump($bidByUserid);
+        $sectionSize = $sectiondao->retrieveSectionSize($courseId,$sectionId);
+        //var_dump($bidByUserid);
         if(count($bidByUserid) >= $sectionSize)
         {
             $clearingPrice = $bidByUserid[$sectionSize-1][1];
@@ -56,8 +56,8 @@ foreach($courses as $course)
         }
     }
 }
-var_dump($succesfulBids);
-var_dump($failBids);
+//var_dump($succesfulBids);
+//var_dump($failBids);
 foreach($succesfulBids as $successBid)
 {
     $userid = $successBid[0];
@@ -74,5 +74,50 @@ foreach ($failBids as $failbid) {
     $bid->updateStatus($userid, $code, $section, $bidStatus);
     $studentDAO->addEdollar($userid, $toAdd);
 }
+
+echo "<h1> Successful Bids:</h1>";
+echo "<table cellspacing='10px' cellpadding='3px'>
+<tr>
+    <th>Student</th>
+    <th>Course ID</th>
+    <th>Section ID</th>
+    <th>Bidded Amount</th>
+</tr>";
+
+$courseList = [];
+foreach($succesfulBids as $successBid) {
+    $courseSectionId = $successBid[2] . "-". $successBid[3];
+    $courseList[$courseSectionId][] = [$successBid[0], $successBid[1], $successBid[2], $successBid[3]];
+    echo "
+    <tr>
+        <td>
+            $successBid[0]
+        </td>
+        <td>
+            $successBid[2]
+        </td>
+        <td>
+            $successBid[3]
+        </td>
+        <td>
+            $successBid[1]
+        </td>
+    </tr>";
+}
+echo "</table>";
+//var_dump($courseList);
+
+foreach($courseList as $course)
+{
+    //var_dump($course);
+    $courseId = $course[0][2];
+    $sectionId = $course[0][3];
+    $takenSlot = 0;
+    $takenSlot = count($course);
+    $availableSlot =  $sectionSize - $takenSlot;
+    // var_dump([$courseId, $sectionId, $availableSlot]);
+    $sectiondao->updateSize($courseId, $sectionId, $availableSlot);
+}
+
 
 ?>

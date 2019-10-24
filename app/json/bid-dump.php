@@ -1,6 +1,7 @@
 <?php
 
 	include '../include/common.php';
+	include '../include/json-protect.php';
 
 	$bidDAO = new BidDAO();
 	$courseDAO = new CourseDAO();
