@@ -8,6 +8,8 @@ $coursedao = new CourseDAO();
 $sectiondao = new SectionDAO();
 $courses = $coursedao->retrieveAllCourses();
 $studentDAO = new StudentDAO();
+$roundDAO = new RoundDAO();
+$roundDAO->endRound1();
 $failBids = [];
 
 $clearingPrice = NULL;
@@ -67,8 +69,11 @@ foreach($succesfulBids as $successBid)
 }
 
 foreach ($failBids as $failbid) {
+    //var_dump($failbid);
     $userid = $failbid[0];
     $toAdd = $failbid[1];
+    $code = $failbid[2];
+    $section = $failbid[3];
     $bidStatus = 'out';
     $bid->updateStatus($userid, $code, $section, $bidStatus);
     $studentDAO->addEdollar($userid, $toAdd);
