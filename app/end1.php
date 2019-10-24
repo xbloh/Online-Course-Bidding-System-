@@ -6,7 +6,6 @@ require_once 'include/protect_admin.php';
 $bid = new BidDAO();
 $coursedao = new CourseDAO();
 $sectiondao = new SectionDAO();
-$successfulBid = new SuccessfulBidDAO();
 $courses = $coursedao->retrieveAllCourses();
 $studentDAO = new StudentDAO();
 $failBids = [];

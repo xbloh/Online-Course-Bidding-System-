@@ -9,7 +9,6 @@
 	$prerequisiteDAO = new PreRequisiteDAO();
 	$bidDAO = new BidDAO();
 	$completedCourseDAO = new CoursesCompletedDAO();
-	$sectionStudentDAO = new SuccessfulBidDAO();
 
 	$courses = $courseDAO->dump();
 	$students = $studentDAO->dump();
@@ -17,7 +16,7 @@
 	$prereq = $prerequisiteDAO->dump();
 	$cc = $completedCourseDAO->dump();
 	$bids = $bidDAO->dump();
-	$ss = $sectionStudentDAO->dump();
+	$ss = $bidDAO->ssDump();
 
 	$result = ['status' => 'success', 'course' => $courses,	'section' => $sections, 'student' => $students, 'prerequisite' => $prereq, 'bid' => $bids, 'completed-course' => $cc, 'section-student' => $ss];
 	// foreach ($courses as $key => $value) {

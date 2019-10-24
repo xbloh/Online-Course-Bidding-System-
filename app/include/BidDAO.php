@@ -11,7 +11,7 @@ class BidDAO
         $current = $roundDAO->retrieveCurrentRound();
 
         $sql = 'INSERT INTO BID (userid, amount, code, section, result, round)
-                VALUES (:userid, :amount, :code, :section, "-", :current)
+                VALUES (:userid, :amount, :code, :section, "pending", :current)
                 ';
 
         $connMgr = new ConnectionManager();       
@@ -362,6 +362,26 @@ class BidDAO
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result[] = ['userid' => $row['userid'], 'amount' => $row['amount'], 'course' => $row['code'], 'section' => $row['section']];
+        }
+        return $result;
+    }
+
+    public function ssDump()
+    {
+        $sql = 'SELECT * from bid order by code, section, amount desc, userid and result = "in"';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = ['userid' => $row['userid'], 'course' => $row['code'], 'section' => $row['section'], 'amount' => $row['amount']];
         }
         return $result;
     }
