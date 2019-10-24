@@ -1,6 +1,7 @@
 <?php
 
 	require_once '../include/common.php';
+	include '../include/json-protect.php';
 
 	$roundDAO = new RoundDAO();
 	$status = $roundDAO->retrieveRoundStatus();

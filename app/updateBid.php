@@ -3,11 +3,16 @@
 require_once 'include/common.php';
 require_once 'include/protect.php';
 
+$roundDAO = new RoundDAO();
+$currentRnd = $roundDAO->retrieveCurrentRound();
+$rndStatus = $roundDAO->retrieveRoundStatus();
+
 $student = $_SESSION['student'];
 $name = $student->getName();
 $userId = $student->getUserId();
 
 $bidDAO = new BidDAO();
+$sectionDAO = new SectionDAO();
 $bidList = [];
 $allBid = [];
 $bids = $bidDAO->retrieveCourseIdSectionIdBidded($userId);
@@ -19,8 +24,22 @@ foreach($bids as $bid)
     $code = $bid[0];
     $section = $bid[1];
     $bidAmt = $bidDAO->retrieveBiddedAmt($userId, $code, $section);
+    $vacancy = $sectionDAO->retrieveSectionSize($code,$section);
+    $winList = $bidDAO->winBids($code, $section, $vacancy, 2);
+    $minBidAmt = $bidDAO->minBid($code, $section, $vacancy, 2, $winList);
 
-    $bidList[] = [$code, $section, $bidAmt];
+    if($currentRnd == '2' && $rndStatus == 'active')
+	{
+        if($bid[3]=='2')
+        {
+            $bidList[] = [$code, $section, $bidAmt];
+        }
+    }
+    else
+    {
+        $bidList[] = [$code, $section, $bidAmt];
+    }
+
     $allBid[] = $bidAmt;
 }
 
@@ -92,6 +111,11 @@ if(isset($_POST['update']))
         $_SESSION['errors'][]='Exceed e-dollar amount';
     }
 
+    if($amount<$minBidAmt)
+    {
+        $_SESSION['errors'][]= "Insufficient bidded amount";
+    }
+
     if(!empty($_SESSION['errors'])){
         printErrors();
     }
@@ -130,6 +154,22 @@ if(isset($_POST['update']))
         echo "</tr>";
 
         $updated = $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmount);
+        if($currentRnd == '2' && $rndStatus == 'active')
+		{
+            $winList = $bidDAO->winBids($courseId, $sectionId, $vacancy, 2);
+            $allRoundTwo = $bidDAO->retrieveAllByCourseSection($courseId, $sectionId, 2);
+            for ($index=0; $index < count($allRoundTwo); $index++) 
+            {
+                if(!in_array($index, $winList))
+                {
+                    $bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'out');
+                } 
+                else
+                {
+                    $bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'in');
+                }
+            }
+		}
     
     }
     

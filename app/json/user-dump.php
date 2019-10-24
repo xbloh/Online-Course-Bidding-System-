@@ -1,6 +1,7 @@
 <?php
 
 	include '../include/common.php';
+	include '../include/json-protect.php';
 
 	$request = json_decode($_REQUEST['r']);
 

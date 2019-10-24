@@ -9,6 +9,9 @@ require_once 'include/protect.php';
 
 $userid=$_SESSION['userid'];
 $bidDAO= new BidDAO();
+$roundDAO = new RoundDAO();
+$currentRnd = $roundDAO->retrieveCurrentRound();
+$rndStatus = $roundDAO->retrieveRoundStatus();
 $CoursesSections=$bidDAO->retrieveCourseIdSectionIdBidded($userid);
 if($CoursesSections==[])
 {
@@ -34,18 +37,38 @@ echo"
 			</tr>";
 					foreach($CoursesSections as $CourseSection){
 						$CourseSectionStr=$CourseSection[0].'+'.$CourseSection[1];
-						echo"
-						<tr>
-						<td>
-							{$CourseSection[0]}
-						</td>
-						<td>
-							{$CourseSection[1]}
-						</td>
-						<td>
-							Delete <input type='radio' name='deleteCourseSection' value='$CourseSectionStr'>
-						</td>
-						</tr>";
+						if($currentRnd == '2' && $rndStatus == 'active')
+						{
+							if($CourseSection[3]=='2'){
+							echo"
+							<tr>
+							<td>
+								{$CourseSection[0]}
+							</td>
+							<td>
+								{$CourseSection[1]}
+							</td>
+							<td>
+								Delete <input type='radio' name='deleteCourseSection' value='$CourseSectionStr'>
+							</td>
+							</tr>";
+							}
+						}
+						else
+						{
+							echo"
+							<tr>
+							<td>
+								{$CourseSection[0]}
+							</td>
+							<td>
+								{$CourseSection[1]}
+							</td>
+							<td>
+								Delete <input type='radio' name='deleteCourseSection' value='$CourseSectionStr'>
+							</td>
+							</tr>";
+						}
 					}				
 				echo '<td>
 					<input type="submit" name="CourseSectionSelected" value="Submit">
