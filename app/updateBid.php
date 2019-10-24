@@ -94,20 +94,27 @@ if(isset($_POST['update']))
     $section = $_POST['sectionId'];
     $newAmt = $_POST['newAmt'];
     $StudentDAO = new StudentDAO();
-
     $Student=$StudentDAO->retrieveStudentByUserId($userId);
-    $studentAmt=$Student->getEdollar();
-
+    $studentAmt=0;
+    for ($i=0; $i < count($code); $i++) { 
+        $sectionBidAmt=$bidDAO->retrieveBiddedAmt($userId, $code[$i], $section[$i]);
+        $studentAmt+=$sectionBidAmt;
+    }
+    $studentAmt+=$Student->getEdollar();
     foreach($newAmt as $amount){
         if ($amount<10 || !(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $amount)) || $amount>999) {
             // if($amount<10||$amount!=number_format($amount,2,'.','')||$amount>999){
                 $_SESSION['errors'][] = "Invalid amount";
                 break;
         }
-        $studentAmt-=$amount;
+        // $studentAmt-=$amount;
     }
-
-    if($studentAmt<0){
+    $totalBid=0;
+    foreach($newAmt as $oneBid){
+        $totalBid += $oneBid;
+    }
+    // echo $studentAmt.$totalBid;
+    if($studentAmt<$totalBid){
         $_SESSION['errors'][]='Exceed e-dollar amount';
     }
 
@@ -143,8 +150,9 @@ if(isset($_POST['update']))
         $oldAmt = $bidDAO->retrieveBiddedAmt($userId, $courseId, $sectionId);
         $StudentDAO->addEdollar($userId, $oldAmt);
         $StudentDAO->deductEdollar($userId, $newAmount);
+        
 
-        $i++;
+        
 
         echo "<tr>";
         echo "<td>{$i}</td>";
@@ -156,7 +164,9 @@ if(isset($_POST['update']))
         $updated = $bidDAO->updateBid($userId, $courseId, $sectionId, $newAmount);
         if($currentRnd == '2' && $rndStatus == 'active')
 		{
+            $vacancy = $sectionDAO->retrieveSectionSize($courseId,$sectionId);
             $winList = $bidDAO->winBids($courseId, $sectionId, $vacancy, 2);
+            // var_dump($winList);
             $allRoundTwo = $bidDAO->retrieveAllByCourseSection($courseId, $sectionId, 2);
             for ($index=0; $index < count($allRoundTwo); $index++) 
             {
@@ -169,7 +179,8 @@ if(isset($_POST['update']))
                     $bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'in');
                 }
             }
-		}
+        }
+        $i++;
     
     }
     
