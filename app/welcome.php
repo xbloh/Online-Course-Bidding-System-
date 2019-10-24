@@ -37,9 +37,14 @@ $coursesCompletedDAO = new CoursesCompletedDAO();
 $bidDAO = new BidDAO();
 $courseDAO = new CourseDAO();
 $studentDAO = new StudentDAO();
+$sectionDAO = new SectionDAO();
 $eDollar = $studentDAO->retrieveStudentByUserId($userId)->getEdollar();
 $coursesCompleted = $coursesCompletedDAO->retrieveCoursesCompleted($student);
 $student->setCoursesCompleted($coursesCompleted);
+
+$roundDAO = new RoundDAO();
+$currentRnd = $roundDAO->retrieveCurrentRound();
+$rndStatus = $roundDAO->retrieveRoundStatus();
 
 $bidList = [];
 $bids = $bidDAO->retrieveCourseIdSectionIdBidded($userId);
@@ -48,8 +53,26 @@ foreach($bids as $bid)
     $code = $bid[0];
     $section = $bid[1];
     $bidAmt = $bidDAO->retrieveBiddedAmt($userId, $code, $section);
-    
-    $bidList[] = [$code, $section, $bidAmt];
+    $vacancy = $sectionDAO->retrieveSectionSize($code,$section);
+    $winList = $bidDAO->winBids($code, $section, $vacancy, 2);
+    $minBidAmt = $bidDAO->minBid($code, $section, $vacancy, 2, $winList);
+    $result = $bid[2];
+    $status = 'Unsuccessful';
+    if($result=='in')
+    {
+        $status = 'Successful';
+    }
+	if($currentRnd == '2' && $rndStatus == 'active')
+	{
+        if($bid[3]=='2')
+        {
+            $bidList[] = [$code, $section, $bidAmt, $status, $minBidAmt];
+        }
+    }
+    else
+    {
+        $bidList[] = [$code, $section, $bidAmt];
+    }
 }
 
 ?>
@@ -58,37 +81,77 @@ foreach($bids as $bid)
 <br>
 <h3>You currently have <?php echo $eDollar; ?> eDollars left</h3>
 <br>
-<h2>Your Successful Bid(s):<h2>
+
 
 <?php
+if($currentRnd == '2' || $rndStatus == 'completed')
+{
+    echo "<h2>Your Successful Bid(s):<h2>";
+}
+else
+{
+    echo "<h2>Your Placed Bid(s):<h2>";
+}
 echo "<table cellspacing='10px' cellpadding='3px'>
 <tr>
     <th>Course Name</th>
     <th>Course ID</th>
     <th>Section ID</th>
-    <th>Bidded Amount</th>
-</tr>";
+    <th>Bidded Amount</th>";
+if($currentRnd == '2' && $rndStatus == 'active')
+{
+    echo "<th>Bid Status</th>
+        <th>Minimum Bid</th>";
+}
+echo"</tr>";
 foreach($bidList as $bidDisplay) {
     $displayCode = $bidDisplay[0];
     $displaySection = $bidDisplay[1];
     $displayBid = $bidDisplay[2];
     $course = $courseDAO->retrieveCourseById($displayCode);
     $courseName = $course->getTitle();
-    echo "
-    <tr>
-        <td>
-            $courseName
-        </td>
-        <td>
-            $displayCode
-        </td>
-        <td>
-            $displaySection
-        </td>
-        <td>
-            $displayBid
-        </td>
-    </tr>";
+    if($currentRnd == '2' && $rndStatus == 'active')
+    {
+        $number = number_format($bidDisplay[4],2,'.','');
+        echo "
+            <tr>
+            <td>
+                $courseName
+            </td>
+            <td>
+                $displayCode
+            </td>
+            <td>
+                $displaySection
+            </td>
+            <td>
+                $displayBid
+            </td>
+            <td>
+                {$bidDisplay[3]}
+            </td>
+            <td>
+                {$number}
+            </td>";
+    }
+    elseif($currentRnd == '1' && $rndStatus == 'active')
+    {
+        echo "
+        <tr>
+            <td>
+                $courseName
+            </td>
+            <td>
+                $displayCode
+            </td>
+            <td>
+                $displaySection
+            </td>
+            <td>
+                $displayBid
+            </td>";
+    }
+    echo "</tr>";
 }
 echo "</table>";
 ?>

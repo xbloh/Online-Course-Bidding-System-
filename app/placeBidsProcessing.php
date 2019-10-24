@@ -97,9 +97,16 @@ foreach ($_SESSION['bids'] as $bid) {
 		}
 	}
 	}
-
-
-
+	if($currentRnd == '2' && $rndStatus == 'active')
+	{
+		$currentVacancy = $SectionDAO->retrieveSectionSize($courseId,$sectionId);
+		$winList = $bidDAO->winBids($courseId, $sectionId, $currentVacancy, 2);
+		$minBidAmt = $bidDAO->minBid($courseId, $sectionId, $currentVacancy, 2, $winList);
+		if($bid->getAmount()<$minBidAmt)
+		{
+			$isAllowed[] = "Insufficient bidded amount";
+		}
+	}
 	// var_dump(count($_SESSION['bids']));
 	// var_dump($isAllowed);
 	$errorList=[];
@@ -124,13 +131,39 @@ foreach ($_SESSION['bids'] as $bid) {
 if ($bidErrors == 0) {
 	$bidDAO = new BidDAO();
 	foreach ($_SESSION['bids'] as $bid) {
-		$bidDAO->add($bid);
 		$userid = $bid->getUserid();
 		$amount = $bid->getAmount();
+		$courseId=$bid->getCode();
+		$sectionId=$bid->getSection();
+		if($currentRnd == '2' && $rndStatus == 'active')
+		{
+			$bidDAO->add($bid);
+			$winList = $bidDAO->winBids($courseId, $sectionId, $currentVacancy, 2);
+			$allRoundTwo = $bidDAO->retrieveAllByCourseSection($courseId, $sectionId, 2);
+			for ($index=0; $index < count($allRoundTwo); $index++) 
+			{
+				if(!in_array($index, $winList))
+				{
+					$bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'out');
+				} 
+				else
+				{
+					$bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'in');
+				}
+			}
+		}
+		else
+		{
+			$bidDAO->add($bid);
+		}
 		$StudentDAO->deductEdollar($userid, $amount);
 	}
-	echo "<h1>BIDS PLACED!!! GOOD LUCK</h1>
-	<a href = 'welcome.php'>go back home</a>";
+	echo "<h1>BIDS PLACED!!! GOOD LUCK</h1>";
+	if($currentRnd == '2' && $rndStatus == 'active')
+	{
+		echo "<h2>Number of vacancy : {$currentVacancy}</h2><h2>Minimum bid : {$minBidAmt}</h2>";
+	}
+	echo "<a href = 'welcome.php'>go back home</a>";
 	unset($_SESSION['bids']);
 	unset($_SESSION['cart']);
 }
@@ -138,6 +171,10 @@ else{
 	$_SESSION['errors']=$errorList;
 	// var_dump($errorList);
 	echo "<h1>Bids cannot be placed because of:</h1>";
+	if($currentRnd == '2' && $rndStatus == 'active')
+	{
+		echo "<h2>Number of vacancy : {$currentVacancy}</h2><h2>Minimum bid : {$minBidAmt}</h2>";
+	}
 	printErrors();
 	echo "<a href = 'welcome.php'>go back home</a>";
 	unset($_SESSION['bids']);

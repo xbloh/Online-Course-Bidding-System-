@@ -70,7 +70,7 @@ class BidDAO
 
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = [$row['code'], $row['section']];
+            $result[] = [$row['code'], $row['section'], $row['result'], $row['round']];
         }
 
         return $result;
@@ -483,6 +483,122 @@ class BidDAO
         // return $row=$stmt->fetch();
         $stmt = null;
         $pdo = null;
+    }
+
+    public function minBid($courseId, $sectionId, $vacancy, $round, $winList)
+    {
+        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and round = :round order by amount desc';
+
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        $stmt->bindParam(':round',$round,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+        
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['amount'];
+        }
+
+        // if(count($result)<$vacancy)
+        // {
+        //     return 10;
+        // }
+        // else
+        // {
+        //     return $result[$vacancy-1]+1;
+        // }
+        if(count($winList)<$vacancy)
+        {
+            return 10;
+        }
+        else
+        {
+            $minBidIndex = $winList[$vacancy-1];
+            return $result[$minBidIndex]+1;
+        }
+        
+    }
+
+    public function winBids($courseId, $sectionId, $vacancy, $round)
+    {
+        $sql = 'SELECT count(*) as countAmount, amount from bid where code = :courseId and section = :sectionId and round = :round group by amount order by amount desc';
+
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        $stmt->bindParam(':round',$round,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+        
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = [$row['countAmount'],$row['amount']];
+        }
+
+        $inList=[];
+        $index=0;
+        foreach($result as $amountVar)
+        {
+            if(count($inList)+$amountVar[0]<=$vacancy)
+            {
+                for ($i=0; $i < $amountVar[0]; $i++)
+                { 
+                    $inList[] = $index;
+                    $index++;
+                }
+            }
+            else
+            {
+                $index+=$amountVar[0];
+            }
+        }
+        // var_dump($inList);
+        return $inList;
+        // if(count($inList)<$vacancy)
+        // {
+        //     return 10;
+        // }
+        // else
+        // {
+        //     $minBidIndex = $inList[$vacancy-1];
+        //     return $result[$minBidIndex];
+        // }
+    }
+
+    public function retrieveAllByCourseSection($courseId, $sectionId, $round)
+    {
+        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and round = :round order by amount desc';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        $stmt->bindParam(':round',$round,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = [$row['userid'], $row['code'], $row['section']];
+        }
+
+        return $result;
     }
 
 }
