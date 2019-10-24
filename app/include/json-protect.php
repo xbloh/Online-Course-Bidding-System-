@@ -7,7 +7,7 @@
 		$token = $_REQUEST['token'];
 		if ($token == '') {
 			$errors[] = 'blank token';
-		} elseif (!verify_token($token)) {
+		} elseif (!verify_token($token) == 'admin') {
 			$errors[] = 'invalid token';
 		}
 	} else {
