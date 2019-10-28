@@ -85,7 +85,7 @@
             {   
                 if(!$bidDAO->checkRoundTwo($userId, $courseId, $sectionId))
                 {
-                    $isAllowed[] = "invalid bid for round 1";
+                    $isAllowed[] = "invalid bid";
                 }
             }
         }
@@ -101,13 +101,13 @@
                     $isAllowed[]="insufficient e$";
                 }
 
-                // if($currentRnd == '2' && $rndStatus == 'active')
-                // {   
-                //     if(!$bidDAO->checkRoundTwo($userId, $courseId, $sectionId))
-                //     {
-                //         $isAllowed[] = "invalid bid for round 1";
-                //     }
-                // }
+                if($currentRnd == '2' && $rndStatus == 'active')
+                {   
+                    if(!$bidDAO->checkRoundTwo($userId, $courseId, $sectionId))
+                    {
+                        $isAllowed[] = "invalid bid";
+                    }
+                }
 
                 $courseId=$bid->getCode();
                 $sectionId=$bid->getSection();
@@ -251,7 +251,7 @@
         ];
     }
 
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
     echo json_encode($result, JSON_PRETTY_PRINT);
 
 ?>
