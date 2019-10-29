@@ -17,7 +17,7 @@
             "course_completed.csv": 4
         },
         {
-            "bid.csv": 29
+            "bid.csv": 27
         }
     ],
     "error": [
@@ -28,6 +28,20 @@
                 "Class timetable clash",
                 "Class timetable clash",
                 "Section limit reached"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 19,
+            "message": [
+                "Not enough e-dollar"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 20,
+            "message": [
+                "Not enough e-dollar"
             ]
         },
         {

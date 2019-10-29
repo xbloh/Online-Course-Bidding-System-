@@ -34,7 +34,8 @@
             "line": 7,
             "message": [
                 "invalid Amount",
-                "invalid Course"
+                "invalid Course",
+                "invalid Section"
             ]
         },
         {
