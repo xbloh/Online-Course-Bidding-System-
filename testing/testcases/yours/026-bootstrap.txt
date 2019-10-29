@@ -17,7 +17,7 @@
             "course_completed.csv": 4
         },
         {
-            "bid.csv": 22
+            "bid.csv": 9
         }
     ],
     "error": [
@@ -46,6 +46,110 @@
                 "invalid section",
                 "invalid day",
                 "invalid venue"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 10,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 11,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 12,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 13,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 14,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 15,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 16,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 17,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 18,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 19,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 20,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 21,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 22,
+            "message": [
+                "Class timetable clash",
+                "Exam timetable clash"
             ]
         }
     ]
