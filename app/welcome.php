@@ -5,12 +5,12 @@
         background-color: #1c87c9;
         border: none;
         color: white;
-        padding: 16px 30px;
+        padding: 30px 30px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
         font-size: 20px;
-        margin: 4px 2px;
+        margin: 4px 4px;
         cursor: pointer; 
     }
 
@@ -19,7 +19,7 @@
     }
 
     th {
-        text-align: left;
+        text-align: center;
     }
 </style>
 </head>
@@ -192,15 +192,15 @@ echo "</table>";
 ?>
 
 <br>
-<a href ="bidPreProcessing.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Add Bid</a>
+<a href ="bidPreProcessing.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Click Here to Add Bid</a>
 <br>
-<a href ="updateBid.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Update Bid</a>
+<a href ="updateBid.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Click Here to Update Bid</a>
 <br>
-<a href ="deleteBid.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Delete Bid</a>
+<a href ="deleteBid.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Click Here to Delete Bid</a>
 <br>
-<a href ="dropSection.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Click Here to Drop a section</a>
+<a href ="dropSection.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Click Here to Drop a Section</a>
 <br>
-<a href ="logout.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Logout</a>
+<a href ="logout.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Logout</a>
 
 </body>
 </html>
