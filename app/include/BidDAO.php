@@ -273,15 +273,15 @@ class BidDAO
         return $result;
     }
 
-    public function checkVariableExists($userId, $courseId, $sectionId, $checktype)
+    public function checkVariableExists($userId, $courseId, $sectionId, $checktype, $round)
     {
         if($checktype=='checkall')
         {
-            $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId and section = :sectionId';
+            $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId and section = :sectionId and round = :round';
         }
         elseif($checktype=='checktillcourse')
         {
-            $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId';
+            $sql = 'SELECT count(*) as countUserSectionCourse from bid where code = :courseId and userid = :userId and round = :round';
         }
         
 
@@ -292,6 +292,7 @@ class BidDAO
 
         $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
         $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
+        $stmt->bindParam(':round',$round,PDO::PARAM_STR);
         if($checktype=='checkall')
         {
             $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);

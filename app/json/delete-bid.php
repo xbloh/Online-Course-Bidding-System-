@@ -64,8 +64,10 @@
 		if (!$SectionDAO->isSectionIdExists($courseId, $sectionId)) {
 			$errors[] = "invalid section";
         }
-               
-
+        if($rndStatus == 'completed')
+        {
+            $errors = ['round ended'];
+        }
         }
         else
         {
