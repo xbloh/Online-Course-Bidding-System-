@@ -3,6 +3,26 @@
 	include '../include/json-protect.php';
 
 	$request = json_decode($_REQUEST['r']);
+	$errors = [];
+
+	if (!isset($request->course)) {
+		$errors[] = "missing course";
+	} elseif ($request->course == '') {
+		$errors[] = "blank course";
+	}
+
+	if (!isset($request->section)) {
+		$errors[] = "missing section";
+	} elseif ($request->section == '') {
+		$errors[] = "blank section";
+	}
+
+	if (count($errors) > 0) {
+		$out = ["status" => "error", "message" => $errors];
+		header('Content-Type: application/json');
+        echo json_encode($out, JSON_PRETTY_PRINT);
+        exit();
+	}
 
 	$course = $request->course;
 	$section = $request->section;
