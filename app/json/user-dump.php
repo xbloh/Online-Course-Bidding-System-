@@ -21,6 +21,7 @@
 	}
 
 	$studentDAO = new StudentDAO();
+	// $checkMissing = ['userid'];
 
 	$is_valid = $studentDAO->isUserIdValid($request->userid);
 
