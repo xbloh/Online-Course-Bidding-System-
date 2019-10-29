@@ -1,2 +1,2 @@
-username=admin
-password=@dm1n5PM
+username=""
+password=""
