@@ -4,8 +4,24 @@
 	include '../include/json-protect.php';
 
 	$request = json_decode($_REQUEST['r']);
+	$errors = [];
+
+	if (!isset($request->userid)) {
+		$errors[] = "missing userid";
+	} elseif ($request->userid == '') {
+		$errors[] = "blank userid";
+	}
+
+	if (count($errors) > 0) {
+		$out = ["status" => "error",
+				"message" => $errors];
+		header('Content-Type: application/json');
+        echo json_encode($out, JSON_PRETTY_PRINT);
+        exit();
+	}
 
 	$studentDAO = new StudentDAO();
+	// $checkMissing = ['userid'];
 
 	$is_valid = $studentDAO->isUserIdValid($request->userid);
 
