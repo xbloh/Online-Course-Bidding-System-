@@ -71,7 +71,7 @@ class Student
 		}
 
 		$studentDAO = new StudentDAO();
-		if ($studentDAO->isUserIdExists($this->userid)) {
+		if ($studentDAO->isUserIdValid($this->userid)) {
 			$errors[] = "duplicate userid";
 		}
 
