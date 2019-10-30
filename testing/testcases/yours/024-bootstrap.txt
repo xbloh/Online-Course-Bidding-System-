@@ -1,10 +1,49 @@
-<br />
-<font size='1'><table class='xdebug-error xe-uncaught-exception' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Fatal error: Uncaught Error: Call to a member function getEdollar() on null in C:\Users\Tricia\Documents\GitHub\project-g4t4\app\include\Bid.php on line <i>150</i></th></tr>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Error: Call to a member function getEdollar() on null in C:\Users\Tricia\Documents\GitHub\project-g4t4\app\include\Bid.php on line <i>150</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0002</td><td bgcolor='#eeeeec' align='right'>400328</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\Users\Tricia\Documents\GitHub\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0012</td><td bgcolor='#eeeeec' align='right'>401944</td><td bgcolor='#eeeeec'>doBootstrap(  )</td><td title='C:\Users\Tricia\Documents\GitHub\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>4</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>3.8835</td><td bgcolor='#eeeeec' align='right'>445744</td><td bgcolor='#eeeeec'>Bid->validate(  )</td><td title='C:\Users\Tricia\Documents\GitHub\project-g4t4\app\include\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>336</td></tr>
-</table></font>
+{
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "student.csv": 26
+        },
+        {
+            "course.csv": 24
+        },
+        {
+            "section.csv": 32
+        },
+        {
+            "prerequisite.csv": 8
+        },
+        {
+            "course_completed.csv": 4
+        },
+        {
+            "bid.csv": 22
+        }
+    ],
+    "error": [
+        {
+            "file": "section.csv",
+            "line": 6,
+            "message": [
+                "invalid course",
+                "invalid section",
+                "invalid day"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 9,
+            "message": [
+                "invalid section"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 16,
+            "message": [
+                "invalid course",
+                "invalid day"
+            ]
+        }
+    ]
+}

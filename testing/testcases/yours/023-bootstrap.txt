@@ -1,12 +1,47 @@
-<br />
-<font size='1'><table class='xdebug-error xe-uncaught-exception' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Fatal error: Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'larry.ng.2009' for key 'PRIMARY' in C:\Users\Tricia\Documents\GitHub\project-g4t4\app\include\StudentDAO.php on line <i>66</i></th></tr>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'larry.ng.2009' for key 'PRIMARY' in C:\Users\Tricia\Documents\GitHub\project-g4t4\app\include\StudentDAO.php on line <i>66</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0003</td><td bgcolor='#eeeeec' align='right'>400328</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\Users\Tricia\Documents\GitHub\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0017</td><td bgcolor='#eeeeec' align='right'>401944</td><td bgcolor='#eeeeec'>doBootstrap(  )</td><td title='C:\Users\Tricia\Documents\GitHub\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>4</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.4596</td><td bgcolor='#eeeeec' align='right'>436872</td><td bgcolor='#eeeeec'>StudentDAO->add(  )</td><td title='C:\Users\Tricia\Documents\GitHub\project-g4t4\app\include\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>134</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>0.4706</td><td bgcolor='#eeeeec' align='right'>454224</td><td bgcolor='#eeeeec'><a href='http://www.php.net/PDOStatement.execute' target='_new'>execute</a>
-(  )</td><td title='C:\Users\Tricia\Documents\GitHub\project-g4t4\app\include\StudentDAO.php' bgcolor='#eeeeec'>...\StudentDAO.php<b>:</b>66</td></tr>
-</table></font>
+{
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "student.csv": 26
+        },
+        {
+            "course.csv": 24
+        },
+        {
+            "section.csv": 35
+        },
+        {
+            "prerequisite.csv": 5
+        },
+        {
+            "course_completed.csv": 4
+        },
+        {
+            "bid.csv": 22
+        }
+    ],
+    "error": [
+        {
+            "file": "prerequisite.csv",
+            "line": 2,
+            "message": [
+                "invalid course",
+                "invalid prerequisite"
+            ]
+        },
+        {
+            "file": "prerequisite.csv",
+            "line": 4,
+            "message": [
+                "invalid prerequisite"
+            ]
+        },
+        {
+            "file": "prerequisite.csv",
+            "line": 6,
+            "message": [
+                "invalid course"
+            ]
+        }
+    ]
+}
