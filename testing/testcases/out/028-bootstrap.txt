@@ -1,30 +1,87 @@
 {
-  "status": "error",
-  "num-record-loaded":
-     [
-        { "bid.csv": 22},
-        { "course.csv": 24},
-        { "course_completed.csv": 4},
-        { "prerequisite.csv": 8},
-        { "section.csv": 35},
-        { "student.csv": 23}
-     ],
-  "error":
-     [
-     {
-          "file" : "student.csv",
-          "line" : 2,
-          "message" : ["invalid password", "invalid name", "invalid e-dollar"]
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "bid.csv": 19
         },
         {
-          "file" : "student.csv",
-          "line" : 17,
-          "message" : ["invalid userid", "invalid password", "invalid e-dollar"]
+            "course.csv": 24
         },
         {
-          "file" : "student.csv",
-          "line" : 26,
-          "message" : ["invalid userid", "invalid name"]
+            "course_completed.csv": 2
+        },
+        {
+            "prerequisite.csv": 8
+        },
+        {
+            "section.csv": 35
+        },
+        {
+            "student.csv": 23
         }
-     ]
+    ],
+    "error": [
+        {
+            "file": "bid.csv",
+            "line": 1,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 13,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 22,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 2,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 3,
+            "message": [
+                "invalid userid",
+                "invalid course completed"
+            ]
+        },
+        {
+            "file": "student.csv",
+            "line": 2,
+            "message": [
+                "invalid e-dollar",
+                "invalid password",
+                "invalid name"
+            ]
+        },
+        {
+            "file": "student.csv",
+            "line": 17,
+            "message": [
+                "invalid userid",
+                "invalid e-dollar",
+                "invalid password"
+            ]
+        },
+        {
+            "file": "student.csv",
+            "line": 26,
+            "message": [
+                "invalid userid",
+                "invalid name"
+            ]
+        }
+    ]
 }

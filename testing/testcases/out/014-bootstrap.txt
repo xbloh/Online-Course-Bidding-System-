@@ -1,45 +1,81 @@
 {
-  "status": "error",
-  "num-record-loaded":
-     [
-        { "bid.csv": 21},
-        { "course.csv": 23},
-        { "course_completed.csv": 3},
-        { "prerequisite.csv": 7},
-        { "section.csv": 34},
-        { "student.csv": 25}
-     ],
-  "error":
-     [
-     {
-          "file" : "bid.csv",
-          "line" : 5,
-          "message" : ["blank amount", "blank code", "blank section"]
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "bid.csv": 20
         },
         {
-          "file" : "course.csv",
-          "line" : 13,
-          "message" : ["blank exam date", "blank exam start", "blank exam end"]
+            "course.csv": 23
         },
         {
-          "file" : "course_completed.csv",
-          "line" : 3,
-          "message" : ["blank code"]
+            "course_completed.csv": 3
         },
         {
-          "file" : "prerequisite.csv",
-          "line" : 8,
-          "message" : ["blank prerequisite"]
+            "prerequisite.csv": 7
         },
         {
-          "file" : "section.csv",
-          "line" : 29,
-          "message" : ["blank venue", "blank size"]
+            "section.csv": 33
         },
         {
-          "file" : "student.csv",
-          "line" : 12,
-          "message" : ["blank school", "blank edollar"]
+            "student.csv": 25
         }
-     ]
+    ],
+    "error": [
+        {
+            "file": "bid.csv",
+            "line": 5,
+            "message": [
+                "blank amount"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 8,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "course.csv",
+            "line": 13,
+            "message": [
+                "blank exam date"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 3,
+            "message": [
+                "blank code"
+            ]
+        },
+        {
+            "file": "prerequisite.csv",
+            "line": 8,
+            "message": [
+                "blank prerequisite"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 25,
+            "message": [
+                "invalid course"
+            ]
+        },
+        {
+            "file": "section.csv",
+            "line": 29,
+            "message": [
+                "blank venue"
+            ]
+        },
+        {
+            "file": "student.csv",
+            "line": 12,
+            "message": [
+                "blank school"
+            ]
+        }
+    ]
 }

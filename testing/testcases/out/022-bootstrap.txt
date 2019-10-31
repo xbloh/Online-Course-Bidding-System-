@@ -1,40 +1,62 @@
 {
-  "status": "error",
-  "num-record-loaded":
-     [
-        { "bid.csv": 22},
-        { "course.csv": 24},
-        { "course_completed.csv": 2},
-        { "prerequisite.csv": 8},
-        { "section.csv": 35},
-        { "student.csv": 26}
-     ],
-  "error":
-     [
-     {
-          "file" : "course_completed.csv",
-          "line" : 1,
-          "message" : ["invalid userid", "invalid course"]
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "bid.csv": 22
         },
         {
-          "file" : "course_completed.csv",
-          "line" : 3,
-          "message" : ["invalid course"]
+            "course.csv": 24
         },
         {
-          "file" : "course_completed.csv",
-          "line" : 5,
-          "message" : ["invalid course completed"]
+            "course_completed.csv": 2
         },
         {
-          "file" : "course_completed.csv",
-          "line" : 6,
-          "message" : ["invalid course completed"]
+            "prerequisite.csv": 8
         },
         {
-          "file" : "course_completed.csv",
-          "line" : 7,
-          "message" : ["invalid course completed"]
+            "section.csv": 35
+        },
+        {
+            "student.csv": 26
         }
-     ]
+    ],
+    "error": [
+        {
+            "file": "course_completed.csv",
+            "line": 1,
+            "message": [
+                "invalid userid",
+                "invalid course"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 3,
+            "message": [
+                "invalid course"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 5,
+            "message": [
+                "invalid course completed"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 6,
+            "message": [
+                "invalid course completed",
+                "invalid course completed"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 7,
+            "message": [
+                "invalid course completed"
+            ]
+        }
+    ]
 }

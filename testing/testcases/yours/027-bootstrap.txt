@@ -2,25 +2,39 @@
     "status": "error",
     "num-record-loaded": [
         {
-            "student.csv": 24
+            "bid.csv": 20
         },
         {
             "course.csv": 24
         },
         {
-            "section.csv": 35
+            "course_completed.csv": 4
         },
         {
             "prerequisite.csv": 8
         },
         {
-            "course_completed.csv": 4
+            "section.csv": 35
         },
         {
-            "bid.csv": 20
+            "student.csv": 24
         }
     ],
     "error": [
+        {
+            "file": "bid.csv",
+            "line": 2,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 6,
+            "message": [
+                "invalid userid"
+            ]
+        },
         {
             "file": "student.csv",
             "line": 3,
@@ -33,21 +47,8 @@
             "file": "student.csv",
             "line": 8,
             "message": [
+                "duplicate userid",
                 "invalid e-dollar"
-            ]
-        },
-        {
-            "file": "bid.csv",
-            "line": 2,
-            "message": [
-                "invalid UserId"
-            ]
-        },
-        {
-            "file": "bid.csv",
-            "line": 6,
-            "message": [
-                "invalid UserId"
             ]
         }
     ]
