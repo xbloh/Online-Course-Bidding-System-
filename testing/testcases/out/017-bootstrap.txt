@@ -1,25 +1,55 @@
 {
-  "status": "error",
-  "num-record-loaded":
-     [
-        { "bid.csv": 29},
-        { "course.csv": 24},
-        { "course_completed.csv": 4},
-        { "prerequisite.csv": 8},
-        { "section.csv": 35},
-        { "student.csv": 26}
-     ],
-  "error":
-     [
-     {
-          "file" : "bid.csv",
-          "line" : 10,
-          "message" : ["section limit reached"]
+    "status": "error",
+    "num-record-loaded": [
+        {
+            "bid.csv": 27
         },
         {
-          "file" : "bid.csv",
-          "line" : 21,
-          "message" : ["not enough e-dollar"]
+            "course.csv": 24
+        },
+        {
+            "course_completed.csv": 4
+        },
+        {
+            "prerequisite.csv": 8
+        },
+        {
+            "section.csv": 35
+        },
+        {
+            "student.csv": 26
         }
-     ]
+    ],
+    "error": [
+        {
+            "file": "bid.csv",
+            "line": 10,
+            "message": [
+                "class timetable clash",
+                "class timetable clash",
+                "section limit reached"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 19,
+            "message": [
+                "not enough e-dollar"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 20,
+            "message": [
+                "not enough e-dollar"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 21,
+            "message": [
+                "not enough e-dollar"
+            ]
+        }
+    ]
 }

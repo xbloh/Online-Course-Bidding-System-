@@ -2,25 +2,61 @@
     "status": "error",
     "num-record-loaded": [
         {
-            "student.csv": 23
+            "bid.csv": 19
         },
         {
             "course.csv": 24
         },
         {
-            "section.csv": 35
+            "course_completed.csv": 2
         },
         {
             "prerequisite.csv": 8
         },
         {
-            "course_completed.csv": 2
+            "section.csv": 35
         },
         {
-            "bid.csv": 19
+            "student.csv": 23
         }
     ],
     "error": [
+        {
+            "file": "bid.csv",
+            "line": 1,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 13,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "bid.csv",
+            "line": 22,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 2,
+            "message": [
+                "invalid userid"
+            ]
+        },
+        {
+            "file": "course_completed.csv",
+            "line": 3,
+            "message": [
+                "invalid userid",
+                "invalid course completed"
+            ]
+        },
         {
             "file": "student.csv",
             "line": 2,
@@ -45,42 +81,6 @@
             "message": [
                 "invalid userid",
                 "invalid name"
-            ]
-        },
-        {
-            "file": "course_completed.csv",
-            "line": 2,
-            "message": [
-                "invalid userid"
-            ]
-        },
-        {
-            "file": "course_completed.csv",
-            "line": 3,
-            "message": [
-                "invalid userid",
-                "invalid course completed"
-            ]
-        },
-        {
-            "file": "bid.csv",
-            "line": 1,
-            "message": [
-                "invalid UserId"
-            ]
-        },
-        {
-            "file": "bid.csv",
-            "line": 13,
-            "message": [
-                "invalid UserId"
-            ]
-        },
-        {
-            "file": "bid.csv",
-            "line": 22,
-            "message": [
-                "invalid UserId"
             ]
         }
     ]

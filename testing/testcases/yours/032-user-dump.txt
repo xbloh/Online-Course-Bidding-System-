@@ -1,8 +1,8 @@
 {
     "status": "success",
-    "userid": "ben.ng.2009",
-    "password": "qwerty129",
-    "name": "Ben NG",
+    "userid": "calvin.ng.2009",
+    "password": "qwerty130",
+    "name": "Calvin NG",
     "school": "SIS",
-    "edollar": "189.00"
+    "edollar": "188.00"
 }
