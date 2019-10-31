@@ -18,7 +18,6 @@ foreach($courses as $course)
     {
         $bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
         $sectionSize = $section->retrieveSectionSize($courseId,$sectionId);
-        var_dump($bidByUserid);
         if(count($bidByUserid) >= $sectionSize)
         {
             $clearingPrice = $bidByUserid[$sectionSize][1];

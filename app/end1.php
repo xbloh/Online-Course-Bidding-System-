@@ -123,5 +123,7 @@ foreach($courseList as $course)
     $sectiondao->updateSize($courseId, $sectionId, $availableSlot);
 }
 
+echo "<a href = 'admin.php'>go back</a>";
+
 
 ?>

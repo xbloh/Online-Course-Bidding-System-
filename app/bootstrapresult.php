@@ -27,6 +27,5 @@
 	}
 	echo "</table>";
 
-
-
+	echo "<a href = 'admin.php'>go back</a>";
 ?>

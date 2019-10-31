@@ -5,4 +5,6 @@
     require_once 'include/common.php';
     $roundDAO = new RoundDAO();
     $roundDAO->startRound2();
+
+echo "<a href = 'admin.php'>go back</a>";
 ?>
