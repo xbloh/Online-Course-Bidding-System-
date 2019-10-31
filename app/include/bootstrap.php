@@ -445,6 +445,11 @@ function doBootstrap(){
         ];
     }
 
+    if (isset($_POST['ui'])) {
+        $_SESSION['bootstrapresult'] = $result;
+        header('Location: bootstrapresult.php');
+    }
+
     header('Content-Type: application/json');
     echo json_encode($result, JSON_PRETTY_PRINT);
 

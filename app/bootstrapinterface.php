@@ -8,5 +8,6 @@ require_once 'include/protect_admin.php';
 	Bootstrap file: 
 	<input id='bootstrap-file' type="file" name="bootstrap-file"></br>
 	<input type="submit" name="submit" value="Import">
+	<input type="hidden" name="ui" value="true">
 </form>
 
