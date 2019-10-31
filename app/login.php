@@ -23,7 +23,7 @@ require_once 'include/common.php';
 
 <body class="text-center">
     <form class="form-signin" action="process.php" method="POST">
-        <img class="mb-4" src="img/Smulogo.png" alt="" width="300" height="200">
+        <img class="mb-4" src="img/merlion uni logo.png" alt="" width="300" height="200">
         
         <h1 class="h3 mb-3 font-weight-normal">Login Page</h1>
 
