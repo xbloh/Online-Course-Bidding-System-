@@ -112,6 +112,12 @@ function doBootstrap(){
 		
 
                 $errors = [];
+                $studentErrors = [];
+                $courseErrors = [];
+                $ccErrors = [];
+                $sectionErrors = [];
+                $prereqErrors = [];
+                $bidErrors = [];
                 // #then read each csv file line by line (remember to skip the header)
 				// #$data = fgetcsv($file) gets you the next line of the CSV file which will be stored 
 				// #in the array $data
@@ -151,7 +157,7 @@ function doBootstrap(){
 
                     
                     if (!empty($message)) {
-                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                        $studentErrors[] = ["file" => $file, "line" => $line, "message" => $message];
                     }
 
                     $line++;
@@ -191,7 +197,7 @@ function doBootstrap(){
                     }
 
                     if (!empty($message)) {
-                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                        $courseErrors[] = ["file" => $file, "line" => $line, "message" => $message];
                     }
 		
 
@@ -232,7 +238,7 @@ function doBootstrap(){
                     }
 
                     if (!empty($message)) {
-                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                        $sectionErrors[] = ["file" => $file, "line" => $line, "message" => $message];
                     }
 
                     $line++;
@@ -272,7 +278,7 @@ function doBootstrap(){
                     }
 
                     if (!empty($message)) {
-                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                        $prereqErrors[] = ["file" => $file, "line" => $line, "message" => $message];
                     }
 
                     $line++;
@@ -312,7 +318,7 @@ function doBootstrap(){
                     }
 
                     if (!empty($message)) {
-                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                        $ccErrors[] = ["file" => $file, "line" => $line, "message" => $message];
                     }
 
                     $line++;
@@ -354,7 +360,7 @@ function doBootstrap(){
                     }
 
                     if (!empty($message)) {
-                        $errors[] = ["file" => $file, "line" => $line, "message" => $message];
+                        $bidErrors[] = ["file" => $file, "line" => $line, "message" => $message];
                     }
 
                     $line++;
@@ -368,7 +374,38 @@ function doBootstrap(){
             $errors[] = "input files is not zip";
         }
     }  
-    
+    //bid, course, course_completed, prereq, section, student
+    if (!empty($bidErrors)) {
+        foreach ($bidErrors as $error) {
+            $errors[] = $error;
+        }
+    }
+    if (!empty($courseErrors)) {
+        foreach ($courseErrors as $error) {
+            $errors[] = $error;
+        }
+    }
+    if (!empty($ccErrors)) {
+        foreach ($ccErrors as $error) {
+            $errors[] = $error;
+        }
+    }
+    if (!empty($prereqErrors)) {
+        foreach ($prereqErrors as $error) {
+            $errors[] = $error;
+        }
+    }
+    if (!empty($sectionErrors)) {
+        foreach ($sectionErrors as $error) {
+            $errors[] = $error;
+        }
+    }
+    if (!empty($studentErrors)) {
+        foreach ($studentErrors as $error) {
+            $errors[] = $error;
+        }
+    }
+
 
 #returning JSON format errors. remember this is only for the JSON API. Humans should not get JSON errors.
     if (!empty($errors))
@@ -383,12 +420,12 @@ function doBootstrap(){
         $result = [ 
             "status" => "error",
             "num-record-loaded" => [
-                ["student.csv" => $student_processed],
+                ["bid.csv" => $bid_processed],
                 ["course.csv" => $course_processed],
-                ["section.csv" => $section_processed],
-                ["prerequisite.csv" => $prerequisite_processed],
                 ["course_completed.csv" => $course_completed_processed],
-                ["bid.csv" => $bid_processed]
+                ["prerequisite.csv" => $prerequisite_processed],
+                ["section.csv" => $section_processed],
+                ["student.csv" => $student_processed]
             ],
             "error" => $errors
         ];
@@ -398,12 +435,12 @@ function doBootstrap(){
         $result = [ 
             "status" => "success",
             "num-record-loaded" => [
-                ["student.csv" => $student_processed],
+                ["bid.csv" => $bid_processed],
                 ["course.csv" => $course_processed],
-                ["section.csv" => $section_processed],
-                ["prerequisite.csv" => $prerequisite_processed],
                 ["course_completed.csv" => $course_completed_processed],
-                ["bid.csv" => $bid_processed]
+                ["prerequisite.csv" => $prerequisite_processed],
+                ["section.csv" => $section_processed],
+                ["student.csv" => $student_processed]
             ]
         ];
     }
