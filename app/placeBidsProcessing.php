@@ -73,7 +73,7 @@ foreach ($_SESSION['bids'] as $bid) {
 		$sectionId2=$bid2->getSection();
 		$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($courseId2,$sectionId2);
 			if($currentBidDate==$moduleClassDateTime[0]){
-				if($moduleClassDateTime[1]<=$currentBidStart||$moduleClassDateTime[2]<=$currentBidEnd){
+				if($moduleClassDateTime[1]<=$currentBidEnd && $moduleClassDateTime[2]>=$currentBidStart){
 				$isAllowed[] = "Class timetable clash  ".$courseId."  ".$sectionId;
 			}
 		}
@@ -91,7 +91,7 @@ foreach ($_SESSION['bids'] as $bid) {
 		$courseId2=$bid2->getCode();
 		$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($courseId2);
 		if($currentBidDate2==$moduleExamDateTime[0]){
-			if($moduleExamDateTime[1]<=$currentBidStart2||$moduleExamDateTime[2]>=$currentBidEnd2){
+			if($moduleExamDateTime[1]<=$currentBidEnd && $moduleExamDateTime[2]>=$currentBidStart){
 				$isAllowed[] = "Exam timetable clash  ".$courseId."  ".$sectionId;
 			}
 		}

@@ -139,7 +139,7 @@
                     {
                         $moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
                         if($currentBidDate==$moduleClassDateTime[0]){
-                            if($moduleClassDateTime[1]<=$currentBidStart||$moduleClassDateTime[2]<=$currentBidEnd){
+                            if($moduleClassDateTime[1]<=$currentBidEnd && $moduleClassDateTime[2]>=$currentBidStart){
                                 $isAllowed[] = "class timetable clash";
                             }
                         }

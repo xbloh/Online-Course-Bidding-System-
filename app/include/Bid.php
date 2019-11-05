@@ -212,7 +212,7 @@ class Bid
 		foreach ($bidded_modules as $bidded_module){
 			$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
 			if($currentBidDate==$moduleExamDateTime[0]){
-				if($moduleExamDateTime[1]<=$currentBidStart||$moduleExamDateTime[2]>=$currentBidEnd){
+				if($moduleExamDateTime[1]<=$currentBidEnd && $moduleExamDateTime[2]>=$currentBidStart){
 					$errors[] = "exam timetable clash  ".$this->code."  ".$this->section;
 				}
 			}
@@ -246,7 +246,7 @@ class Bid
 		foreach ($bidded_modules as $bidded_module){
 			$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
 			if($currentBidDate==$moduleExamDateTime[0]){
-				if($moduleExamDateTime[1]<=$currentBidStart||$moduleExamDateTime[2]>=$currentBidEnd){
+				if($moduleExamDateTime[1]<=$currentBidEnd && $moduleExamDateTime[2]>=$currentBidStart){
 					$errors[] = "exam timetable clash";
 				}
 			}
