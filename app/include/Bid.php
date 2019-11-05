@@ -98,14 +98,13 @@ class Bid
 			foreach ($bidded_modules as $bidded_module){
 				$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
 				if($currentBidDate==$moduleClassDateTime[0]){
-					if($moduleClassDateTime[1]<=$currentBidStart||$moduleClassDateTime[2]<=$currentBidEnd){
+					if($moduleClassDateTime[1]<=$currentBidEnd && $moduleClassDateTime[2]>=$currentBidStart){
 						$errors[] = "class timetable clash";
 					}
 				}
 			}
 	
 			$currentBidDayTime = $CourseDAO->retrieveExamDateTime($this->code);
-			print("main");
 			//var_dump($currentBidDayTime);
 			$currentBidDate=$currentBidDayTime[0];
 			$currentBidStart=$currentBidDayTime[1];
@@ -114,12 +113,10 @@ class Bid
 			$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 			foreach ($bidded_modules as $bidded_module){
 				$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
-				print("check");
 				//var_dump($moduleExamDateTime);
 				if($currentBidDate==$moduleExamDateTime[0]){
-					if($moduleExamDateTime[1]<$currentBidEnd && $moduleExamDateTime[2]>$currentBidStart){
+					if($moduleExamDateTime[1]<=$currentBidEnd && $moduleExamDateTime[2]>=$currentBidStart){
 						$errors[] = "exam timetable clash";
-						print("above is error");
 					}
 				}
 			}
@@ -149,10 +146,10 @@ class Bid
 
 			$StudentObj=$StudentDAO->retrieveStudentByUserId($this->userid);
 			
-			$biddedAmt=$bidDAO->totalAmountByID($this->userid);
+			//$biddedAmt=$bidDAO->totalAmountByID($this->userid);
 			$currentAmt=($this->amount);
-			$totalAmt=$biddedAmt+$currentAmt;
-			if($totalAmt > ($StudentObj->getEdollar())){
+			//$totalAmt=$biddedAmt+$currentAmt;
+			if($currentAmt > ($StudentObj->getEdollar())){
 				$errors[] = "not enough e-dollar";
 		}
 			
