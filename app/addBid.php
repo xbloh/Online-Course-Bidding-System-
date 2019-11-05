@@ -46,11 +46,16 @@
 		<table cellspacing="10px" cellpadding="3px">
 			<?php
 
+				$roundDAO = new RoundDAO();
+				$currentRnd = $roundDAO->retrieveCurrentRound();
+				$rndStatus = $roundDAO->retrieveRoundStatus();
+
 				if (isset($_POST['courseSelected'])) {
 
 					$course = $_SESSION['coursesAvailable'][$_POST['indexOfCourseToBid']];
 					$_SESSION['courseSelected'] = $course;
 					$sectionDAO = new SectionDAO();
+					$bidDAO = new BidDAO();
 					$sections = $sectionDAO->retrieveSectionIdsByCourse($course);
 					$course->setSectionsAvailable($sections);
 
@@ -74,12 +79,16 @@
 								Venue
 							</th>
 							<th>
-								Size
-							</th>
-							<th>
-								Add bid
-							</th>
+								Vacancy
+							</th>";
+					if(($currentRnd == '2' && $rndStatus == 'active') || $rndStatus == 'completed')
+					{
+						echo "<th>Minimum Bid</th>";
+					}
+					echo "
+						<th>Add bid</th>
 						</tr>";
+
 					foreach ($course->getSectionsAvailable() as $index => $sectionId) {
 						$section = $sectionDAO->retrieveSection($course->getCourseId(), $sectionId);
 						if (isset($_POST['indexOfSectionToBid']) && $index == $_POST['indexOfSectionToBid']) {
@@ -107,14 +116,21 @@
 								<td>
 									{$section->getVenue()}
 								</td>
-								<td>
+								<td align = 'center'>
 									{$section->getSize()}
-								</td>
-								<td>
-									Add to cart <input type='radio' name='indexOfSectionToBid' value='$index' $selected>
-								</td>
-							</tr>
-							";
+								</td>";
+								if(($currentRnd == '2' && $rndStatus == 'active') || $rndStatus == 'completed')
+								{
+									$bidDAO = new BidDAO();
+									$winList = $bidDAO->winBids($course->getCourseId(), $section->getSectionId(), $section->getSize(), $currentRnd);
+									$minBidAmt = $bidDAO->minBid($course->getCourseId(), $section->getSectionId(), $section->getSize(), 2, $winList);
+									echo "<td>$minBidAmt</td>";
+								}
+								echo "
+									<td>
+										Add to cart <input type='radio' name='indexOfSectionToBid' value='$index' $selected>
+									</td>
+								</tr>";
 					}
 					echo "</table>
 					<input type='submit' name='sectionSelected' value='Select Section'>";

@@ -57,8 +57,13 @@ foreach($bids as $bid)
     $winList = $bidDAO->winBids($code, $section, $vacancy, 2);
     $minBidAmt = $bidDAO->minBid($code, $section, $vacancy, 2, $winList);
     $result = $bid[2];
-
+    var_dump($bid);
     $status = 'Unsuccessful';
+
+    if($result == '-')
+    {
+        $status = 'Pending';
+    }
 
     if($result=='in')
     {
@@ -93,7 +98,7 @@ foreach($bids as $bid)
 <?php
 if($currentRnd == '2' || $rndStatus == 'completed')
 {
-    echo "<h2>Your Successful Bid(s):<h2>";
+    echo "<h2>Your Bidding Result(s):<h2>";
 }
 else
 {
@@ -104,11 +109,16 @@ echo "<table cellspacing='10px' cellpadding='3px'>
     <th>Course Name</th>
     <th>Course ID</th>
     <th>Section ID</th>
-    <th>Bidded Amount</th>";
+    <th>Bidded Amount</th>
+    ";
 if($currentRnd == '2' && $rndStatus == 'active')
 {
     echo "<th>Bid Status</th>
           <th>Minimum Bid</th>";
+}
+if($currentRnd == '1' && $rndStatus == 'active')
+{
+    echo "<th>Bidding Status</th>";
 }
 if($currentRnd == '1' && $rndStatus == 'completed')
 {
@@ -122,6 +132,7 @@ foreach($bidList as $bidDisplay) {
     $displayBid = $bidDisplay[2];
     $course = $courseDAO->retrieveCourseById($displayCode);
     $courseName = $course->getTitle();
+    
     if($currentRnd == '2' && $rndStatus == 'active')
     {
         $number = number_format($bidDisplay[4],2,'.','');
@@ -161,6 +172,9 @@ foreach($bidList as $bidDisplay) {
             </td>
             <td>
                 $displayBid
+            </td>
+            <td>
+                $status
             </td>
             ";
     }

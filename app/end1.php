@@ -123,6 +123,35 @@ foreach($courseList as $course)
     $sectiondao->updateSize($courseId, $sectionId, $availableSlot);
 }
 
+echo "<h1> Unsuccessful Bids:</h1>";
+echo "<table cellspacing='10px' cellpadding='3px'>
+<tr>
+    <th>Student</th>
+    <th>Course ID</th>
+    <th>Section ID</th>
+    <th>Bidded Amount</th>
+</tr>";
+
+foreach($failBids as $failbid) {
+    echo "
+    <tr>
+        <td>
+            $failbid[0]
+        </td>
+        <td>
+            $failbid[2]
+        </td>
+        <td>
+            $failbid[3]
+        </td>
+        <td>
+            $failbid[1]
+        </td>
+    </tr>";
+}
+echo "</table>";
+
+
 echo "<a href = 'admin.php'>go back</a>";
 
 

@@ -537,7 +537,7 @@ class BidDAO
         // }
         if(count($winList)<$vacancy)
         {
-            return 10;
+            return 10.00;
         }
         else
         {
