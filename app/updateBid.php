@@ -102,13 +102,19 @@ if(isset($_POST['update']))
     }
     $studentAmt+=$Student->getEdollar();
     foreach($newAmt as $amount){
+        if(ctype_alpha($amount)){
+            $_SESSION['errors'][] = "Invalid amount";
+            break;
+        }
         if ($amount<10 || !(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $amount)) || $amount>999) {
             // if($amount<10||$amount!=number_format($amount,2,'.','')||$amount>999){
-                $_SESSION['errors'][] = "Invalid amount";
-                break;
+            $_SESSION['errors'][] = "Invalid amount";
+            break;
         }
         // $studentAmt-=$amount;
     }
+    var_dump($_SESSION['errors']);
+    if(empty($_SESSION['errors'])){
     $totalBid=0;
     foreach($newAmt as $oneBid){
         $totalBid += $oneBid;
@@ -187,6 +193,10 @@ if(isset($_POST['update']))
     echo "</table>";
     
 
+}
+}
+else{
+    printErrors();
 }
 }
 
