@@ -170,7 +170,7 @@ require_once 'common.php';
 	        $result = array();
 
 	        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-	        $result = [strtotime($row['day']), strtotime($row['start']), strtotime($row['end'])];
+	        $result = [$row['day'], strtotime($row['start']), strtotime($row['end'])];
 	        return $result;
 		}
 
