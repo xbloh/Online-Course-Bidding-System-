@@ -105,6 +105,8 @@ class Bid
 			}
 	
 			$currentBidDayTime = $CourseDAO->retrieveExamDateTime($this->code);
+			print("main");
+			//var_dump($currentBidDayTime);
 			$currentBidDate=$currentBidDayTime[0];
 			$currentBidStart=$currentBidDayTime[1];
 			$currentBidEnd=$currentBidDayTime[2];
@@ -112,9 +114,12 @@ class Bid
 			$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 			foreach ($bidded_modules as $bidded_module){
 				$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
+				print("check");
+				//var_dump($moduleExamDateTime);
 				if($currentBidDate==$moduleExamDateTime[0]){
-					if($moduleExamDateTime[1]<=$currentBidStart||$moduleExamDateTime[2]>=$currentBidEnd){
+					if($moduleExamDateTime[1]<$currentBidEnd && $moduleExamDateTime[2]>$currentBidStart){
 						$errors[] = "exam timetable clash";
+						print("above is error");
 					}
 				}
 			}

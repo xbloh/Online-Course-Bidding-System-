@@ -168,7 +168,7 @@ class CourseDAO
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $result = [$row['examDate'], $row['examStart'], $row['examEnd']];
+        $result = [strtotime($row['examDate']), strtotime($row['examStart']), strtotime($row['examEnd'])];
 
         return $result;
     }
