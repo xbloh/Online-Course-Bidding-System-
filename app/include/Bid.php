@@ -88,6 +88,8 @@ class Bid
 			$errors[] = "invalid section";
 		}
 		if(empty($errors)){
+			if(!$bidDAO->checkVariableExists($this->userid, $this->code, $this->section, 'checktillcourse', 1)){
+
 			$currentBidDayTime = $SectionDAO->retrieveSectionDayTime($this->code,$this->section);
 			// var_dump($currentBidDayTime);
 			$currentBidDate=$currentBidDayTime[0];
@@ -119,6 +121,7 @@ class Bid
 						$errors[] = "exam timetable clash";
 					}
 				}
+			}
 			}
 		
 			$student = $StudentDAO->retrieveStudentByUserId($this->userid);
@@ -194,7 +197,7 @@ class Bid
 		foreach ($bidded_modules as $bidded_module){
 			$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
 			if($currentBidDate==$moduleClassDateTime[0]){
-				if($moduleClassDateTime[1]<=$currentBidStart||$moduleClassDateTime[2]<=$currentBidEnd){
+				if($moduleClassDateTime[1]<=$currentBidEnd && $moduleClassDateTime[2]>=$currentBidStart){
 					$errors[] = "class timetable clash  ".$this->code."  ".$this->section;
 				}
 			}
@@ -228,7 +231,7 @@ class Bid
 		foreach ($bidded_modules as $bidded_module){
 			$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
 			if($currentBidDate==$moduleClassDateTime[0]){
-				if($moduleClassDateTime[1]<=$currentBidStart || $moduleClassDateTime[2]<=$currentBidEnd){
+				if($moduleClassDateTime[1]<=$currentBidEnd && $moduleClassDateTime[2]>=$currentBidStart){
 					$errors[] = "class timetable clash";
 				}
 			}
