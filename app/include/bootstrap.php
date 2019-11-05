@@ -125,7 +125,7 @@ function doBootstrap(){
 				$header = fgetcsv($student);
 				#to remove the first line, because it rmbs which line it reads
                 $file = "student.csv";
-                $line = 1;
+                $line = 2;
                 while(($data = fgetcsv($student)) != false){
                     #to start from the second line (with data)
                     #0 -> userid, 1 -> password, 2 -> name, 3 -> school, 4 -> edollar
@@ -168,7 +168,7 @@ function doBootstrap(){
        	
                 $header = fgetcsv($course);
                 $file = "course.csv";
-                $line = 1;
+                $line = 2;
 
                 while(($data = fgetcsv($course)) != false){
                     $message = [];
@@ -209,7 +209,7 @@ function doBootstrap(){
 
 				$header = fgetcsv($section);
                 $file = 'section.csv';
-				$line = 1;
+				$line = 2;
                 while(($data = fgetcsv($section)) != false){
                     $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
@@ -250,7 +250,7 @@ function doBootstrap(){
                 // mysql_query('SET foreign_key_checks = 1');
                 $header = fgetcsv($prerequisite);
 				$file = 'prerequisite.csv';
-                $line = 1;
+                $line = 2;
                 while(($data = fgetcsv($prerequisite)) != false){
                     $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
@@ -290,7 +290,7 @@ function doBootstrap(){
 
                 $header = fgetcsv($course_completed);
 				$file = 'course_completed.csv';
-                $line = 1;
+                $line = 2;
                 while(($data = fgetcsv($course_completed)) != false){
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
                     #NEED TO LOOK AT WIKI FOR THE ERRORS INSTRUCTIONS!!!
@@ -331,7 +331,7 @@ function doBootstrap(){
 
                 $header = fgetcsv($bid);
                 $file = "bid.csv";
-                $line = 1;		
+                $line = 2;		
                 while(($data = fgetcsv($bid)) != false){
                     $message = [];
                     #0 -> course, #1 -> section, #2 -> day, #3 -> start, #4 -> end, #5 -> instructor, #6 -> venue, #7 -> size
