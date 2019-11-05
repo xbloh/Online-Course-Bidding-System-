@@ -24,7 +24,7 @@ create table COURSE (
 
 create table SECTION (
     courseID varchar(100) not null,
-	sectionID varchar(2) not null,
+	sectionID varchar(100) not null,
     day int not null,
     start time not null,
     end	time not null,
@@ -51,7 +51,7 @@ create table BID (
     userid varchar(128) not null,
     amount decimal(5,2) not null,
     code varchar(100),
-    section varchar(2) not null,
+    section varchar(100) not null,
     result varchar(3) not null,
     round int not null,
 	CONSTRAINT BID_PK primary key (userid,code,section)

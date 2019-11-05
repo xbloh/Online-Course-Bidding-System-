@@ -88,6 +88,8 @@ class Bid
 			$errors[] = "invalid section";
 		}
 		if(empty($errors)){
+			if(!$bidDAO->checkVariableExists($this->userid, $this->code, $this->section, 'checktillcourse', 1)){
+
 			$currentBidDayTime = $SectionDAO->retrieveSectionDayTime($this->code,$this->section);
 			// var_dump($currentBidDayTime);
 			$currentBidDate=$currentBidDayTime[0];
@@ -119,6 +121,7 @@ class Bid
 						$errors[] = "exam timetable clash";
 					}
 				}
+			}
 			}
 		
 			$student = $StudentDAO->retrieveStudentByUserId($this->userid);
