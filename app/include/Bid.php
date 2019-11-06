@@ -73,6 +73,10 @@ class Bid
 		$prerequisiteDAO = new PrerequisiteDAO();
 		$courseCompletedDAO = new CoursesCompletedDAO();
 		$bidDAO = new BidDAO();
+
+		if ($bidDAO->bidExists($this->userid, $this->code, $this->section)) {
+			$this->isUpdate = True;
+		}
 	if($this->isAddBid==FALSE && $this->isCart==FALSE && $this->isUpdate==FALSE){
 		if (!$StudentDAO->isUserIdValid($this->userid)){
 			$errors[] = "invalid userid";
@@ -229,6 +233,9 @@ class Bid
 
 		$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 		foreach ($bidded_modules as $bidded_module){
+			if ($bidded_module[0] == $this->code && $bidded_module[1] == $this->section) {
+				continue;
+			}
 			$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
 			if($currentBidDate==$moduleClassDateTime[0]){
 				if($moduleClassDateTime[1]<=$currentBidEnd && $moduleClassDateTime[2]>=$currentBidStart){
@@ -245,6 +252,9 @@ class Bid
 		$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 		foreach ($bidded_modules as $bidded_module){
 			$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
+			if ($bidded_module[0] == $this->code && $bidded_module[1] == $this->section) {
+				continue;
+			}
 			if($currentBidDate==$moduleExamDateTime[0]){
 				if($moduleExamDateTime[1]<=$currentBidEnd && $moduleExamDateTime[2]>=$currentBidStart){
 					$errors[] = "exam timetable clash";
