@@ -649,6 +649,30 @@ class BidDAO
         
     }
 
+    public function bidExists($userId, $courseId, $sectionId)
+    {
+        $sql = 'SELECT * from bid where userid = :userId and code = :courseId and section = :sectionId and result = "-"';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+        $count = 0;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $count ++;
+        }
+
+        return $count > 0;
+    }
+
 }
 
 ?>
