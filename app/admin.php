@@ -1,34 +1,16 @@
 <?php
 
 require_once 'include/protect_admin.php';
-
+include 'menu_admin.php'
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Admin</title>
-	<style>.button {
-        background-color: #1c87c9;
-        border: none;
-        color: white;
-        padding: 16px 30px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        margin: 4px 2px;
-        cursor: pointer; 
-    }</style>
-</head>
+
 <body>
-<a href ="bootstrapinterface.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Bootstrap</a>
-<br>
-<a href ="end1.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">End Round 1</a>
-<br>
-<a href ="start2.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">Start Round 2</a>
-<br>
-<a href ="end2.php" class="button" style="font-size : 20px; width: 16%; height: 20px;">End Round 2</a>
-<br>
+<h1>Welcome to BIOS, Admin!</h1>
+
+
+<h2><?php    $day = date('l'); $date = date('d-m-Y');    echo "Today is ".$day. ", and the date is ".$date."!";    ?></h2>
+<?php #tried to add this but not sure why the time seems to be in the wrong timezone ?>
+<!-- <h2><?php    $time = date('g:i:s');    echo "The time is now ".$time;    ?></h2> -->
+</body></html>
 </body>
 </html>
-
