@@ -2,7 +2,7 @@
 
 require_once 'include/common.php';
 require_once 'include/protect_admin.php';
-
+include 'menu_admin.php';
 $bid = new BidDAO();
 $coursedao = new CourseDAO();
 $sectiondao = new SectionDAO();
