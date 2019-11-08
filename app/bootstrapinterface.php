@@ -1,7 +1,7 @@
 <?php
 require_once 'include/common.php';
 require_once 'include/protect_admin.php';
-
+include 'menu_admin.php';
 ?>
 
 <form id='bootstrap-form' action="bootstrap-process.php" method="post" enctype="multipart/form-data">
