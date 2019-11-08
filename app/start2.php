@@ -1,3 +1,7 @@
+<?php
+include 'menu_admin.php'
+?>
+
 <html>
     <h2>Round 2 started</h2>
 </html>
