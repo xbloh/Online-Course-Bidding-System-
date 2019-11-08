@@ -1,7 +1,7 @@
 <?php
 
 	require_once 'include/common.php';
-	require_once'include/protect_admin.php';
+	require_once 'include/protect_admin.php';
 
 	$result = $_SESSION['bootstrapresult'];
 	if ($result['status'] == 'error') {
