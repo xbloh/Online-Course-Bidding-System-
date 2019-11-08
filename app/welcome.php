@@ -1,32 +1,7 @@
-<html>
-<head>
-<style>
-    .button {
-        background-color: #1c87c9;
-        border: none;
-        color: white;
-        padding: 30px 30px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        margin: 4px 4px;
-        cursor: pointer; 
-    }
-
-    h1 {
-        font-size: 30px;
-    }
-
-    th {
-        text-align: center;
-    }
-</style>
-</head>
-<?php
+ <?php
 
 require_once 'include/common.php';
-
+include 'menu.php';
 require_once 'include/protect.php';
 
 $student = $_SESSION['student'];
@@ -138,44 +113,44 @@ foreach($bidList as $bidDisplay) {
         $number = number_format($bidDisplay[4],2,'.','');
         echo "
             <tr>
-            <td>
+            <th>
                 $courseName
-            </td>
-            <td>
+            </th>
+            <th>
                 $displayCode
-            </td>
-            <td>
+            </th>
+            <th>
                 $displaySection
-            </td>
-            <td>
+            </th>
+            <th>
                 $displayBid
-            </td>
-            <td>
+            </th>
+            <th>
                 {$bidDisplay[3]}
-            </td>
-            <td>
+            </th>
+            <th>
                 {$number}
-            </td>";
+            </th>";
     }
     elseif($currentRnd == '1' && $rndStatus == 'active')
     {
         echo "
         <tr>
-            <td>
+            <th>
                 $courseName
-            </td>
-            <td>
+            </th>
+            <th>
                 $displayCode
-            </td>
-            <td>
+            </th>
+            <th>
                 $displaySection
-            </td>
-            <td>
+            </th>
+            <th>
                 $displayBid
-            </td>
-            <td>
+            </th>
+            <th>
                 $status
-            </td>
+            </th>
             ";
     }
     
@@ -183,21 +158,21 @@ foreach($bidList as $bidDisplay) {
     {
         echo "
         <tr>
-            <td>
+            <th>
                 $courseName
-            </td>
-            <td>
+            </th>
+            <th>
                 $displayCode
-            </td>
-            <td>
+            </th>
+            <th>
                 $displaySection
-            </td>
-            <td>
+            </th>
+            <th>
                 $displayBid
-            </td>
-            <td>
+            </th>
+            <th>
                 {$bidDisplay[3]}
-            </td>
+            </th>
             ";
     }
     echo "</tr>";
@@ -205,7 +180,7 @@ foreach($bidList as $bidDisplay) {
 echo "</table>";
 ?>
 
-<br>
+<!-- <br>
 <a href ="bidPreProcessing.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Click Here to Add Bid</a>
 <br>
 <a href ="updateBid.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Click Here to Update Bid</a>
@@ -214,7 +189,8 @@ echo "</table>";
 <br>
 <a href ="dropSection.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Click Here to Drop a Section</a>
 <br>
-<a href ="logout.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Logout</a>
+<a href ="logout.php" class="button" style="font-size : 20px; width: 30%; height: 20px;">Logout</a> -->
 
 </body>
 </html>
+
