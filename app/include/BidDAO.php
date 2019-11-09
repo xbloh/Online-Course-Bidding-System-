@@ -608,7 +608,7 @@ class BidDAO
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
         $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
-        $stmt->bindParam(':round',$round,PDO::PARAM_STR);
+        $stmt->bindParam(':round',$round,PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
@@ -616,7 +616,7 @@ class BidDAO
 
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = [$row['userid'], $row['code'], $row['section']];
+            $result[] = [$row['userid'], $row['code'], $row['section'], $row['amount'], $row['result']];
         }
 
         return $result;
