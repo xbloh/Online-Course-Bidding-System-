@@ -86,7 +86,7 @@
 			if (!$courseDAO->isCourseIdExists($this->course)) {
 				$errors[] = "invalid course";
 			}
-			if (substr($this->sectionId, 0, 1) !== "S" || !is_numeric(substr($this->sectionId, 1))) {
+			if (substr($this->sectionId, 0, 1) !== "S" || !is_numeric(substr($this->sectionId, 1)) || substr($this->sectionId, 1) > 99 || substr($this->sectionId, 1) < 1) {
 				$errors[] = "invalid section";
 			}
 

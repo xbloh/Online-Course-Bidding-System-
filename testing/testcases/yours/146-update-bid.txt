@@ -5,7 +5,7 @@
 <tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
 <tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
 <tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0001</td><td bgcolor='#eeeeec' align='right'>401960</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\project-g4t4\app\json\update-bid.php' bgcolor='#eeeeec'>...\update-bid.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.3266</td><td bgcolor='#eeeeec' align='right'>416592</td><td bgcolor='#eeeeec'>BidDAO->add(  )</td><td title='C:\project-g4t4\app\json\update-bid.php' bgcolor='#eeeeec'>...\update-bid.php<b>:</b>280</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.3386</td><td bgcolor='#eeeeec' align='right'>434112</td><td bgcolor='#eeeeec'><a href='http://www.php.net/PDOStatement.execute' target='_new'>execute</a>
+<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.3700</td><td bgcolor='#eeeeec' align='right'>416592</td><td bgcolor='#eeeeec'>BidDAO->add(  )</td><td title='C:\project-g4t4\app\json\update-bid.php' bgcolor='#eeeeec'>...\update-bid.php<b>:</b>280</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.3937</td><td bgcolor='#eeeeec' align='right'>434112</td><td bgcolor='#eeeeec'><a href='http://www.php.net/PDOStatement.execute' target='_new'>execute</a>
 (  )</td><td title='C:\project-g4t4\app\include\BidDAO.php' bgcolor='#eeeeec'>...\BidDAO.php<b>:</b>36</td></tr>
 </table></font>
