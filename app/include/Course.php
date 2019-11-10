@@ -79,9 +79,12 @@ class Course
 	public function validate()
 	{
 		$errors = [];
-
 		if (!preg_match("/^[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/", $this->examDate)) {
 			$errors[] = "invalid exam date";
+		} else {
+			if (!checkdate(substr($this->examDate, 4, 2), substr($this->examDate, 6), substr($this->examDate, 0, 4))) {
+				$errors[] = "invalid exam date";
+			}
 		}
 
 		$examStart = explode(":", $this->examStart);

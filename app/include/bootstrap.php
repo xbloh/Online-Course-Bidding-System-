@@ -366,9 +366,9 @@ function doBootstrap(){
                         foreach ($data as $key => $value) {
                             if (empty($value)) {
                                 $message[] = "blank " . $header[$key];
-                                break;
                             }
                         }
+                        echo "\n";
                     }
 
                     if (!empty($message)) {
