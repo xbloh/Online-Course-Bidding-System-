@@ -96,14 +96,14 @@
 				$errors[] = "invalid day";
 			}
 
-			$start = explode(":", $this->start);
-			if ((int)$start[0] > 23 || (int)$start[1] > 59 || (int)$start[0] < 0 || (int)$start[1] < 0) {
+			$start = $this->start;
+			if (!preg_match("/^(?:2[0-3]|[01]?[0-9]):[0-5][0-9]$/", $start)) {
 				$errors[] = "invalid start";
 			}
 
 
-			$end = explode(":", $this->end);
-			if ((int)$end[0] > 23 || (int)$end[1] > 59 || (int)$end[0] < 0 || (int)$end[1] < 0) {
+			$end = $this->end;
+			if (!preg_match("/^(?:2[0-3]|[01]?[0-9]):[0-5][0-9]$/", $end)) {
 				$errors[] = "invalid end";
 			} else if (strtotime($this->end) <= strtotime($this->start)) {
 				$errors[] = "invalid end";

@@ -87,8 +87,7 @@ class Bid
 		}
 		if (!$CourseDAO->isCourseIdExists($this->code)) {
 			$errors[] = "invalid course";
-		}
-		if (!$SectionDAO->isSectionIdExists($this->code, $this->section)) {
+		} elseif (!$SectionDAO->isSectionIdExists($this->code, $this->section)) {
 			$errors[] = "invalid section";
 		}
 		if(empty($errors)){
@@ -278,6 +277,12 @@ class Bid
 		// var_dump($courseCompleted);
 		if(in_array($course, $courseCompleted)){
 			$errors[] = "course completed";
+		}
+
+		$prevAmount = $bidDAO->retrieveBiddedAmt($this->userid, $this->code, $this->section);
+		$StudentObj = $StudentDAO->retrieveStudentByUserId($this->userid);
+		if ($StudentObj->getEdollar() + $prevAmount < $this->amount) {
+			$errors[] = "not enough e-dollar";
 		}
 	}
 	return $errors;
