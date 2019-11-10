@@ -12,6 +12,7 @@ class Bid
 	private $isAddBid;
 	private $isCart;
 	private $isUpdate;
+	private $isDiffSection;
 
 	
 	public function __construct($userid, $amount, $code, $section, $isAddBid = False, $isCart = False, $isUpdate = False)
@@ -24,6 +25,7 @@ class Bid
 		$this->isAddBid = $isAddBid;
 		$this->isCart = $isCart;
 		$this->isUpdate = $isUpdate;
+		$this->isDiffSection = False;
     }
     
 	public function getUserid()
@@ -74,8 +76,12 @@ class Bid
 		$courseCompletedDAO = new CoursesCompletedDAO();
 		$bidDAO = new BidDAO();
 
-		if ($bidDAO->bidExists($this->userid, $this->code, $this->section)) {
+		if ($bidDAO->bidExists($this->userid, $this->code, $this->section) || $bidDAO->bidCourseExists($this->userid, $this->code)) {
 			$this->isUpdate = True;
+		}
+
+		if ($bidDAO->bidCourseExists($this->userid, $this->code)) {
+			$this->isDiffSection = True;
 		}
 	if($this->isAddBid==FALSE && $this->isCart==FALSE && $this->isUpdate==FALSE){
 		if (!$StudentDAO->isUserIdValid($this->userid)){
@@ -157,9 +163,11 @@ class Bid
 			//$totalAmt=$biddedAmt+$currentAmt;
 			if($currentAmt > ($StudentObj->getEdollar())){
 				$errors[] = "not enough e-dollar";
+			}
+				
+		} else {
+			return $errors;
 		}
-			
-	}
 	}
 	if($this->isAddBid){
 		if($bidDAO->isUSerCourseSectionExists($this->userid, $this->code, $this->section)){
@@ -232,7 +240,7 @@ class Bid
 
 		$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 		foreach ($bidded_modules as $bidded_module){
-			if ($bidded_module[0] == $this->code && $bidded_module[1] == $this->section) {
+			if ($bidded_module[0] == $this->code) {
 				continue;
 			}
 			$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
@@ -251,7 +259,7 @@ class Bid
 		$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 		foreach ($bidded_modules as $bidded_module){
 			$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
-			if ($bidded_module[0] == $this->code && $bidded_module[1] == $this->section) {
+			if ($bidded_module[0] == $this->code) {
 				continue;
 			}
 			if($currentBidDate==$moduleExamDateTime[0]){
@@ -279,12 +287,27 @@ class Bid
 			$errors[] = "course completed";
 		}
 
-		$prevAmount = $bidDAO->retrieveBiddedAmt($this->userid, $this->code, $this->section);
+		if ($this->isDiffSection) {
+			$prevAmount = $bidDAO->retrieveCourseBiddedAmt($this->userid, $this->code);
+		} else {
+			$prevAmount = $bidDAO->retrieveBiddedAmt($this->userid, $this->code, $this->section);
+		}
 		$StudentObj = $StudentDAO->retrieveStudentByUserId($this->userid);
 		if ($StudentObj->getEdollar() + $prevAmount < $this->amount) {
 			$errors[] = "not enough e-dollar";
 		}
 	}
+
+	$roundDAO = new RoundDAO();
+	if ($roundDAO->retrieveCurrentRound() == 1) {
+		$student = $StudentDAO->retrieveStudentByUserId($this->userid);
+		$school = $student->getSchool();
+		if ($school != $CourseDAO->retrieveCourseById($this->code)->getSchool()) {
+			$errors[] = "not own school course";
+		}
+	}
+	
+
 	return $errors;
 	}
 	// public function validate2()

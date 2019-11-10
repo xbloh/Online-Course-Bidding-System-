@@ -99,6 +99,28 @@ class BidDAO
         return $result[0];
     }
 
+    public function retrieveCourseBiddedAmt($userid, $code)
+    {
+        $sql = 'SELECT amount FROM bid WHERE userid=:userid AND code=:code';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->bindParam(':code',$code,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['amount'];
+        }
+
+        return $result[0];
+    }
+
     public function retrieveBiddedAmtNoSection($userid, $code)
     {
         $sql = 'SELECT amount FROM bid WHERE userid=:userid AND code=:code';
@@ -180,6 +202,32 @@ class BidDAO
         $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
         $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
         $stmt->bindParam(':section', $sectionId, PDO::PARAM_STR);
+        // Add code to delete a record from employmentstat table in database, 
+        // given the id of an existing record
+        // $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $status=False;
+        // $status=$stmt->execute();
+        // echo"$userId, $courseId,$sectionId";
+        // if(!$status){
+        if($stmt->execute()){
+            $status=True;
+        }
+        $stmt = null;
+        $pdo = null;
+        return $status;
+    }
+
+    public function deleteCourseBid($userId, $courseId)
+    {
+        $sql='DELETE FROM BID WHERE userid=:userid AND code=:code';
+
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql); 
+
+        $stmt->bindParam(':userid', $userId, PDO::PARAM_STR);
+        $stmt->bindParam(':code', $courseId, PDO::PARAM_STR);
         // Add code to delete a record from employmentstat table in database, 
         // given the id of an existing record
         // $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -659,6 +707,29 @@ class BidDAO
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
         $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
+        $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+        $count = 0;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $count ++;
+        }
+
+        return $count > 0;
+    }
+
+    public function bidCourseExists($userId, $courseId)
+    {
+        $sql = 'SELECT * from bid where userid = :userId and code = :courseId and result = "-"';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
         $stmt->bindParam(':userId',$userId,PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();

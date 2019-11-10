@@ -2,10 +2,10 @@
     "status": "error",
     "num-record-loaded": [
         {
-            "bid.csv": 0
+            "bid.csv": 1
         },
         {
-            "course.csv": 5
+            "course.csv": 6
         },
         {
             "course_completed.csv": 0
@@ -14,7 +14,7 @@
             "prerequisite.csv": 0
         },
         {
-            "section.csv": 0
+            "section.csv": 3
         },
         {
             "student.csv": 6
@@ -23,38 +23,23 @@
     "error": [
         {
             "file": "bid.csv",
-            "line": 2,
-            "message": [
-                "invalid amount",
-                "invalid course"
-            ]
-        },
-        {
-            "file": "bid.csv",
             "line": 3,
             "message": [
-                "invalid course"
+                "not enough e-dollar"
             ]
         },
         {
             "file": "bid.csv",
             "line": 4,
             "message": [
-                "invalid course"
+                "not own school course"
             ]
         },
         {
-            "file": "course.csv",
-            "line": 2,
+            "file": "student.csv",
+            "line": 8,
             "message": [
-                "invalid exam date"
-            ]
-        },
-        {
-            "file": "section.csv",
-            "line": 2,
-            "message": [
-                "invalid course"
+                "duplicate userid"
             ]
         }
     ]

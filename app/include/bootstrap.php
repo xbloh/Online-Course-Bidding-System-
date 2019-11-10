@@ -341,11 +341,18 @@ function doBootstrap(){
 
                         $currentErrors = $new_bid->validate();
                         if (empty($currentErrors)) {
-                            if ($bidDAO->bidExists(trim($data[0]), trim($data[2]), trim($data[3]))) {
-                                $toAdd = $bidDAO->retrieveBiddedAmt(trim($data[0]), trim($data[2]), trim($data[3]));
-                                $bidDAO->deleteBid(trim($data[0]), trim($data[2]), trim($data[3]));
-                                $studentDAO->addEdollar(trim($data[0]), $toAdd);
+                            if ($bidDAO->bidCourseExists(trim($data[0]), trim($data[2]))) {
+                                if ($bidDAO->bidExists(trim($data[0]), trim($data[2]), trim($data[3]))) {
+                                    $toAdd = $bidDAO->retrieveBiddedAmt(trim($data[0]), trim($data[2]), trim($data[3]));
+                                    $bidDAO->deleteBid(trim($data[0]), trim($data[2]), trim($data[3]));
+                                    $studentDAO->addEdollar(trim($data[0]), $toAdd);
+                                } else {
+                                    $toAdd = $bidDAO->retrieveCourseBiddedAmt(trim($data[0]), trim($data[2]), trim($data[3]));
+                                    $bidDAO->deleteCourseBid(trim($data[0]), trim($data[2]), trim($data[3]));
+                                    $studentDAO->addEdollar(trim($data[0]), $toAdd);
+                                }
                             }
+                            
                             $bidDAO->add($new_bid);
                             $studentDAO->deductEdollar($data[0], $data[1]);
                             $bid_processed++;

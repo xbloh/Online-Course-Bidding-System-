@@ -75,7 +75,7 @@ class Student
 			$errors[] = "duplicate userid";
 		}
 
-		if ($this->edollar<10||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $this->edollar))||$this->edollar>999) {
+		if ($this->edollar<0||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $this->edollar))||$this->edollar>999) {
 		// if($this->edollar!=number_format($this->edollar,2,'.','')){
 		// if($this->edollar<10||$this->edollar!=number_format($this->edollar,2,'.','')||$this->edollar>999){
 			$errors[] = "invalid e-dollar";
