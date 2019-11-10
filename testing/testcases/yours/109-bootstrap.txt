@@ -1,0 +1,30 @@
+<br />
+<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
+<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice: A non well formed numeric value encountered in C:\project-g4t4\app\include\Section.php on line <i>90</i></th></tr>
+<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
+<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
+<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0002</td><td bgcolor='#eeeeec' align='right'>401136</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>0</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0006</td><td bgcolor='#eeeeec' align='right'>402728</td><td bgcolor='#eeeeec'>doBootstrap(  )</td><td title='C:\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>4</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.2851</td><td bgcolor='#eeeeec' align='right'>441408</td><td bgcolor='#eeeeec'>Section->validate(  )</td><td title='C:\project-g4t4\app\include\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>220</td></tr>
+</table></font>
+<br />
+<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
+<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice: A non well formed numeric value encountered in C:\project-g4t4\app\include\Section.php on line <i>90</i></th></tr>
+<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
+<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
+<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0002</td><td bgcolor='#eeeeec' align='right'>401136</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>0</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0006</td><td bgcolor='#eeeeec' align='right'>402728</td><td bgcolor='#eeeeec'>doBootstrap(  )</td><td title='C:\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>4</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.2851</td><td bgcolor='#eeeeec' align='right'>441408</td><td bgcolor='#eeeeec'>Section->validate(  )</td><td title='C:\project-g4t4\app\include\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>220</td></tr>
+</table></font>
+<br />
+<font size='1'><table class='xdebug-error xe-uncaught-exception' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
+<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Fatal error: Uncaught PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'sectionID' at row 1 in C:\project-g4t4\app\include\SectionDAO.php on line <i>105</i></th></tr>
+<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'sectionID' at row 1 in C:\project-g4t4\app\include\SectionDAO.php on line <i>105</i></th></tr>
+<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
+<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
+<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0002</td><td bgcolor='#eeeeec' align='right'>401136</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>0</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0006</td><td bgcolor='#eeeeec' align='right'>402728</td><td bgcolor='#eeeeec'>doBootstrap(  )</td><td title='C:\project-g4t4\app\json\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>4</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.3031</td><td bgcolor='#eeeeec' align='right'>441408</td><td bgcolor='#eeeeec'>SectionDAO->add(  )</td><td title='C:\project-g4t4\app\include\bootstrap.php' bgcolor='#eeeeec'>...\bootstrap.php<b>:</b>222</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>0.3136</td><td bgcolor='#eeeeec' align='right'>459304</td><td bgcolor='#eeeeec'><a href='http://www.php.net/PDOStatement.execute' target='_new'>execute</a>
+(  )</td><td title='C:\project-g4t4\app\include\SectionDAO.php' bgcolor='#eeeeec'>...\SectionDAO.php<b>:</b>105</td></tr>
+</table></font>

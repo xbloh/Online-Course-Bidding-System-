@@ -1,0 +1,17 @@
+{
+    "status": "success",
+    "students": [
+        {
+            "userid": "anaconda",
+            "amount": "10.00"
+        },
+        {
+            "userid": "duke",
+            "amount": "10.00"
+        },
+        {
+            "userid": "geeko",
+            "amount": "10.00"
+        }
+    ]
+}
