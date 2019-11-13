@@ -32,7 +32,7 @@ foreach($bids as $bid)
     $winList = $bidDAO->winBids($code, $section, $vacancy, 2);
     $minBidAmt = $bidDAO->minBid($code, $section, $vacancy, 2, $winList);
     $result = $bid[2];
-    var_dump($bid);
+    // var_dump($bid);
     $status = 'Unsuccessful';
 
     if($result == '-')
