@@ -175,7 +175,7 @@ class StudentDAO{
 
         if($row=$stmt->fetch()){
             
-            return new Student($row['userid'], $row['password'], $row['name'], $row['school'], number_format($row['edollar'],1));
+            return new Student($row['userid'], $row['password'], $row['name'], $row['school'], number_format($row['edollar'],2));
         }
     }
 
