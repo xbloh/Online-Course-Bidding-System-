@@ -1,0 +1,11 @@
+{
+    "status": "success",
+    "bids": [
+        {
+            "row": 1,
+            "userid": "alpha",
+            "amount": "20.00",
+            "result": "in"
+        }
+    ]
+}
