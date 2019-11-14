@@ -139,7 +139,9 @@ class Bid
 			$courses = $CourseDAO->retrieveCoursesBySchool($school);
 
 			$courseCompleted = $courseCompletedDAO->retrieveCoursesCompByUserId($this->userid);
+			
 			$prerequisiteId = $prerequisiteDAO->retrievePreRequisitesIdByCourseId($this->code);
+			
 			foreach($prerequisiteId as $prerequisiteEach){
 				if(!in_array($prerequisiteEach, $courseCompleted)){
 					$errors[] = "incomplete prerequisites";
@@ -186,7 +188,9 @@ class Bid
 		$courses = $CourseDAO->retrieveCoursesBySchool($school);
 
 		$courseCompleted = $courseCompletedDAO->retrieveCoursesCompByUserId($this->userid);
+		// var_dump($courseCompleted);
 		$prerequisiteId = $prerequisiteDAO->retrievePreRequisitesIdByCourseId($this->code);
+		// var_dump($prerequisiteId);
 		foreach($prerequisiteId as $prerequisiteEach){
 			if(!in_array($prerequisiteEach, $courseCompleted)){
 				$errors[] = "incomplete Prerequisites  ".$this->code.'  '.$this->section;

@@ -43,7 +43,7 @@ class CoursesCompletedDAO
         $conn = $connMgr->getConnection();
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->bindParam(':userid',$userId,PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
@@ -75,8 +75,11 @@ class CoursesCompletedDAO
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $result[] = $row['code'];
+        $result = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['code'];
+        }
 
         return $result;
     }
@@ -94,10 +97,10 @@ class CoursesCompletedDAO
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
-        $result = array();
-
+        $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            var_dump($row['code']);
             $result[] = $row['code'];
         }
 

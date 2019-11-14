@@ -583,6 +583,10 @@ class BidDAO
         // {
         //     return $result[$vacancy-1]+1;
         // }
+        if(count($winList)==0)
+        {
+            return 10.00;
+        }
         if(count($winList)<$vacancy)
         {
             return 10.00;

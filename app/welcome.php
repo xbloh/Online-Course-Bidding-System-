@@ -29,8 +29,11 @@ foreach($bids as $bid)
     $section = $bid[1];
     $bidAmt = $bidDAO->retrieveBiddedAmt($userId, $code, $section);
     $vacancy = $sectionDAO->retrieveSectionSize($code,$section);
+    // echo $code,$section,$vacancy;
     $winList = $bidDAO->winBids($code, $section, $vacancy, 2);
+    // var_dump($winList);
     $minBidAmt = $bidDAO->minBid($code, $section, $vacancy, 2, $winList);
+    // var_dump($minBidAmt);
     $result = $bid[2];
     // var_dump($bid);
     $status = 'Unsuccessful';
