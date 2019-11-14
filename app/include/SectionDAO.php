@@ -24,7 +24,7 @@ require_once 'common.php';
 
 
 	        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	            $result[] = new Section($course, $row['sectionID'], $row['day'], $row['start'], $row['end'], $row['instructor'], $row['venue'], $row['size']);
+				$result[] = new Section($course, $row['sectionID'], $row['day'], $row['start'], $row['end'], $row['instructor'], $row['venue'], $row['size']);
 	        }
 	        return $result;
 		}
@@ -231,7 +231,12 @@ require_once 'common.php';
 
 
 	        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	            $result[] = ['course' => $row['courseID'], 'section' => $row['sectionID'], 'day' => $row['day'], 'start' => $row['start'], 'start' => $row['start'], 'end' => $row['end'], 'instructor' => $row['instructor'], 'venue' => $row['venue'], 'size' => $row['size']];
+				$days = [ "1" => 'Monday', "2" => 'Tuesday', "3" => 'Wednesday', "4" => 'Thursday', "5" => 'Friday', "6" => 'Saturday', "7" => 'Sunday'];
+				$start = date_create($row['start']);
+				$startSec = date_format($start,"Gi");
+				$end = date_create($row['end']);
+				$endSec = date_format($end,"Gi");
+	            $result[] = ['course' => $row['courseID'], 'section' => $row['sectionID'], 'day' => $days[$row['day']], 'start' => $startSec, 'end' => $endSec, 'instructor' => $row['instructor'], 'venue' => $row['venue'], 'size' => intval($row['size'])];
 	        }
 	        return $result;
 		}

@@ -188,7 +188,13 @@ class CourseDAO
 
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = ['course' => $row['courseID'], 'school' => $row['school'], 'title' => $row['title'], 'description' => $row['description'], 'exam date' => $row['examDate'], 'exam start' => $row['examStart'], 'exam end' => $row['examEnd']];
+            $examDate = date_create($row['examDate']);
+            $date = date_format($examDate,"Ymd");
+            $examStart = date_create($row['examStart']);
+            $start = date_format($examStart,"Gi");
+            $examEnd = date_create($row['examEnd']);
+            $end = date_format($examEnd,"Gi");
+            $result[] = ['course' => $row['courseID'], 'school' => $row['school'], 'title' => $row['title'], 'description' => $row['description'], 'exam date' => $date, 'exam start' => $start, 'exam end' => $end];
         }
         return $result;
     }

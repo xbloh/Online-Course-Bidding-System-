@@ -161,7 +161,7 @@ class StudentDAO{
         $pdo = $connMgr->getConnection();
 
         // Step 2 - Write & Prepare SQL Query (take care of Param Binding if necessary)
-        $sql = "SELECT * 
+        $sql = "SELECT *
                 FROM STUDENT 
                 WHERE 
                     userid=:userid
@@ -175,7 +175,7 @@ class StudentDAO{
 
         if($row=$stmt->fetch()){
             
-            return new Student($row['userid'], $row['password'], $row['name'], $row['school'], $row['edollar']);
+            return new Student($row['userid'], $row['password'], $row['name'], $row['school'], number_format($row['edollar'],1));
         }
     }
 
@@ -200,7 +200,7 @@ class StudentDAO{
 
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = ['userid' => $row['userid'], 'password' => $row['password'], 'name' => $row['name'], 'school' => $row['school'], 'edollar' => $row['edollar']];
+            $result[] = ['userid' => $row['userid'], 'password' => $row['password'], 'name' => $row['name'], 'school' => $row['school'], 'edollar' => floatval($row['edollar'])];
         }
         return $result;
     }
