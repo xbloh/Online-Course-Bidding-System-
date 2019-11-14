@@ -114,7 +114,7 @@ if(isset($_POST['update']))
         }
         // $studentAmt-=$amount;
     }
-    var_dump($_SESSION['errors']);
+
     if(empty($_SESSION['errors'])){
     $totalBid=0;
     foreach($newAmt as $oneBid){
