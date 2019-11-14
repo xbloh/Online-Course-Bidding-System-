@@ -498,7 +498,7 @@ class BidDAO
         $result = array();
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = ['userid' => $row['userid'], 'amount' => $row['amount']];
+            $result[] = ['userid' => $row['userid'], 'amount' => floatval($row['amount'])];
         }
         return $result;
     }
