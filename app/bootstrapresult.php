@@ -5,7 +5,7 @@
 
 	$result = $_SESSION['bootstrapresult'];
 	if ($result['status'] == 'error') {
-		echo "<h3>There were the following errors with bootstrap:</h3><table width='800'><tr>
+		echo "<h3>There following are the errors with bootstrap:</h3><table width='800'><tr>
 		<th>file</th><th>line</th><th>errors</th></tr>";
 		foreach ($result['error'] as $error) {
 			$messages = implode(', ', $error['message']);
