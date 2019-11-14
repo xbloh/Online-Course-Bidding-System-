@@ -453,7 +453,7 @@ class BidDAO
 
         $i = 1;
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = ['row' => $i, 'userid' => $row['userid'], 'amount' => $row['amount'], 'result' => $row['result']];
+            $result[] = ['row' => $i, 'userid' => $row['userid'], 'amount' => floatval($row['amount']), 'result' => $row['result']];
             $i ++;
         }
         return $result;
