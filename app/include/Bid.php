@@ -13,6 +13,7 @@ class Bid
 	private $isCart;
 	private $isUpdate;
 	private $isDiffSection;
+	private $doesBidEvenExist;
 
 	
 	public function __construct($userid, $amount, $code, $section, $isAddBid = False, $isCart = False, $isUpdate = False)
@@ -26,6 +27,7 @@ class Bid
 		$this->isCart = $isCart;
 		$this->isUpdate = $isUpdate;
 		$this->isDiffSection = False;
+		$this->doesBidEvenExist = False;
     }
     
 	public function getUserid()
@@ -79,7 +81,9 @@ class Bid
 		if ($bidDAO->bidExists($this->userid, $this->code, $this->section) || $bidDAO->bidCourseExists($this->userid, $this->code)) {
 			$this->isUpdate = True;
 		}
-
+		if ($bidDAO->bidExists($this->userid, $this->code, $this->section)) {
+			$this->doesBidEvenExist = True;
+		}
 		if ($bidDAO->bidCourseExists($this->userid, $this->code)) {
 			$this->isDiffSection = True;
 		}
@@ -290,11 +294,15 @@ class Bid
 		if(in_array($course, $courseCompleted)){
 			$errors[] = "course completed";
 		}
-
-		if ($this->isDiffSection) {
-			$prevAmount = $bidDAO->retrieveCourseBiddedAmt($this->userid, $this->code);
-		} else {
-			$prevAmount = $bidDAO->retrieveBiddedAmt($this->userid, $this->code, $this->section);
+		if($this->doesBidEvenExist){
+			if ($this->isDiffSection) {
+				$prevAmount = $bidDAO->retrieveCourseBiddedAmt($this->userid, $this->code);
+			} else {
+				$prevAmount = $bidDAO->retrieveBiddedAmt($this->userid, $this->code, $this->section);
+			}
+		}
+		else{
+			$prevAmount = 0;
 		}
 		$StudentObj = $StudentDAO->retrieveStudentByUserId($this->userid);
 		if ($StudentObj->getEdollar() + $prevAmount < $this->amount) {

@@ -9,6 +9,15 @@ class sort {
 
 	function bootstrap($a, $b)
 	{
+		$a=explode(' ', $a);
+		$a=end($a);	
+		$b=explode(' ', $b);
+		$b=end($b);
+		return strcmp($a,$b);
+	}
+
+	function alphabet($a, $b)
+	{
 		return strcmp($a,$b);
 	}
 	

@@ -748,6 +748,29 @@ class BidDAO
         return $count > 0;
     }
 
+    public function retrieveCourseIdSectionIdBiddedRounds($userid, $round)
+    {
+        $sql = 'SELECT * from bid where userid=:userid and round=:round';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+        $stmt->bindParam(':round',$round,PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = [$row['code'], $row['section'], $row['result'], $row['round']];
+        }
+
+        return $result;
+    }
+
 }
 
 ?>

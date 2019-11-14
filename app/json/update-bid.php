@@ -8,6 +8,7 @@
     $SectionDAO = new SectionDAO;
     $CourseDAO = new CourseDAO;
     $errors = [];
+    $isAllowed = [];
     $message = [];
     $totalAmtCart = 0;
     $checkMissing = ['userid', 'amount', 'course', 'section'];
@@ -99,7 +100,7 @@
                 $vacancy = $SectionDAO->retrieveSectionSize($courseId, $sectionId);
                 $winList = $bidDAO->winBids($courseId, $sectionId, $vacancy, 2);
                 $minBidAmt = $bidDAO->minBid($courseId, $sectionId, $vacancy, 2, $winList);
-                if($totalAmtCart<$minBidAmt)
+                if($totalAmtCart<$minBidAmt && count($winList)==$vacancy)
                 {
                     $isAllowed[]="bid too low";
                 }
@@ -158,7 +159,7 @@
                         $vacancy = $SectionDAO->retrieveSectionSize($courseId, $sectionId);
                         $winList = $bidDAO->winBids($courseId, $sectionId, $vacancy, 2);
                         $minBidAmt = $bidDAO->minBid($courseId, $sectionId, $vacancy, 2, $winList);
-                        if($totalAmtCart<$minBidAmt)
+                        if($totalAmtCart<$minBidAmt && count($winList)==$vacancy)
                         {
                             $isAllowed[]="bid too low";
                         }
@@ -182,6 +183,42 @@
                 $isAllowed[]="insufficient e$";
             }
         }   
+
+        $courseId=$bid->getCode();
+        $sectionId=$bid->getSection();
+        $currentBidDayTime = $SectionDAO->retrieveSectionDayTime($courseId,$sectionId);
+        $currentBidDate=$currentBidDayTime[0];
+        $currentBidStart=$currentBidDayTime[1];
+        $currentBidEnd=$currentBidDayTime[2];
+
+        $bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($userId);
+        foreach ($bidded_modules as $bidded_module)
+        {
+            $moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
+            if($currentBidDate==$moduleClassDateTime[0]){
+                if($moduleClassDateTime[1]<$currentBidEnd && $moduleClassDateTime[2]>$currentBidStart){
+                    $isAllowed[] = "class timetable clash";
+                }
+            }
+        }
+
+        $courseId=$bid->getCode();
+        $sectionId=$bid->getSection();
+        $currentBidDayTime = $CourseDAO->retrieveExamDateTime($courseId);
+        $currentBidDate=$currentBidDayTime[0];
+        $currentBidStart=$currentBidDayTime[1];
+        $currentBidEnd=$currentBidDayTime[2];
+
+        $bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($userId);
+        foreach ($bidded_modules as $bidded_module){
+			$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
+			if($currentBidDate==$moduleExamDateTime[0]){
+				if($moduleExamDateTime[1]<$currentBidEnd && $moduleExamDateTime[2]>$currentBidStart){
+					$isAllowed[] = "exam timetable clash";
+				}
+			}
+		}
+            
         $vacancy = $SectionDAO->retrieveSectionSize($courseId, $sectionId);
         if($vacancy==0)
         {
@@ -194,7 +231,7 @@
                 $vacancy = $SectionDAO->retrieveSectionSize($courseId, $sectionId);
                 $winList = $bidDAO->winBids($courseId, $sectionId, $vacancy, 2);
                 $minBidAmt = $bidDAO->minBid($courseId, $sectionId, $vacancy, 2, $winList);
-                if($totalAmtCart<$minBidAmt)
+                if($totalAmtCart<$minBidAmt && count($winList)==$vacancy)
                 {
                     $isAllowed[]="bid too low";
                 }
@@ -217,9 +254,9 @@
                 $isAllowed[]="not own school course";
             }
         }
-
-
     }
+    $sortclass = new sort();
+    $isAllowed = $sortclass->sort_it($isAllowed,"alphabet");
     }
     else
     {
@@ -237,6 +274,8 @@
                 array_push($errors,("missing " . $missing));
             }
         }
+        $sortclass = new sort();
+        $errors = $sortclass->sort_it($errors,"bootstrap");
         
     }
 
@@ -250,8 +289,8 @@
 
     if (!empty($errors))
     {	
-        $sortclass = new sort();
-        $errors = $sortclass->sort_it($errors,"bootstrap");
+        // $sortclass = new sort();
+        // $errors = $sortclass->sort_it($errors,"bootstrap");
         $result = [ 
             "status" => "error",
             "message" => $errors

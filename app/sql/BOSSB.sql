@@ -54,7 +54,7 @@ create table BID (
     section varchar(100) not null,
     result varchar(3) not null,
     round int not null,
-	CONSTRAINT BID_PK primary key (userid,code,section)
+	CONSTRAINT BID_PK primary key (userid,code,section,round)
 );
 
 create table ROUNDS (

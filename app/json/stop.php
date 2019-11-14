@@ -82,7 +82,10 @@
 				    $code = $successBid[2];
 				    $section = $successBid[3];
 				    $bidStatus = 'in';
-				    $bid->updateStatus($userid, $code, $section, $bidStatus);
+					$bid->updateStatus($userid, $code, $section, $bidStatus);
+					$vacancy = $sectiondao->retrieveSectionSize($code,$section);
+					$vacancy--;
+					$sectiondao->updateSize($code, $section, $vacancy);
 				}
 
 				foreach ($failBids as $failbid) {

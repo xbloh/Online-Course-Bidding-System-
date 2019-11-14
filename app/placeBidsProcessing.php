@@ -102,7 +102,7 @@ foreach ($_SESSION['bids'] as $bid) {
 		$currentVacancy = $SectionDAO->retrieveSectionSize($courseId,$sectionId);
 		$winList = $bidDAO->winBids($courseId, $sectionId, $currentVacancy, 2);
 		$minBidAmt = $bidDAO->minBid($courseId, $sectionId, $currentVacancy, 2, $winList);
-		if($bid->getAmount()<$minBidAmt)
+		if($bid->getAmount()<$minBidAmt && count($winList)==$currentVacancy)
 		{
 			$isAllowed[] = "Insufficient bidded amount";
 		}

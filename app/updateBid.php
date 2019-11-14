@@ -125,7 +125,7 @@ if(isset($_POST['update']))
         $_SESSION['errors'][]='Exceed e-dollar amount';
     }
 
-    if($amount<$minBidAmt)
+    if($amount<$minBidAmt  && count($winList)==$vacancy)
     {
         $_SESSION['errors'][]= "Insufficient bidded amount";
     }
