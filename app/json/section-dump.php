@@ -50,7 +50,7 @@
 
 	$out = ["status" => "success", "students" => $students];
 	header('Content-Type: application/json');
-	echo json_encode($out, JSON_PRETTY_PRINT);
+	echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
 
 
 ?>

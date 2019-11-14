@@ -1,9 +1,0 @@
-{
-    "status": "error",
-    "message": [
-        "blank course",
-        "blank section",
-        "blank userid",
-        "missing amount"
-    ]
-}
