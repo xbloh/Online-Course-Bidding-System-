@@ -7,18 +7,26 @@ include 'menu.php';
 	<title>Place your bid!</title>
 </head>
 <body>
-	<form action="addBid.php" method="post">
-		<table>
-			<tr>
-				<th>
-					Select course:
-				</th>
-				<td>
-					<select name='indexOfCourseToBid'>
-						<?php
-							require 'include/common.php';
-							require_once 'include/protect.php';
-							
+	<?php
+		require 'include/common.php';
+		require_once 'include/protect.php';
+		$roundDAO = new RoundDAO();
+		$rndStatus = $roundDAO->retrieveRoundStatus();
+					if($rndStatus=='completed')
+					{
+						echo "<h3>The round has ended</h3><br><a href='welcome.php'>Back</a>";
+					}
+					else
+					{
+							echo"<form action='addBid.php' method='post'>
+							<table>
+								<tr>
+									<th>
+										Select course:
+									</th>
+									<td>
+									<select name='indexOfCourseToBid'>";
+						
 							foreach ($_SESSION['coursesAvailable'] as $index => $course) {
 								
 								$preReqDAO = new PreRequisiteDAO();
@@ -32,24 +40,24 @@ include 'menu.php';
 								}else {
 									$selected = '';
 								}
-
-								echo "<option value='$index' $selected>" . $course->getCourseId() . " " . $course->getTitle() . "</option>";
+								echo "<option value='$index' $selected>" . $course->getCourseId() . " " . $course->getTitle() . "</option>";		
 							}
-						?>
-					</select>
+					echo'</select>
 				</td>
 				<td>
 					<input type="submit" name="courseSelected" value="View Course">
 				</td>
 			</tr>
 		</table>
-	</form>
+	</form>';
+	}		
+	?>
 
 	<form method='post'>
 		<table cellspacing="10px" cellpadding="3px">
 			<?php
 
-				$roundDAO = new RoundDAO();
+				// $roundDAO = new RoundDAO();
 				$currentRnd = $roundDAO->retrieveCurrentRound();
 				$rndStatus = $roundDAO->retrieveRoundStatus();
 
