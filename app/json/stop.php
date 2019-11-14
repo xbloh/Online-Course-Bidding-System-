@@ -10,6 +10,7 @@
 	$courseDAO = new CourseDAO();
 	$sectiondao = new SectionDAO();
 	$bid = new BidDAO();
+	$studentDAO = new StudentDAO();
 
 	if ($status != "active" ) {
 		$errors[] = "round already ended";
@@ -28,7 +29,6 @@
 			if ($roundDAO->endRound1()) {
 				$failBids = [];
 				$courses = $courseDAO->retrieveAllCourses();
-
 				$clearingPrice = NULL;
 				$succesfulBids = [];
 				foreach($courses as $course)

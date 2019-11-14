@@ -417,7 +417,7 @@ class BidDAO
 
     public function ssDump()
     {
-        $sql = 'SELECT * from bid order by code, section, amount desc, userid and result = "in"';
+        $sql = 'SELECT * from bid where result = "in" order by code, section, amount desc, userid';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -498,7 +498,7 @@ class BidDAO
         $result = array();
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = ['userid' => $row['userid'], 'amount' => floatval($row['amount'])];
+            $result[] = ['userid' => $row['userid'], 'amount' => $row['amount']];
         }
         return $result;
     }
