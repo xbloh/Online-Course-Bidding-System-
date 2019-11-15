@@ -5,19 +5,30 @@ require_once 'include/protect.php';
 include 'menu.php';
 
 $roundDAO = new RoundDAO();
+$bidDAO = new BidDAO();
+$sectionDAO = new SectionDAO();
+
 $currentRnd = $roundDAO->retrieveCurrentRound();
 $rndStatus = $roundDAO->retrieveRoundStatus();
 
+if($rndStatus=='completed')
+{
+    echo "<h3>The round has ended</h3><br>";
+}
+elseif($rndStatus=='Begin')
+{
+    echo "<h3>The round has not begin</h3><br>";
+}
+else{
 $student = $_SESSION['student'];
 $name = $student->getName();
 $userId = $student->getUserId();
-
-$bidDAO = new BidDAO();
-$sectionDAO = new SectionDAO();
 $bidList = [];
 $allBid = [];
 $bids = $bidDAO->retrieveCourseIdSectionIdBidded($userId);
 $_SESSION['errors']=[];
+
+
 
 foreach($bids as $bid)
 
@@ -198,6 +209,7 @@ if(isset($_POST['update']))
 }
 else{
     printErrors();
+}
 }
 }
 
