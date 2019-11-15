@@ -16,6 +16,10 @@ include 'menu.php';
 					{
 						echo "<h3>The round has ended</h3><br><a href='welcome.php'>Back</a>";
 					}
+					elseif($rndStatus=='Begin')
+					{
+						echo "<h3>The round has not begin</h3><br><a href='welcome.php'>Back</a>";
+					}
 					else
 					{
 							echo"<form action='addBid.php' method='post'>

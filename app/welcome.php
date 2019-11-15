@@ -13,13 +13,17 @@ $bidDAO = new BidDAO();
 $courseDAO = new CourseDAO();
 $studentDAO = new StudentDAO();
 $sectionDAO = new SectionDAO();
-$eDollar = $studentDAO->retrieveStudentByUserId($userId)->getEdollar();
-$coursesCompleted = $coursesCompletedDAO->retrieveCoursesCompleted($student);
-$student->setCoursesCompleted($coursesCompleted);
 
 $roundDAO = new RoundDAO();
 $currentRnd = $roundDAO->retrieveCurrentRound();
 $rndStatus = $roundDAO->retrieveRoundStatus();
+if($rndStatus!='Begin')
+{
+$eDollar = $studentDAO->retrieveStudentByUserId($userId)->getEdollar();
+$coursesCompleted = $coursesCompletedDAO->retrieveCoursesCompleted($student);
+$student->setCoursesCompleted($coursesCompleted);
+
+
 
 $bidList = [];
 $bids = $bidDAO->retrieveCourseIdSectionIdBidded($userId);
@@ -63,13 +67,14 @@ foreach($bids as $bid)
         $bidList[] = [$code, $section, $bidAmt];
     }
 }
+}
 
 ?>
 <body>
 <h1>Welcome to BIOS, <?php echo $name; ?></h1>
 <br>
 <h2>Round <font style = "color:#1c87c9"><?php echo $roundDAO->retrieveCurrentRound();?></font> is currently <font style = "color:#1c87c9"><?php echo $roundDAO->retrieveRoundStatus();?></font></h2>
-<h3>You currently have <?php echo $eDollar; ?> eDollars left</h3>
+<h3>You currently have <?php if($rndStatus!='Begin'){echo $eDollar;} else{echo 0;} ?> eDollars left</h3>
 <br>
 
 
@@ -103,6 +108,7 @@ if($currentRnd == '1' && $rndStatus == 'completed')
     echo "<th>Bid Status</th>";
 }
 echo"</tr>";
+if($rndStatus!='Begin'){
 
 foreach($bidList as $bidDisplay) {
     $displayCode = $bidDisplay[0];
@@ -181,6 +187,7 @@ foreach($bidList as $bidDisplay) {
     echo "</tr>";
 }
 echo "</table>";
+}
 ?>
 
 <!-- <br>
