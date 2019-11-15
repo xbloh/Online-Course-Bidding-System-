@@ -16,6 +16,15 @@ $roundDAO = new RoundDAO();
 $currentRnd = $roundDAO->retrieveCurrentRound();
 $rndStatus = $roundDAO->retrieveRoundStatus();
 $CoursesSections=$bidDAO->retrieveCourseIdSectionIdBidded($userid);
+if($rndStatus=='completed')
+{
+	echo "<h3>The round has ended</h3><br>";
+}
+elseif($rndStatus=='Begin')
+{
+	echo "<h3>The round has not begin</h3><br>";
+}
+else{
 if($CoursesSections==[])
 {
 	echo "<h2>No more course bidded.</h2>";
@@ -80,8 +89,10 @@ echo"
 		</table>
 	</form>';
 }
+}
 ?>
-<a href='welcome.php'>Back</a>
+<br>
+<a href='welcome.php'>Go back to Home</a>
 <br>
 
 <?php

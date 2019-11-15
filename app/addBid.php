@@ -14,11 +14,11 @@ include 'menu.php';
 		$rndStatus = $roundDAO->retrieveRoundStatus();
 					if($rndStatus=='completed')
 					{
-						echo "<h3>The round has ended</h3><br><a href='welcome.php'>Back</a>";
+						echo "<h3>The round has ended</h3><br><br><a href='welcome.php'>Go back to Home</a>";
 					}
 					elseif($rndStatus=='Begin')
 					{
-						echo "<h3>The round has not begin</h3><br><a href='welcome.php'>Back</a>";
+						echo "<h3>The round has not begin</h3><br><br><a href='welcome.php'>Go back to Home</a>";
 					}
 					else
 					{
