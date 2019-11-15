@@ -1,6 +1,7 @@
 <?php
 
 require_once 'include/common.php';
+include 'menu.php';
 
 $bidDAO = new BidDAO();
 $StudentDAO = new StudentDAO();
