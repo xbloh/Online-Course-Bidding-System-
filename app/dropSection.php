@@ -43,10 +43,16 @@
 				echo "<tr><td>{$courseId}</td><td>{$sectionId}</td>
 				<td><input type='checkbox' name='toDrop[]' value={$identifier}></td></tr>";
 			}
-		echo ' </table>
-		<input type="submit" name="Submit">
-	</form>';
+		echo "</table>";
+		if(count($successfulBids)>0){
+			echo ' 
+			<input type="submit" name="Submit">
+			</form>';
 		}
+		else{
+			echo "<a href='welcome.php'>Go back to Home</a>";
+		}
+	}
 	?>
 	
 </body>
