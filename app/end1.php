@@ -48,6 +48,7 @@ foreach($courses as $course)
                     }
                 } else {
                     $failBids[] = [$user, $amount, $courseId, $sectionId];
+                    $bid->deleteBid($user, $courseId, $sectionId);
                 }
             }
             
