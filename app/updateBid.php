@@ -96,8 +96,22 @@ foreach($bidList as $bidDisplay) {
 
 }
 
+// echo "</table>";
+// echo "<input type = 'submit' name = 'update' value = 'Update Bid'>";
+
 echo "</table>";
-echo "<input type = 'submit' name = 'update' value = 'Update Bid'>";
+		if(count($bidList)>0){
+			echo ' 
+			<input type="submit" name="Submit">
+			</form>';
+		}
+		else{
+			echo "<a href='welcome.php'>Go back to Home</a>";
+		}
+	}
+	
+	
+
 echo "</form><br>";
 
 if(isset($_POST['update']))
@@ -211,9 +225,9 @@ else{
     printErrors();
 }
 }
-}
+
 
 echo "<br>";
-echo "<a href = 'welcome.php'>Go back to Home</a>";
+// echo "<a href = 'welcome.php'>Go back to Home</a>";
 
 ?>
