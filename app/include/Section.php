@@ -85,8 +85,11 @@
 			$courseDAO = new CourseDAO();
 			if (!$courseDAO->isCourseIdExists($this->course)) {
 				$errors[] = "invalid course";
+				return $errors;
 			}
-			if (substr($this->sectionId, 0, 1) !== "S" || !is_numeric(substr($this->sectionId, 1)) || substr($this->sectionId, 1) > 99 || substr($this->sectionId, 1) < 1) {
+			// !(preg_match('/^(?:[s][1-9]\d{0,99})$/', $this->sectionId))
+			// if (substr($this->sectionId, 0, 1) !== "S"|| substr($this->sectionId, 1, 2) == 0 || !is_numeric(substr($this->sectionId, 1)) || substr($this->sectionId, 1) > 99 || substr($this->sectionId, 1) < 1) {
+				if (!(preg_match('/^(?:[sS][1-9]\d{0,99})$/', $this->sectionId)) || !is_numeric(substr($this->sectionId, 1)) || substr($this->sectionId, 1) > 99 || substr($this->sectionId, 1) < 1) {
 				$errors[] = "invalid section";
 			}
 

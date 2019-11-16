@@ -97,6 +97,7 @@ class Bid
 		}
 		if (!$CourseDAO->isCourseIdExists($this->code)) {
 			$errors[] = "invalid course";
+			return $errors;
 		} elseif (!$SectionDAO->isSectionIdExists($this->code, $this->section)) {
 			$errors[] = "invalid section";
 		}
