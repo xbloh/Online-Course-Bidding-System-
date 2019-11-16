@@ -354,7 +354,7 @@ function doBootstrap(){
                             }
                             
                             $bidDAO->add($new_bid);
-                            $studentDAO->deductEdollar($data[0], $data[1]);
+                            $studentDAO->deductEdollar(trim($data[0]), trim($data[1]));
                             $bid_processed++;
                         } else {
                             foreach ($currentErrors as $error) {
