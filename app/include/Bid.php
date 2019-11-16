@@ -81,10 +81,10 @@ class Bid
 		if ($bidDAO->bidExists($this->userid, $this->code, $this->section) || $bidDAO->bidCourseExists($this->userid, $this->code)) {
 			$this->isUpdate = True;
 		}
-		if ($bidDAO->bidExists($this->userid, $this->code, $this->section)) {
+		if ($bidDAO->bidExists($this->userid, $this->code, $this->section) || $bidDAO->bidCourseExists($this->userid, $this->code)) {
 			$this->doesBidEvenExist = True;
 		}
-		if ($bidDAO->bidCourseExists($this->userid, $this->code)) {
+		if ($bidDAO->bidCourseExists($this->userid, $this->code) && !$bidDAO->bidExists($this->userid, $this->code, $this->section)) {
 			$this->isDiffSection = True;
 		}
 	if($this->isAddBid==FALSE && $this->isCart==FALSE && $this->isUpdate==FALSE){
@@ -322,10 +322,6 @@ class Bid
 
 	return $errors;
 	}
-	// public function validate2()
-	// {
-
-	// }
 
 }
 ?>
