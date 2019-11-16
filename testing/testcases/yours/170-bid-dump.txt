@@ -4,8 +4,8 @@
         {
             "row": 1,
             "userid": "beta",
-            "amount": "12.00",
-            "result": "in"
+            "amount": 12.0,
+            "result": "-"
         }
     ]
 }

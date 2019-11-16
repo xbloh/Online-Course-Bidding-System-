@@ -482,9 +482,13 @@ class BidDAO
         return $status;
     }
         
-    public function retrieveSuccessfulBids($courseId, $sectionId)
+    public function retrieveSuccessfulBids($courseId, $sectionId, $round1 = False)
     {
-        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and result = "in" order by userid';
+        if ($round1) {
+            $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and result = "in" and round = 1 order by userid';
+        } else {
+            $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and result = "in" order by userid';
+        }
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();

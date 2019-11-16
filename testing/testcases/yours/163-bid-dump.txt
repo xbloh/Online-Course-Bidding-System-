@@ -4,7 +4,7 @@
         {
             "row": 1,
             "userid": "alpha",
-            "amount": "20.00",
+            "amount": 20.0,
             "result": "-"
         }
     ]

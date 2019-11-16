@@ -8,6 +8,7 @@
 	$sectionDAO = new SectionDAO();
 	$roundDAO = new RoundDAO();
 	$round = $roundDAO->retrieveCurrentRound();
+	$status = $roundDAO->retrieveRoundStatus();
 
 	$errors = [];
 
@@ -32,8 +33,31 @@
 	}
 
 	$bids = $bidDAO->bidDump($course, $section, $round);
-	$out = ["status" => "success", "bids" => $bids];
-	header('Content-Type: application/json');
-	echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+	if ($round == 2 && $status == 'active') {
+		$newbids = [];
+		foreach ($bids as $bid) {
+			$new = [];
+			foreach ($bid as $key => $value) {
+				if ($key == 'result') {
+					$new[$key] = '-';
+				} else {
+					$new[$key] = $value;
+				}
+
+
+				
+			}
+			$newbids[] = $new;
+		}
+
+		$out = ["status" => "success", "bids" => $newbids];
+		header('Content-Type: application/json');
+		echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+		exit;
+	} else {
+		$out = ["status" => "success", "bids" => $bids];
+		header('Content-Type: application/json');
+		echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+	}
 
 ?>

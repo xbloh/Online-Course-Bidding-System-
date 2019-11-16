@@ -29,6 +29,9 @@
 	$courseDAO = new CourseDAO();
 	$sectionDAO = new SectionDAO();
 	$errors = [];
+	$roundDAO = new RoundDAO();
+	$round = $roundDAO->retrieveCurrentRound();
+	$status = $roundDAO->retrieveRoundStatus();
 
 	if (!$courseDAO->isCourseIdExists($course)) {
 		$errors[] = "invalid course";
@@ -45,12 +48,24 @@
         exit();
 	}
 
-	$bidDAO = new BidDAO();
-	$students = $bidDAO->retrieveSuccessfulBids($course, $section);
+	if (!($round == 2 && $status == 'active')) {
+		$bidDAO = new BidDAO();
+		$students = $bidDAO->retrieveSuccessfulBids($course, $section);
 
-	$out = ["status" => "success", "students" => $students];
-	header('Content-Type: application/json');
-	echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+		$out = ["status" => "success", "students" => $students];
+		header('Content-Type: application/json');
+		echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+		exit;
+	} else {
+	
+		$bidDAO = new BidDAO();
+		$students = $bidDAO->retrieveSuccessfulBids($course, $section, True);
+
+		$out = ["status" => "success", "students" => $students];
+		header('Content-Type: application/json');
+		echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+
+	}
 
 
 ?>
