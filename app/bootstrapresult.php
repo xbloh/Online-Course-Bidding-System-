@@ -8,10 +8,14 @@
 	if ($result['status'] == 'error') {
 		echo "<h3>There following are the errors with bootstrap:</h3><table width='800'><tr>
 		<th>file</th><th>line</th><th>errors</th></tr>";
-		foreach ($result['error'] as $error) {
-			$messages = implode(', ', $error['message']);
-			echo "<tr><td align='center'>{$error['file']}</td><td align='center'>{$error['line']}</td><td align='center'>{$messages}</td></tr>";
-			
+		if(count($result['error'])==1){
+			echo "<tr><td></td><td></td><td align='center'>{$result['error'][0]}</td>";
+		}
+		else{
+			foreach ($result['error'] as $error) {
+					$messages = implode(', ', $error['message']);
+					echo "<tr><td align='center'>{$error['file']}</td><td align='center'>{$error['line']}</td><td align='center'>{$messages}</td></tr>";
+				}
 		}
 		echo "</table>";
 	} else {
