@@ -105,12 +105,10 @@ echo "</table>";
 			<input type="submit" name="Submit">
 			</form>';
 		}
-		else{
-			echo "<a href='welcome.php'>Go back to Home</a>";
-		}
+		//else{
+		//	echo "<a href='welcome.php'>Go back to Home</a>";
+		//}
 	
-	
-
 echo "</form><br>";
 }
 
