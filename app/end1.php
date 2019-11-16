@@ -27,18 +27,24 @@ foreach($courses as $course)
         {
             $clearingPrice = $bidByUserid[$sectionSize-1][1];
             //echo $clearingPrice;
+            $counter = 0;
             foreach($bidByUserid as $bidUser)
             {
+                $counter ++;
                 $user = $bidUser[0];
                 $amount = $bidUser[1];
                 if($amount > $clearingPrice)
                 {
                     $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
                 } elseif ($amount == $clearingPrice) {
-                    if ($bidByUserid[$sectionSize][1] == $clearingPrice) {
+                    if ($counter != count($bidByUserid)) {
                         $failBids[] = [$user, $amount, $courseId, $sectionId];
                     } else {
-                        $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
+                        if ($bidByUserid[$counter - 2][1] == $clearingPrice || (count($bidByUserid) > $sectionSize && $bidByUserid[$counter][1] == $clearingPrice)) {
+                            $failBids = [$user, $amount, $courseId, $sectionId];
+                        } else {
+                            $succesfulBids = [$user, $amount, $courseId, $sectionId];
+                        }
                     }
                 } else {
                     $failBids[] = [$user, $amount, $courseId, $sectionId];
