@@ -8,9 +8,16 @@ include 'menu_admin.php'
 <h1>Welcome to BIOS, Admin!</h1>
 
 
-<h2><?php    $day = date('l'); $date = date('j F Y');    echo "Today is ".$day. ", ".$date."!";    ?></h2>
-<?php #tried to add this but not sure why the time seems to be in the wrong timezone ?>
-<!-- <h2><?php    $time = date('g:i:s');    echo "The time is now ".$time;    ?></h2> -->
+<h2><?php
+date_default_timezone_set('Asia/Singapore');
+$day = date('l');
+$time = date('h:i:s A');
+$date = date('j F Y');
+echo "Today is ". $day. ", ".$date."!";    ?></h2>
+<h3> <?php echo "The current time is ". $time;    ?></h3>
+
+
 </body></html>
 </body>
 </html>
+
