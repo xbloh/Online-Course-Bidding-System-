@@ -40,7 +40,7 @@
 				        $bidByUserid = $bid->bidsByCourseSection($courseId, $sectionId);
 				        $sectionSize = $sectiondao->retrieveSectionSize($courseId,$sectionId);
 				        //var_dump($bidByUserid);
-				        if(count($bidByUserid) >= $sectionSize)
+				        if(count($bidByUserid) > $sectionSize)
 				        {
 				            $clearingPrice = $bidByUserid[$sectionSize-1][1];
 				            //echo $clearingPrice;
@@ -63,6 +63,27 @@
 				            }
 				            
 				        }
+				        elseif (count($bidByUserid) == $sectionSize) {
+				        	$clearingPrice = $bidByUserid[$sectionSize-1][1];
+				        	$counter = 0;
+				        	foreach ($bidByUserid as $bidUser) {
+				        		$counter ++;
+				        		$user = $bidUser[0];
+				                $amount = $bidUser[1];
+
+				                if($amount > $clearingPrice)
+				                {
+				                    $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
+				                } else {
+				                	if ($counter != count($bidByUserid)) {
+				                		break;
+				                	} else {
+				                		$succesfulBids[] = [$user, $amount, $courseId, $sectionId];
+				                		echo "$user";
+				                	}
+				                }
+				        	}
+				        }
 				        else
 				        {
 				            foreach($bidByUserid as $bidUser)
@@ -74,7 +95,6 @@
 				        }
 				    }
 				}
-				//var_dump($succesfulBids);
 				//var_dump($failBids);
 				foreach($succesfulBids as $successBid)
 				{
