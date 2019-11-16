@@ -79,7 +79,7 @@
 				                		break;
 				                	} else {
 				                		$succesfulBids[] = [$user, $amount, $courseId, $sectionId];
-				                		echo "$user";
+				                		// echo "$user";
 				                	}
 				                }
 				        	}

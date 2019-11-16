@@ -37,15 +37,23 @@ class Course_Completed
     		$errors[] = "invalid course";
     	}
 
-		if($prerequisitesDAO->isCourseRequirePrerequisite($this->code)){
-			$prerequisiteId = $prerequisitesDAO->retrievePreRequisitesIdByCourseId($this->code);
-			foreach($prerequisiteId as $prerequisiteEach){
-				if(!$coursesCompletedDAO->isPrerequisiteCompleted($prerequisiteEach)){
-					$errors[] = "invalid course completed";
+		// if($prerequisitesDAO->isCourseRequirePrerequisite($this->code)){
+		// 	$prerequisiteId = $prerequisitesDAO->retrievePreRequisitesIdByCourseId($this->code);
+		// 	foreach($prerequisiteId as $prerequisiteEach){
+		// 		if(!$coursesCompletedDAO->isPrerequisiteCompleted($prerequisiteEach)){
+		// 			$errors[] = "invalid course completed";
+		// 	}
+		// }
+		$courseCompleted = $coursesCompletedDAO->retrieveCoursesCompByUserId($this->userid);
+		// var_dump($courseCompleted);
+		$prerequisiteId = $prerequisitesDAO->retrievePreRequisitesIdByCourseId($this->code);
+		// var_dump($prerequisiteId);
+		foreach($prerequisiteId as $prerequisiteEach){
+			if(!in_array($prerequisiteEach, $courseCompleted)){
+				$errors[] = "invalid course completed";
 			}
 		}
-
-		}
+		// }
 		
 		return $errors;
 		

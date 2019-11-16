@@ -5,10 +5,11 @@
 	include 'menu_admin.php';
 
 	$result = $_SESSION['bootstrapresult'];
+	// var_dump($result['error'][0]);
 	if ($result['status'] == 'error') {
 		echo "<h3>There following are the errors with bootstrap:</h3><table width='800'><tr>
 		<th>file</th><th>line</th><th>errors</th></tr>";
-		if(count($result['error'])==1){
+		if(!is_array($result['error'][0])){
 			echo "<tr><td></td><td></td><td align='center'>{$result['error'][0]}</td>";
 		}
 		else{
