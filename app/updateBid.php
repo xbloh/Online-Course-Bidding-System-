@@ -108,13 +108,14 @@ echo "</table>";
 		else{
 			echo "<a href='welcome.php'>Go back to Home</a>";
 		}
-	}
 	
 	
 
 echo "</form><br>";
+}
 
-if(isset($_POST['update']))
+// var_dump($_POST['Submit']);
+if(isset($_POST['Submit']))
 {
     $code = $_POST['courseId'];
     $section = $_POST['sectionId'];
@@ -184,7 +185,7 @@ if(isset($_POST['update']))
         $StudentDAO->deductEdollar($userId, $newAmount);
         
 
-        
+        $newAmount = number_format($newAmount, 2);
 
         echo "<tr>";
         echo "<td>{$i}</td>";
@@ -228,6 +229,5 @@ else{
 
 
 echo "<br>";
-// echo "<a href = 'welcome.php'>Go back to Home</a>";
-
+echo "<a href = 'welcome.php'>Go back to Home</a>";
 ?>
