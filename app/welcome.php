@@ -94,7 +94,7 @@ echo "<table cellspacing='10px' cellpadding='3px'>
     <th>Section ID</th>
     <th>Bidded Amount</th>
     ";
-if($currentRnd == '2' && $rndStatus == 'active')
+if($currentRnd == '2')
 {
     echo "<th>Bid Status</th>
           <th>Minimum Bid</th>";
@@ -117,7 +117,7 @@ foreach($bidList as $bidDisplay) {
     $course = $courseDAO->retrieveCourseById($displayCode);
     $courseName = $course->getTitle();
     
-    if($currentRnd == '2' && $rndStatus == 'active')
+    if($currentRnd == '2')
     {
         $number = number_format($bidDisplay[4],2,'.','');
         echo "
