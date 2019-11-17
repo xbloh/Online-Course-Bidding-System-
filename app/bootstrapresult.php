@@ -4,6 +4,8 @@
 	require_once 'include/protect_admin.php';
 	include 'menu_admin.php';
 
+	echo "<h1>Round 1 started successfully</h1><br>";
+
 	$result = $_SESSION['bootstrapresult'];
 	// var_dump($result['error'][0]);
 	if ($result['status'] == 'error') {
