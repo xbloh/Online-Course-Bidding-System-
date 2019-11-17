@@ -112,6 +112,9 @@ class Bid
 	
 			$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 			foreach ($bidded_modules as $bidded_module){
+				if ($bidded_module[2] == 'out') {
+					continue;
+				}
 				$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
 				if($currentBidDate==$moduleClassDateTime[0]){
 					if($moduleClassDateTime[1]<$currentBidEnd && $moduleClassDateTime[2]>$currentBidStart){
@@ -128,6 +131,9 @@ class Bid
 	
 			$bidded_modules=$bidDAO->retrieveCourseIdSectionIdBidded($this->userid);
 			foreach ($bidded_modules as $bidded_module){
+				if ($bidded_module[2] == 'out') {
+					continue;
+				}
 				$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
 				//var_dump($moduleExamDateTime);
 				if($currentBidDate==$moduleExamDateTime[0]){
@@ -258,6 +264,9 @@ class Bid
 			if ($bidded_module[0] == $this->code) {
 				continue;
 			}
+			if ($bidded_module[2] == 'out') {
+				continue;
+			}
 			$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
 			if($currentBidDate==$moduleClassDateTime[0]){
 				if($moduleClassDateTime[1]<$currentBidEnd && $moduleClassDateTime[2]>$currentBidStart){
@@ -275,6 +284,9 @@ class Bid
 		foreach ($bidded_modules as $bidded_module){
 			$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
 			if ($bidded_module[0] == $this->code) {
+				continue;
+			}
+			if ($bidded_module[2] == 'out') {
 				continue;
 			}
 			if($currentBidDate==$moduleExamDateTime[0]){
