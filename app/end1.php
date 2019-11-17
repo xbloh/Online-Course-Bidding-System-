@@ -134,6 +134,7 @@ foreach($courseList as $course)
     $sectionId = $course[0][3];
     $takenSlot = 0;
     $takenSlot = count($course);
+    $sectionSize = $sectiondao->retrieveSectionSize($courseId, $sectionId);
     $availableSlot =  $sectionSize - $takenSlot;
     // var_dump([$courseId, $sectionId, $availableSlot]);
     $sectiondao->updateSize($courseId, $sectionId, $availableSlot);
