@@ -2,11 +2,11 @@
 	// for all bid validations
 	require_once 'include/common.php';
 	require_once 'include/protect.php';
-	
+	include 'menu.php';
 	$sectionDAO = new SectionDAO();
 	// ignore validations first
 	echo "<h1>Your Selected Section(s)<h1>";
-	echo "<table cellspacing='10px' cellpadding='3px'>
+	echo "<table cellspacing='5px' cellpadding='3px'>
 	<tr>
 	<th>Course ID</th>
 	<th>Section ID</th>
