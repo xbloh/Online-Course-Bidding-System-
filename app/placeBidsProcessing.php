@@ -11,6 +11,7 @@ $roundDAO = new RoundDAO();
 $student = $_SESSION['student'];
 $userId = $student->getUserId();
 $totalAmtCart=0;
+$eDollar = $StudentDAO->retrieveStudentByUserId($userId)->getEdollar();
 $currentRnd = $roundDAO->retrieveCurrentRound();
 $rndStatus = $roundDAO->retrieveRoundStatus();
 
@@ -160,7 +161,7 @@ if ($bidErrors == 0) {
 		$StudentDAO->deductEdollar($userid, $amount);
 	}
 	echo "<h1>BIDS PLACED!!! GOOD LUCK</h1>";
-	// echo"<h2>Remaining e$".getEdollar()."</h2><br>";
+	echo"<h2>Remaining e$".$eDollar."</h2><br>";
 	if($currentRnd == '2' && $rndStatus == 'active')
 	{
 		echo "<h2>Number of vacancy : {$currentVacancy}</h2><h2>Minimum bid : {$minBidAmt}</h2>";
