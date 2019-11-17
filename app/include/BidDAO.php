@@ -679,7 +679,7 @@ class BidDAO
 
     public function retrieveAllByCourseSection($courseId, $sectionId, $round)
     {
-        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and round = :round order by amount desc';
+        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId and round = :round order by amount desc, userid';
         
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -688,6 +688,29 @@ class BidDAO
         $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
         $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
         $stmt->bindParam(':round',$round,PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = array();
+
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = [$row['userid'], $row['code'], $row['section'], $row['amount'], $row['result']];
+        }
+
+        return $result;
+    }
+
+    public function retrieveAllByCourseSectionBoth($courseId, $sectionId)
+    {
+        $sql = 'SELECT * from bid where code = :courseId and section = :sectionId order by amount desc, userid';
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':courseId',$courseId,PDO::PARAM_STR);
+        $stmt->bindParam(':sectionId',$sectionId,PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 

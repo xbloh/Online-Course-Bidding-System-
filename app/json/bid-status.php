@@ -54,7 +54,7 @@
 
 	$round1Bids = $bidDAO->retrieveAllByCourseSection($course, $section, 1);
 	$round2Bids = $bidDAO->retrieveAllByCourseSection($course, $section, 2);
-	$allBids = array_merge($round1Bids, $round2Bids);
+	$allBids = $bidDAO->retrieveAllByCourseSectionBoth($course, $section);
 
 	if ($round == 2 && $status == 'active') {
 		$bids = $round2Bids;
