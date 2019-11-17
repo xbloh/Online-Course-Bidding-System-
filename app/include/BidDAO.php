@@ -481,6 +481,29 @@ class BidDAO
         $pdo = null;
         return $status;
     }
+
+    public function update2Status($userid, $code, $section, $bidStatus) {
+        $sql= 'UPDATE BID SET RESULT=:bidStatus WHERE userid=:userid AND code=:code AND section=:section and round = 2';
+
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql); 
+
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':code', $code, PDO::PARAM_STR);
+        $stmt->bindParam(':section', $section, PDO::PARAM_STR);
+        $stmt->bindParam(':bidStatus', $bidStatus, PDO::PARAM_STR);
+    
+        $status=FALSE;
+        
+        if($stmt->execute()){
+            $status=TRUE;
+        }
+        $stmt = null;
+        $pdo = null;
+        return $status;
+    }
         
     public function retrieveSuccessfulBids($courseId, $sectionId, $round1 = False)
     {

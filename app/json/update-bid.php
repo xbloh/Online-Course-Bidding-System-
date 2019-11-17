@@ -338,11 +338,11 @@
                 {
                     if(!in_array($index, $winList))
                     {
-                        $bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'out');
+                        $bidDAO->update2Status($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'out');
                     } 
                     else
                     {
-                        $bidDAO->updateStatus($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'in');
+                        $bidDAO->update2Status($allRoundTwo[$index][0], $allRoundTwo[$index][1], $allRoundTwo[$index][2], 'in');
                     }
                 }
             }
