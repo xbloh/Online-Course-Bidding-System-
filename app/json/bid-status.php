@@ -65,12 +65,6 @@
 	$size = $sectionDAO->retrieveSectionSize($course, $section);
 	$vacancy = $size;
 
-	foreach ($allBids as $bid) {
-		if ($bid[4] == 'in') {
-			$vacancy --;
-		}
-	}
-
 	if ($round == 1) {
 		foreach ($round1Bids as $bid) {
 			if (!isset($minPrice) || ($bid[4] == 'in' && $bid[3] < $minPrice)) {
@@ -80,10 +74,11 @@
 	}
 
 	if ($round == 2) {
-		if (count($round2Bids) == 0) {
+		if (count($round2Bids) == 0 || count($round2Bids) < $size) {
 			$minPrice = 10;
 		} else {
 			foreach ($round2Bids as $bid) {
+				echo $bid[3];
 				if (!isset($minPrice) || ($bid[4] == 'in' && $bid[3] < $minPrice)) {
 					$minPrice = $bid[3];
 				}
