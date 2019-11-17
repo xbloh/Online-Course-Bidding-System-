@@ -78,7 +78,6 @@
 			$minPrice = 10;
 		} else {
 			foreach ($round2Bids as $bid) {
-				echo $bid[3];
 				if (!isset($minPrice) || ($bid[4] == 'in' && $bid[3] < $minPrice)) {
 					$minPrice = $bid[3];
 				}
