@@ -179,6 +179,7 @@ if(isset($_POST['Submit']))
         if ($value === "") $newAmt[$int] = $allBid[$int][0];
     }
     $i = 0;
+    $dis_i = 1;
 
     while($i < sizeof($code))
     {
@@ -191,9 +192,8 @@ if(isset($_POST['Submit']))
         
 
         $newAmount = number_format($newAmount, 2);
-
         echo "<tr>";
-        echo "<td>{$i}</td>";
+        echo "<td>{$dis_i}</td>";
         echo "<td>{$courseId}</td>";
         echo "<td>{$sectionId}</td>";
         echo "<td>{$newAmount}</td>";
@@ -219,6 +219,7 @@ if(isset($_POST['Submit']))
             }
         }
         $i++;
+        $dis_i++;
     
     }
     
