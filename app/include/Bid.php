@@ -198,13 +198,13 @@ class Bid
 		// var_dump($prerequisiteId);
 		foreach($prerequisiteId as $prerequisiteEach){
 			if(!in_array($prerequisiteEach, $courseCompleted)){
-				$errors[] = "incomplete Prerequisites  ".$this->code.'  '.$this->section;
+				$errors[] = $this->code.'  '.$this->section." : incomplete Prerequisites";
 			}
 		}
 		$course=$this->code;
 		// var_dump($courseCompleted);
 		if(in_array($course, $courseCompleted)){
-			$errors[] = "course completed  ".$course;
+			$errors[] = $course." : course completed";
 		}
 
 		$currentBidDayTime = $SectionDAO->retrieveSectionDayTime($this->code,$this->section);
@@ -218,7 +218,7 @@ class Bid
 			$moduleClassDateTime=$SectionDAO->retrieveSectionDayTime($bidded_module[0],$bidded_module[1]);
 			if($currentBidDate==$moduleClassDateTime[0]){
 				if($moduleClassDateTime[1]<$currentBidEnd && $moduleClassDateTime[2]>$currentBidStart){
-					$errors[] = "class timetable clash  ".$this->code."  ".$this->section;
+					$errors[] = $this->code."  ".$this->section." : class timetable clash";
 				}
 			}
 		}
@@ -233,7 +233,7 @@ class Bid
 			$moduleExamDateTime=$CourseDAO->retrieveExamDateTime($bidded_module[0]);
 			if($currentBidDate==$moduleExamDateTime[0]){
 				if($moduleExamDateTime[1]<$currentBidEnd && $moduleExamDateTime[2]>$currentBidStart){
-					$errors[] = "exam timetable clash  ".$this->code."  ".$this->section;
+					$errors[] = $this->code."  ".$this->section." : exam timetable clash";
 				}
 			}
 		}
