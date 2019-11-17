@@ -4,9 +4,9 @@ include 'menu_admin.php';
     require_once 'include/common.php';
     $roundDAO = new RoundDAO();
     $round = $roundDAO->retrieveCurrentRound();
-    $status = $roundDAO->retrieveRoundStatis();
+    $status = $roundDAO->retrieveRoundStatus();
 
-    if (!($round == 1 && $status == $completed)) {
+    if (!($round == 1 && $status == 'completed')) {
     	echo "<h1>Error: Round 2 cannot be started!</h1><br>
 	    Current round: {$round}<br>
 	    Round status: {$status}";
