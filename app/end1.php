@@ -9,6 +9,18 @@ $sectiondao = new SectionDAO();
 $courses = $coursedao->retrieveAllCourses();
 $studentDAO = new StudentDAO();
 $roundDAO = new RoundDAO();
+$round = $roundDAO->retrieveCurrentRound();
+$status = $roundDAO->retrieveRoundStatus();
+
+if (!($round == 1 && $status == 'active')) {
+    echo "<h1>Error: Round 1 is not active and cannot be ended</h1><br>
+    Current round: {$round}<br>
+    Round status: {$status}";
+    exit;
+}
+
+echo "<h1>Round 1 ended successfully</h1><br>";
+
 $roundDAO->endRound1();
 $failBids = [];
 
@@ -41,9 +53,9 @@ foreach($courses as $course)
                         $failBids[] = [$user, $amount, $courseId, $sectionId];
                     } else {
                         if ($bidByUserid[$counter - 2][1] == $clearingPrice || (count($bidByUserid) > $sectionSize && $bidByUserid[$counter][1] == $clearingPrice)) {
-                            $failBids = [$user, $amount, $courseId, $sectionId];
+                            $failBids[] = [$user, $amount, $courseId, $sectionId];
                         } else {
-                            $succesfulBids = [$user, $amount, $courseId, $sectionId];
+                            $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
                         }
                     }
                 } else {
@@ -76,7 +88,6 @@ foreach($succesfulBids as $successBid)
 }
 
 foreach ($failBids as $failbid) {
-    //var_dump($failbid);
     $userid = $failbid[0];
     $toAdd = $failbid[1];
     $code = $failbid[2];
