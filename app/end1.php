@@ -38,7 +38,6 @@ foreach($courses as $course)
         if(count($bidByUserid) >= $sectionSize)
         {
             $clearingPrice = $bidByUserid[$sectionSize-1][1];
-            //echo $clearingPrice;
             $counter = 0;
             foreach($bidByUserid as $bidUser)
             {
@@ -49,7 +48,7 @@ foreach($courses as $course)
                 {
                     $succesfulBids[] = [$user, $amount, $courseId, $sectionId];
                 } elseif ($amount == $clearingPrice) {
-                    if ($counter != count($bidByUserid)) {
+                    if ($counter != $sectionSize) {
                         $failBids[] = [$user, $amount, $courseId, $sectionId];
                     } else {
                         if ($bidByUserid[$counter - 2][1] == $clearingPrice || (count($bidByUserid) > $sectionSize && $bidByUserid[$counter][1] == $clearingPrice)) {
@@ -60,7 +59,6 @@ foreach($courses as $course)
                     }
                 } else {
                     $failBids[] = [$user, $amount, $courseId, $sectionId];
-                    $bid->deleteBid($user, $courseId, $sectionId);
                 }
             }
             

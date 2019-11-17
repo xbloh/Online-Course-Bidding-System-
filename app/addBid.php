@@ -155,7 +155,7 @@ include 'menu.php';
 		
 	</form>
 	<?php
-		if(isset($_POST['sectionSelected'])) {
+		if(isset($_POST['sectionSelected']) && isset($_POST['indexOfSectionToBid'])) {
 			$course = $_SESSION['courseSelected'];
 			$index = $_POST['indexOfSectionToBid'];
 			$sectionSelected = [$course->getCourseId(), $course->getSectionsAvailable()[$index]];

@@ -11,7 +11,6 @@ $roundDAO = new RoundDAO();
 $student = $_SESSION['student'];
 $userId = $student->getUserId();
 $totalAmtCart=0;
-$eDollar = $StudentDAO->retrieveStudentByUserId($userId)->getEdollar();
 $currentRnd = $roundDAO->retrieveCurrentRound();
 $rndStatus = $roundDAO->retrieveRoundStatus();
 
@@ -22,7 +21,7 @@ foreach ($_SESSION['cart'] as $sectionSelected) {
 		$identifier = $courseId . $sectionId;
 
 		if ($_POST[$identifier]<10||!(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $_POST[$identifier]))||$_POST[$identifier]>999) {
-			$_SESSION['errors']=['Input should only be numbers'];
+			$_SESSION['errors']=['Invalid bid amount'];
 			echo "<h1>Bids cannot be placed because of:</h1>";
 			printErrors();
 			echo "<a href = 'welcome.php'>go back home</a>";
@@ -51,6 +50,10 @@ $bidErrors = 0;
 
 foreach ($_SESSION['bids'] as $bid) {
 	$isAllowed = $bid->validate();
+	$sectionSize = $SectionDAO->retrieveSectionSize($bid->getCode(), $bid->getSection());
+	if ($sectionSize == 0) {
+		$isAllowed[]="Section has no more vacancies";
+	}
 	$noOfSectionBidded=$bidDAO->numberOfSectionsByID($userId);
 	if($noOfSectionBidded+count($_SESSION['bids'])>5){
 		$exceedbids=$noOfSectionBidded+count($_SESSION['bids'])-5;
@@ -121,7 +124,7 @@ foreach ($_SESSION['bids'] as $bid) {
 				$bidErrors++;
 			}
 		}
-		}//output error message and go back to placeBids.php
+	}//output error message and go back to placeBids.php
 	
 
 	//}
@@ -139,6 +142,9 @@ if ($bidErrors == 0) {
 		$sectionId=$bid->getSection();
 		if($currentRnd == '2' && $rndStatus == 'active')
 		{
+			if ($bidDAO->isUSerCourseSectionExists($userid, $courseId, $sectionId)) {
+				$bidDAO->deleteBid($userid, $courseId, $sectionId);
+			}
 			$bidDAO->add($bid);
 			$winList = $bidDAO->winBids($courseId, $sectionId, $currentVacancy, 2);
 			$allRoundTwo = $bidDAO->retrieveAllByCourseSection($courseId, $sectionId, 2);
@@ -161,6 +167,8 @@ if ($bidErrors == 0) {
 		$StudentDAO->deductEdollar($userid, $amount);
 	}
 	echo "<h1>BIDS PLACED!!! GOOD LUCK</h1>";
+
+	$eDollar = $StudentDAO->retrieveStudentByUserId($userid)->getEdollar();
 	echo"<h2>Remaining e$".$eDollar."</h2><br>";
 	if($currentRnd == '2' && $rndStatus == 'active')
 	{
@@ -174,11 +182,11 @@ else{
 	$_SESSION['errors']=$errorList;
 	// var_dump($errorList);
 	echo "<h1>Bids cannot be placed because of:</h1>";
+	printErrors();
 	if($currentRnd == '2' && $rndStatus == 'active')
 	{
 		echo "<h2>Number of vacancy : {$currentVacancy}</h2><h2>Minimum bid : {$minBidAmt}</h2>";
 	}
-	printErrors();
 	echo "<a href = 'welcome.php'>go back home</a>";
 	unset($_SESSION['bids']);
 	unset($_SESSION['cart']);

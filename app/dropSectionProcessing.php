@@ -6,6 +6,7 @@
 	$request = $_GET['toDrop'];
 	$errors = [];
 	$studentDAO = new StudentDAO();
+	$sectionDAO = new SectionDAO();
 
 	if (count($request) == 0) {
 		echo "<h2>No bids selected</h2>
@@ -22,6 +23,9 @@
 			$studentDAO->addEdollar($userId, $amount);
 			if (!$bidDAO->deleteBid($userId, $bid[0], $bid[1])) {
 				$errors[] = $bid;
+			} else {
+				$sectionSize = $sectionDAO->retrieveSectionSize($bid[0], $bid[1]);
+				$sectionDAO->updateSize($bid[0], $bid[1], $sectionSize + 1);
 			}
 		}
 

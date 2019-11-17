@@ -126,17 +126,24 @@ if(isset($_POST['Submit']))
         $studentAmt+=$sectionBidAmt;
     }
     $studentAmt+=$Student->getEdollar();
+
+    $count = 0;
     foreach($newAmt as $amount){
         if(ctype_alpha($amount)){
             $_SESSION['errors'][] = "Invalid amount";
             break;
         }
-        if ($amount<10 || !(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $amount)) || $amount>999) {
+
+        if ($amount == '') {
+            $newAmt[$count] = $sectionBidAmt=$bidDAO->retrieveBiddedAmt($userId, $code[$count], $section[$count]);
+        }
+        elseif ($amount<10 || !(preg_match('/^(?:[0-9]{0,3})\.{0,1}\d{0,2}$/', $amount)) || $amount>999) {
             // if($amount<10||$amount!=number_format($amount,2,'.','')||$amount>999){
             $_SESSION['errors'][] = "Invalid amount";
             break;
         }
         // $studentAmt-=$amount;
+        $count ++;
     }
 
     if(empty($_SESSION['errors'])){
